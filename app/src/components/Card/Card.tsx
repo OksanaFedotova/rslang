@@ -1,20 +1,13 @@
 import React from "react";
-interface ICard {
-  image: string;
-  textExample: string;
-  textExampleTranslate: string;
-  textMeaningTranslate: string;
-  transcription: string;
-  word: string;
-  wordTranslate: string;
-}
-const Card: React.FunctionComponent<ICard> = ({image, textExample, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate}) => {
+import ICard from "../../Interfaces/ICard";
+const Card: React.FunctionComponent<ICard> = ({key, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate}) => {
   return (
     <div>
       <img src={image}></img>
-      <p>{textExample}</p>
+      <p dangerouslySetInnerHTML={{__html: textExample}}></p>
       <p>{textExampleTranslate}</p>
       <p>{textMeaningTranslate}</p>
+      <p>{textMeaning}</p>
       <p>{transcription}</p>
       <p>{word}</p>
       <p>{wordTranslate}</p>

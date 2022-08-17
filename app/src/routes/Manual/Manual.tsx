@@ -1,18 +1,10 @@
+
 import React from "react";
 import  { useEffect, useState } from 'react';
 import getWords from "../services/request";
 import Card from "../../components/Card/Card";
-
-interface ICard {
-  image: string;
-  textExample: string;
-  textExampleTranslate: string;
-  textMeaningTranslate: string;
-  transcription: string;
-  word: string;
-  wordTranslate: string;
-}
-const initialValue: ICard[] | [] = [];
+import IWord from "../../Interfaces/IWord";
+const initialValue: IWord[] | [] = [];
 
 const Manual = () => {
   const [words, setWords] = useState(initialValue)
@@ -22,14 +14,16 @@ const Manual = () => {
    return (
     <>
     {
-      words.forEach((word) => {
-       console.log(word);
-        <Card
-          image={word.image}
+      words.map((word) => {
+        console.log(word)
+       return <Card
+          key={word.id}
+          image={`https://rslang-b.herokuapp.com/${word.image}`}
           textExample={word.textExample} 
           textExampleTranslate={word.textExampleTranslate} 
           textMeaningTranslate={word.textMeaningTranslate} 
           transcription={word.transcription}
+          textMeaning={word.textMeaning}
           word={word.word}
           wordTranslate={word.wordTranslate}
         ></Card>
