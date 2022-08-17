@@ -1,6 +1,5 @@
 
-import React from "react";
-//import Frame from 'react-frame-component';
+import React, { Fragment } from "react";
 import  { useEffect, useState } from 'react';
 import getWords from "../services/request";
 import Card from "../../components/Card/Card";
@@ -14,7 +13,7 @@ const Manual = () => {
     getWords(0, 0, res => setWords(res))
   }, [])
    return (
-    <>
+    <Fragment>
     {
       words.map((word) => {
        return <Card
@@ -31,7 +30,7 @@ const Manual = () => {
         }
       )
     }
-    </>
+    </Fragment>
    )
 }
 export default Manual;
