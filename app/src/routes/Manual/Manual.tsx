@@ -15,7 +15,6 @@ const Manual = () => {
     <>
     {
       words.map((word) => {
-        console.log(word)
        return <Card
           key={word.id}
           image={`https://rslang-b.herokuapp.com/${word.image}`}

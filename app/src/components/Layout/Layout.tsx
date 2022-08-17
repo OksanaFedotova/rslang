@@ -1,22 +1,24 @@
 import React from 'react';
+//import { useNavigate } from 'react-router-dom';
 
 interface ILayout {
   title: string;
   content: string;
-  children: JSX.Element[]
+  children: JSX.Element[];
+ // handleClick: () => void
 }
 
 const Layout: React.FunctionComponent<ILayout> = ({title, content, children}) => {
     return (
-    <div>
+      <>
       <article>
         <div>
           <h3>{title}</h3>
           <span>{content}</span>
-          {children}
         </div>
       </article>
-    </div>
+      <>{children}</>
+      </>
     )
   }
  
