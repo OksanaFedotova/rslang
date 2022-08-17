@@ -1,9 +1,11 @@
 
 import React from "react";
+//import Frame from 'react-frame-component';
 import  { useEffect, useState } from 'react';
 import getWords from "../services/request";
 import Card from "../../components/Card/Card";
 import IWord from "../../Interfaces/IWord";
+
 const initialValue: IWord[] | [] = [];
 
 const Manual = () => {
@@ -25,7 +27,7 @@ const Manual = () => {
           textMeaning={word.textMeaning}
           word={word.word}
           wordTranslate={word.wordTranslate}
-        ></Card>
+        />
         }
       )
     }

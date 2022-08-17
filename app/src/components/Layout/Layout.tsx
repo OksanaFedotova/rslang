@@ -23,3 +23,4 @@ const Layout: React.FunctionComponent<ILayout> = ({title, content, children}) =>
   }
  
   export default Layout;
+  
