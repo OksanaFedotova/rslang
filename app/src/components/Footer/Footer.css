@@ -1,0 +1,30 @@
+.footer {
+   padding: 10px 20px; 
+   background-color: #28a3e8;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.center-block {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #000;
+}
+
+.footer-link:hover {
+    cursor: pointer;
+    color: #ffffff;
+    transition: .5s;
+}
+
+.rs-link:hover {
+    filter: invert(100%) sepia(4%) saturate(0%) hue-rotate(310deg) brightness(115%) contrast(100%);
+    transition: .5s;
+}
