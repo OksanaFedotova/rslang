@@ -1,0 +1,27 @@
+.header {
+    padding: 10px 20px;
+    background-color: #28a3e8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
+}
+
+.logo {
+    width: 70px;
+    height: auto;
+    cursor: pointer;
+}
+
+.header-logo:hover > .logo-text{
+    color: #ffff00;
+    transition: .5s;
+}
+
+.logo-text {
+    font-family: Merriweather;
+    color: #fff;
+    letter-spacing: 1px;
+    cursor: pointer;
+}

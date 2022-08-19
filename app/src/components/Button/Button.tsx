@@ -1,4 +1,5 @@
 import React from "react";
+import './Button.css';
 
 interface IButton {
   title: string;
@@ -7,7 +8,7 @@ interface IButton {
 }
 const Button: React.FunctionComponent<IButton> = ({title, handleClick}) => {
   return (
-    <button onClick={handleClick}>{title}</button>
+    <button className="header-button" onClick={handleClick}>{title}</button>
   )
 }
 export default Button;

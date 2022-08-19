@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { NavLink } from 'react-router-dom';
+import './Menu.css';
+
 const MENU = [
     {
         title: 'Учебник',
@@ -19,11 +21,11 @@ const Menu = () => {
   return (
     <Fragment>
         <div className='menu'>
-          <ul>
+          <ul className="menu-list">
               {
                   MENU.map(({title, to}, index) => (
-                      <li key={index}>
-                          <NavLink to={to}>
+                      <li className="list-item" key={index}>
+                          <NavLink className="nav-link" to={to}>
                               {title}
                           </NavLink>
                       </li>
