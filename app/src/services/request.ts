@@ -1,4 +1,4 @@
-import IWord from "../../interfaces/IWord";
+import IWord from "../Interfaces/IWord";
 const getWords = (page: number, group: number, callback: React.Dispatch<React.SetStateAction<IWord[]>>) => {
   fetch(`https://rslang-b.herokuapp.com/words?page=${page}&group=${group}`)
   .then((res) => res.json())

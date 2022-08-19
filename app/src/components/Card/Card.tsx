@@ -1,16 +1,16 @@
 import React from "react";
-import ICard from "../../interfaces/ICard";
+import ICard from "../../Interfaces/ICard";
 const Card: React.FunctionComponent<ICard> = ({key, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate}) => {
   return (
     <div>
       <img src={image}></img>
       <p dangerouslySetInnerHTML={{__html: textExample}}></p>
-      <p>{textExampleTranslate}</p>
-      <p>{textMeaningTranslate}</p>
-      <p>{textMeaning}</p>
-      <p>{transcription}</p>
-      <p>{word}</p>
-      <p>{wordTranslate}</p>
+      <p dangerouslySetInnerHTML={{__html: textExampleTranslate}}></p>
+      <p dangerouslySetInnerHTML={{__html: textMeaningTranslate}}></p>
+      <p dangerouslySetInnerHTML={{__html: textMeaning}}></p>
+      <p dangerouslySetInnerHTML={{__html: transcription}}></p>
+      <p dangerouslySetInnerHTML={{__html: word}}></p>
+      <p dangerouslySetInnerHTML={{__html: wordTranslate}}></p>
     </div>
   )
 }
