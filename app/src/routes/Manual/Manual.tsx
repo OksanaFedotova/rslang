@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import  { useEffect, useState } from 'react';
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
-import IWord from "../../interfaces/IWord";
+import IWord from "../../Interfaces/IWord";
 
 const initialValue: IWord[] | [] = [];
 

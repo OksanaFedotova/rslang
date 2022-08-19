@@ -1,5 +1,5 @@
 import React from "react";
-import ICard from "../../interfaces/ICard";
+import ICard from "../../Interfaces/ICard";
 const Card: React.FunctionComponent<ICard> = ({key, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate}) => {
   return (
     <div>
