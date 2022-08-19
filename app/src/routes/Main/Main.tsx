@@ -2,22 +2,28 @@ import React from "react";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router";
 
 
 const HomePage = () => {
-   const navigator = useNavigate();
-    const handleClickButton = () => {
-     navigator('/manual');
-    };
+  
+  const navigator = useNavigate();
+  const handleClickButton = () => {
+    navigator('/team');
+  };
+
     return (
     <>
-    <Header title='RSLang'/>
-    <Layout title='Выучить английский легко!' content="Лучшие методики изучения языка">
-        <button onClick={handleClickButton}>Учебник</button>
+    <Header/>
+    <Layout title=''>
       <div>
-        <p>Мини игры</p>
+        <p>RS-lang - приложение для эффективного изучения языка!</p>
       </div>
+        <div>
+        <p>Получай новые знания, где угодно и когда угодно!</p>
+      </div>
+       <Button title="Наша команда" handleClick={handleClickButton}/>
     </Layout>
     <Footer/>
     </>
