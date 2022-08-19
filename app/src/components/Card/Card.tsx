@@ -3,7 +3,7 @@ import ICard from "../../Interfaces/ICard";
 const Card: React.FunctionComponent<ICard> = ({key, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate}) => {
   return (
     <div>
-      <img src={image}></img>
+      <img src={image}/>
       <p dangerouslySetInnerHTML={{__html: textExample}}></p>
       <p dangerouslySetInnerHTML={{__html: textExampleTranslate}}></p>
       <p dangerouslySetInnerHTML={{__html: textMeaningTranslate}}></p>

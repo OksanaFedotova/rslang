@@ -17,7 +17,7 @@ const Header = () => {
            <p className='logo-text'>RSLang</p>
         </div>
         <Menu></Menu>
-        <Button title='Войти' handleClick={handleClickButton}></Button>
+        <Button title='Войти' handleClick={handleClickButton} className="header-button"></Button>
       </header>
     </div>
   )

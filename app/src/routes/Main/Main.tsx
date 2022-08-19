@@ -23,7 +23,7 @@ const HomePage = () => {
         <div>
         <p>Получай новые знания, где угодно и когда угодно!</p>
       </div>
-       <Button title="Наша команда" handleClick={handleClickButton}/>
+       <Button title="Наша команда" handleClick={handleClickButton} className="header-button"/>
     </Layout>
     <Footer/>
     </>
