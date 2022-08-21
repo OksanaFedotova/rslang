@@ -9,6 +9,8 @@ const Header = () => {
 
 const [modalActive, setModalActive] = React.useState<boolean | undefined>(false);
 
+const [modalActive, setModalActive] = React.useState<boolean | undefined>(false);
+
   return (
     <div>
       <header className='header'>
