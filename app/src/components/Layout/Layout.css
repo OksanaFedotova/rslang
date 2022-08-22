@@ -1,0 +1,8 @@
+.layout {
+  flex: 1 1 auto;
+  height: 75vh;
+  margin: 20px;
+}
+.layout > h3 {
+  margin-left: 5px;
+} 

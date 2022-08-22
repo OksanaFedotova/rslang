@@ -1,0 +1,32 @@
+.card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  background-color: rgb(211, 235, 247);
+  margin: 1em;
+  padding: 1em;
+  border-radius: 5px;
+}
+.card > div {
+  margin: 5px;
+}
+.card-img {
+   grid-area: 1 / 1 / 4 / 2;
+}
+.word {
+  font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+  }
+}

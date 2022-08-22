@@ -5,7 +5,7 @@ import './Menu.css';
 const MENU = [
     {
         title: 'Учебник',
-        to: '/manual'
+        to: '/textbook'
     },
     {
         title: 'Мини-игры',

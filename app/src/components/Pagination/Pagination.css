@@ -1,0 +1,23 @@
+.pagination-ul {
+  display: flex;
+  justify-content: center;
+}
+.pagination-ul li {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  width: 52px;
+  border-radius: 50%;
+  background-color: #ffff00;
+  margin: 10px;
+}
+.pagination-ul a {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: large;
+}
+

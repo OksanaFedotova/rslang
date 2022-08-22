@@ -1,16 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './routes/Main/Main';
-import Manual from './routes/Manual/Manual';
+import Textbook from './routes/Textbook/Textbook';
 import Team from './routes/Team/Team';
 import './App.css';
+import Page from './routes/Textbook/Page';
+
 
 function App() {
   return (
   <BrowserRouter>
     <Routes>
           <Route path="/" element={<HomePage/>}/>
-          <Route path="/manual" element={<Manual/>}/>
+          <Route path="/textbook" element={<Textbook/>}/>
+          <Route path={'textbook/group/:groupNumber/page/:pageNumber'} element={<Page/>}/>
           <Route path="/team" element={<Team/>}/>
      </Routes>
   </BrowserRouter>

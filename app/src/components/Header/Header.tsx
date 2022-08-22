@@ -9,10 +9,7 @@ const Header = () => {
 
 const [modalActive, setModalActive] = React.useState<boolean | undefined>(false);
 
-const [modalActive, setModalActive] = React.useState<boolean | undefined>(false);
-
   return (
-    <div>
       <header className='header'>
         <div className='header-logo'>
            <img className='logo' src={logo} alt={"logo"}/> 
@@ -26,7 +23,6 @@ const [modalActive, setModalActive] = React.useState<boolean | undefined>(false)
             </form>
           </AuthForm> 
       </header>
-    </div>
   )
 }
   export default Header;
