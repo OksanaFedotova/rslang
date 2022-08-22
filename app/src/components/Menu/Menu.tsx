@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment} from "react";
 import { NavLink } from 'react-router-dom';
 import './Menu.css';
 
@@ -21,7 +21,7 @@ const Menu = () => {
   return (
     <Fragment>
         <div className='menu'>
-          <ul className="menu-list">
+          <ul className='menu-list'>
               {
                   MENU.map(({title, to}, index) => (
                       <li className="list-item" key={index}>

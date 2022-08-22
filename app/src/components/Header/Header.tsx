@@ -1,5 +1,6 @@
 import React from 'react';
 import Menu from '../Menu/Menu';
+import Burger from '../Menu/Burger';
 import logo  from '../../assets/logo.png'
 import Button from '../Button/Button';
 import './Header.css';
@@ -18,6 +19,7 @@ const Header = () => {
         </div>
         <Menu></Menu>
         <Button title='Войти' handleClick={handleClickButton} className="header-button"></Button>
+        <Burger/>
       </header>
     </div>
   )
