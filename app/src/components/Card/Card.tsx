@@ -1,5 +1,6 @@
 import React from "react";
 import ICard from "../../Interfaces/ICard";
+import audioButton from "../../assets/audio.png";
 
 import './Card.css'
 
@@ -10,17 +11,31 @@ const Card: React.FunctionComponent<ICard> = ({image, textExample, textMeaning, 
       <div className="wrapper-word">
         <p className="word">{<b>{word}</b>} - {<i>{wordTranslate}</i>}</p>
         <p dangerouslySetInnerHTML={{__html: transcription}}/>
-        <audio controls src={audio}/>
+        <img
+          src={audioButton}
+          className="audio-control"
+          title="audio"
+          onClick={() => {
+            const audioWord = new Audio(audio);
+            const audioMean = new Audio(audioMeaning);
+            const audioEx = new Audio(audioExample);
+            audioWord.play();
+            audioWord.addEventListener('ended', () => {
+              audioMean.play();
+            })
+            audioMean.addEventListener('ended', () => {
+              audioEx.play();
+            })
+          }}
+        />
       </div>
       <div className="wrapper-example">
         <p dangerouslySetInnerHTML={{__html: textExample}}/>
         <p dangerouslySetInnerHTML={{__html: textExampleTranslate}}/>
-        <audio controls src={audioExample}/>
       </div>
       <div className="wrapper-meaning">
         <p dangerouslySetInnerHTML={{__html: textMeaning}}/>
         <p dangerouslySetInnerHTML={{__html: textMeaningTranslate}}/>
-        <audio controls src={audioMeaning}/>
       </div>
     </div>
   )

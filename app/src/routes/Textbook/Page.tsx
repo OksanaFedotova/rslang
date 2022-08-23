@@ -1,7 +1,6 @@
 
 import React, { Fragment, useEffect, useState  } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -9,6 +8,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import IWord from "../../Interfaces/IWord";
+import TextbookNav from "./TextbookNav";
 import Pagination from "../../components/Pagination/Pagination";
 
 
@@ -16,17 +16,34 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
+type textBookProps = {
+  className: string,
+  handleClick: (() => void) | undefined
+}
+const initialTextbookNav: textBookProps = {
+    className: "not-active",
+    handleClick: undefined
+  }
+
 const Page = () => {
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
-  const [words, setWords] = useState(initialValue)
+  const [words, setWords] = useState(initialValue);
+  const [isActive, setActive] = useState(initialTextbookNav);
   useEffect(() => {
     getWords(group, page, res => setWords(res))
-  }, [])
-  const navigator = useNavigate();
+  }, []);
+
   const handleClickButton = () => {
-    navigator('/textbook');
+    if (isActive.className === "not-active") {
+      setActive({
+        className: 'active',
+        handleClick: () => useEffect(() => {getWords(group, page, res => setWords(res))}, [])
+      })
+    } else {
+      setActive(initialTextbookNav)
+    }
   };
    return (
     <Fragment>
@@ -35,9 +52,13 @@ const Page = () => {
          <div className="button-container">
            <Button
              className="textbook-button"
-             title="Электронный учебник"
+             title="Выберите раздел учебника"
              handleClick={handleClickButton} />
          </div>
+         <TextbookNav
+            className={isActive.className}
+            handleClick={isActive.handleClick}
+         />
          <div className="cards">
            {words.map((word) => {
              return <Card
@@ -53,7 +74,7 @@ const Page = () => {
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
                audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`} />;
-           }
+            }
            )}
          </div>
        </div>

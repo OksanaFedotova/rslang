@@ -1,7 +1,7 @@
 .card {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 0.5fr, 1.5fr);
   background-color: rgb(211, 235, 247);
   margin: 1em;
   padding: 1em;
@@ -16,7 +16,12 @@
 .word {
   font-size: 20px;
 }
-
+.audio-control {
+  width: 40px;
+  height: 40px;
+  margin: 3px;
+  cursor: pointer;
+}
 @media (max-width: 900px) {
   .card {
     display: grid;
