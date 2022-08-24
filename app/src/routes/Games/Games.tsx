@@ -2,17 +2,25 @@ import React from "react";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
+import './Games.css';
+import sprintGamePic from "../../assets/sprintGamePic.jpg";
+import audioGamePic from "../../assets/audioGamePic.jpg";
 
 const Games = () => {
   return  (
      <>
       <Header/>
-      <Layout>
-        <div className="sprint">
+      <Layout title="Выберите игру">
+        <div></div>
+        <div className="games-page-wrapper">
+        <div className="sprint game-block">
+          <img src={sprintGamePic} alt={"sprint-game-image"} className="game-image"/>
           Спринт
         </div>
-        <div className="audio-challenge">
+        <div className="audio-challenge game-block">
+        <img src={audioGamePic} alt={"audio-game-image"} className="game-image"/>
           Аудио вызов
+        </div>
         </div>
       </Layout>
       <Footer/>
