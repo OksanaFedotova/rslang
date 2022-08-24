@@ -1,9 +1,9 @@
 .menu-list {
     display: flex;
     flex-direction: row;
-    column-gap: 70px;
+    column-gap: 5vw;
     list-style: none;
-    margin-right: 200px;
+    margin-right: 14vw;
 }
 
 .nav-link {

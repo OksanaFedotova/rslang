@@ -66,7 +66,7 @@ const Page = () => {
             handleClick={showGames}
           />
           {isMenuGames && 
-            <ul>
+            <ul className="page__menu-games">
               <Link
                 key={'link-sprint'}
                 to={'../games/sprint'}
