@@ -20,9 +20,7 @@ const navigator = useNavigate();
         <Menu></Menu>
         <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>
         <AuthForm active={modalActive} setActive={setModalActive}>
-            <form className="input-form" action="">
                 <Validation/>
-            </form>
           </AuthForm> 
       </header>
   )
