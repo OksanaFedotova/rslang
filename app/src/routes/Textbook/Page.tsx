@@ -1,6 +1,7 @@
 
 import React, { Fragment, useEffect, useState  } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams} from "react-router";
+import { Link } from "react-router-dom";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -16,49 +17,71 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
-type textBookProps = {
-  className: string,
-  handleClick: (() => void) | undefined
-}
-const initialTextbookNav: textBookProps = {
-    className: "not-active",
-    handleClick: undefined
-  }
+// type textBookProps = {
+//   className: string,
+//   handleClick: (() => void) | undefined
+// }
+// const initialTextbookNav: textBookProps = {
+//     className: "not-active",
+//     handleClick: undefined
+//   }
 
 const Page = () => {
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
+
   const [words, setWords] = useState(initialValue);
-  const [isActive, setActive] = useState(initialTextbookNav);
+  const [isActive, setActive] = useState(false);
+  const [isMenuGames, setMenuGames] = useState(false);
+
   useEffect(() => {
     getWords(group, page, res => setWords(res))
   }, []);
 
   const handleClickButton = () => {
-    if (isActive.className === "not-active") {
-      setActive({
-        className: 'active',
-        handleClick: () => useEffect(() => {getWords(group, page, res => setWords(res))}, [])
-      })
-    } else {
-      setActive(initialTextbookNav)
-    }
+    setActive(!isActive)
   };
+  const showGames = () => {
+    setMenuGames(!isMenuGames)
+  }
    return (
     <Fragment>
        <Header />
        <div className="page">
          <div className="button-container">
            <Button
-             className="textbook-button"
+             className="button textbook-button"
              title="Выберите раздел учебника"
              handleClick={handleClickButton} />
-         </div>
-         <TextbookNav
-            className={isActive.className}
-            handleClick={isActive.handleClick}
-         />
+          {
+            isActive && <TextbookNav
+              handleClick={() => 
+                useEffect(() => {getWords(group, page, res => setWords(res))}, [])
+              }/> 
+          }
+          <Button
+            className="button games-button"
+            title="Мини игры"
+            handleClick={showGames}
+          />
+          {isMenuGames && 
+            <ul>
+              <Link
+                key={'link-sprint'}
+                to={'../games/sprint'}
+              >
+                Спринт
+              </Link>
+              <Link
+                key={'link-audio-challenge'}
+                to={'../games/audio-challenge'} 
+              >
+                Аудио-вызов
+              </Link>
+            </ul>
+          }
+        </div>
          <div className="cards">
            {words.map((word) => {
              return <Card
