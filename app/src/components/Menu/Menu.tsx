@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment} from "react";
 import { NavLink } from 'react-router-dom';
 import './Menu.css';
 
@@ -17,11 +17,16 @@ const MENU = [
     },
 ]
 
-const Menu = () => {
+interface IMenu {
+    active: boolean,
+    setActive: (active: boolean) => void,
+}
+
+const Menu: React.FunctionComponent<IMenu> = ({active}) => {
   return (
     <Fragment>
         <div className='menu'>
-          <ul className="menu-list">
+          <ul className={active ? 'menu-list active' : 'menu-list'}>
               {
                   MENU.map(({title, to}, index) => (
                       <li className="list-item" key={index}>
