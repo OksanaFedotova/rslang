@@ -1,0 +1,26 @@
+.burger-block {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 35px;
+    left: 20px;
+    display: none;
+    justify-content: space-around;
+    flex-flow: column nowrap;
+    z-index: 3;
+    transition: all .5s linear;
+}
+
+.burger-line {
+    width: 40px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+@media (max-width: 850px) {
+    .burger-block {
+        display: flex;
+        transition: .3s;
+    }
+}
