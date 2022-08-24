@@ -5,12 +5,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 110px;
+    min-height: 11vh;
 }
 
 .logo {
     width: 70px;
-    height: auto;
+    height: 10vh;
     cursor: pointer;
 }
 

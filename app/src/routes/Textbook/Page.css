@@ -28,3 +28,18 @@
   background-color: darkorange;
   transition: .5s;
 }
+.page__menu-games {
+  padding: 1vw;
+  text-align: center;
+}
+.page__menu-games > * {
+  display: flex;
+  width: 200px;
+  height: 40px;
+  text-decoration: none;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(211, 235, 247);
+  color: #000;
+  border-radius: 5px;
+}
