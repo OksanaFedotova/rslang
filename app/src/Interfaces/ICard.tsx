@@ -8,5 +8,8 @@ interface ICard {
   transcription: string;
   word: string;
   wordTranslate: string;
+  audio: string;
+  audioExample: string;
+  audioMeaning: string;
 }
 export default ICard;

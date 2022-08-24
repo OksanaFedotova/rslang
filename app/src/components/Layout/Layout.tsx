@@ -1,5 +1,5 @@
 import React from 'react';
-//import { useNavigate } from 'react-router-dom';
+import './Layout.css';
 
 interface ILayout {
   title?: string;
@@ -8,14 +8,10 @@ interface ILayout {
 
 const Layout: React.FunctionComponent<ILayout> = ({title, children}) => {
     return (
-      <>
-      <article>
-        <div>
-          { title? <h3>{title}</h3>: null }
-        </div>
-      </article>
+      <div className='layout'>
+        { title? <h3>{title}</h3>: null }
       <>{children}</>
-      </>
+      </div>
     )
   }
  

@@ -1,0 +1,19 @@
+.menu-list {
+    display: flex;
+    flex-direction: row;
+    column-gap: 70px;
+    list-style: none;
+    margin-right: 200px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 22px;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+    color: #ffff00;
+    transition: .5s;
+}
