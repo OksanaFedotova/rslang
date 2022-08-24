@@ -11,6 +11,13 @@
     align-items: center;
     justify-content: flex-start;
     font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.game-block:hover {
+    border: 1px #a6c54b solid;
+    border-radius: 25px;
+    transition: .5s;
 }
 
 .game-image {
