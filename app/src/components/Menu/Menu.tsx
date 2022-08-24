@@ -5,7 +5,7 @@ import './Menu.css';
 const MENU = [
     {
         title: 'Учебник',
-        to: '/manual'
+        to: '/textbook'
     },
     {
         title: 'Мини-игры',
@@ -17,11 +17,16 @@ const MENU = [
     },
 ]
 
-const Menu = () => {
+interface IMenu {
+    active: boolean,
+    setActive: (active: boolean) => void,
+}
+
+const Menu: React.FunctionComponent<IMenu> = ({active}) => {
   return (
     <Fragment>
         <div className='menu'>
-          <ul className='menu-list'>
+          <ul className={active ? 'menu-list active' : 'menu-list'}>
               {
                   MENU.map(({title, to}, index) => (
                       <li className="list-item" key={index}>

@@ -1,7 +1,7 @@
 .burger-block {
     width: 40px;
     height: 40px;
-    position: fixed;
+    position: absolute;
     top: 35px;
     left: 20px;
     display: none;
