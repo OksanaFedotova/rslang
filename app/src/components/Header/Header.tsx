@@ -21,9 +21,7 @@ const [modalActive, setModalActive] = React.useState<boolean | undefined>(false)
         <Menu></Menu>
         <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>
         <AuthForm active={modalActive} setActive={setModalActive}>
-            <form className="input-form" action="">
                 <Validation/>
-            </form>
           </AuthForm> 
       </header>
     </div>
