@@ -1,6 +1,6 @@
 .layout {
   flex: 1 1 auto;
-  height: calc(100vh - 250px);
+  height: 79vh;
   margin: 20px;
 }
 .layout > h3 {

@@ -1,10 +1,11 @@
 .main-page {
     padding: 50px 20px;
     display: flex;
+    flex: 1 0 auto;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: calc(100vh - 210px);
+    height: 79vh;
     font-size: 1.5rem;
     box-sizing: border-box;
     text-align: justify;
@@ -33,6 +34,7 @@
         flex-direction: column;
         row-gap: 30px;
         text-align: center;
+        height: auto;
     }
 
     .main-left-block {

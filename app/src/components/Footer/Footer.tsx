@@ -3,9 +3,7 @@ import './Footer.css';
 
 const Footer = () => {
   return (
-    <div>
-      <footer>
-          <div className="footer">
+      <footer className="footer">
              <div>
               <a className='rs-link' href='https://rs.school/js/'>
                 <img src={'https://rs.school/images/rs_school_js.svg'} width='70px'></img>
@@ -19,9 +17,7 @@ const Footer = () => {
              <div>
               <p>2022</p>
              </div>
-            </div>
         </footer>
-    </div>
   )
 }
 

@@ -1,3 +1,13 @@
+.textbook {
+  display: flex;
+  flex-direction: column;
+}
+.textbook-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10vh;
+}
 .groups-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -11,6 +21,14 @@
   margin: 5px;
   text-decoration: none;
   color: #000;
+  text-align: center;
+  padding: 2vh;
+}
+.textbook-image {
+  width: 45%;
+}
+.textbook-image > img {
+  width: 90%;
 }
 .A1 {
   background-color: rgb(207, 246, 148);

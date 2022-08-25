@@ -27,7 +27,7 @@ const HomePage = () => {
       </div>
        <Button title="Наша команда" handleClick={handleClickButton} className="header-button"/>
        </div>
-       <img className="main-img" src={homePageImage}/>
+       <img className="main-img" src={homePageImage} alt={"main-img"}/>
        </div>
     <Footer/>
     </>

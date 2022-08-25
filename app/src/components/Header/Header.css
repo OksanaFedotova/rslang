@@ -5,12 +5,16 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 110px;
+    min-height: 11vh;
+}
+
+.header-rightblock {
+    width: 280px;
 }
 
 .logo {
     width: 70px;
-    height: auto;
+    height: 10vh;
     cursor: pointer;
 }
 
@@ -24,4 +28,15 @@
     color: #fff;
     letter-spacing: 1px;
     cursor: pointer;
+}
+
+@media (max-width: 850px) {
+    .logo {
+        margin-left: 90px;
+        transition: .3s;
+    }
+    .logo-text {
+        margin-left: 90px;
+        transition: .3s;
+    }
 }
