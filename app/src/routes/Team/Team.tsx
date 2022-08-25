@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import Layout from "../../components/Layout/Layout";
 import './Team.css';
 import testPicture from "../../assets/testPicture.jpg";
 import githubIcon from "../../assets/githubIcon.svg";
@@ -10,7 +9,6 @@ const Team = () => {
   return (
     <Fragment>
     <Header/>
-    <Layout title="Наша команда">
       <div>
       </div>
       <div className="team-wrapper">
@@ -36,7 +34,6 @@ const Team = () => {
           <a target="blank" rel="noreferer" href='https://github.com/daryadak' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
       </div>
-  </Layout>
   <Footer/>
   </Fragment>
   )
