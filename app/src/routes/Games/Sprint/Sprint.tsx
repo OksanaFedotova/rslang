@@ -8,59 +8,37 @@ import './Sprint.css';
 import IWord from "../../../Interfaces/IWord";
 import getWords from "../../../services/request";
 
-
+const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>, callback2: React.Dispatch<React.SetStateAction<any>>) => {
+  const randomIndex = Math.floor(Math.random() * words.length);
+  const word = words[randomIndex];
+  const englishWord = word.word;
+  const isItCorrectCombination = Math.floor(Math.random() * 2);
+  const russianWord = isItCorrectCombination ? word.wordTranslate : words[Math.floor(Math.random() * words.length)].wordTranslate;
+  callback([englishWord, russianWord]);
+  isItCorrectCombination ? callback2("yes") : callback2("no");
+}
 
 const Sprint = () => {
  
   const initialValue: IWord[] | [] = [];
-  const arrayEnWords: string[] = [];
-  const arrayRuWords: string[] = [];
+  const arrayWords: string[] = [];
 
+  const {groupNumber, pageNumber} = useParams();
+  const group = groupNumber? +groupNumber: 0;
+  const page = pageNumber? +pageNumber: 0
 
-    const {groupNumber, pageNumber} = useParams();
-    const group = groupNumber? +groupNumber: 0;
-    const page = pageNumber? +pageNumber: 0
-  
-    const [words, setWords] = useState(initialValue);
-    const [count, setCount] = useState(0);
-    const [isGameActive, setGameActive] = useState(false);
+  const [words, setWords] = useState(initialValue);
+  const [count, setCount] = useState(0);
+  const [isGameActive, setGameActive] = useState(false);
+  const [correctAnswer, setCorrectAnswer] = useState('');
+  const [variants, setVariants] = useState(arrayWords);
 
-  
-    useEffect(() => {
-      getWords(group, page, res => setWords(res))
-    }, []);
-
-    words.forEach((word) => {
-      arrayEnWords.push(word.word);
-      arrayRuWords.push(word.wordTranslate);
-    });
-
-
-    const randomIndexEn = Math.floor(Math.random() * words.length);
-    const randomIndexRu = Math.floor(Math.random() * words.length);
-
-
-    const checkAnswer = (answer: boolean) => {
-      let currentCount = count;
-      words.forEach((word) => {
-        if(word.word == arrayEnWords[randomIndexEn] && (word.wordTranslate == arrayRuWords[randomIndexRu])) {
-          answer == true;
-          currentCount++;
-          setCount(currentCount);
-        }
+  useEffect(() => {
+    getWords(group, page, res => { 
+       setWords(res);
+       getVariants(res, setVariants, setCorrectAnswer)
     })
-  }
-  const checkWrongAnswer = (answer: boolean) => {
-    let currentCount = count;
-      words.forEach((word) => {
-        if(word.word !== arrayEnWords[randomIndexEn] || (word.wordTranslate !== arrayRuWords[randomIndexRu])) {
-          answer == false;
-          currentCount++;
-          setCount(currentCount);
-        } 
-  })
-}
-
+  }, []);
 
   return  (
      <>
@@ -70,17 +48,29 @@ const Sprint = () => {
           <p>В этой игре ты сможешь проверить свои знания на время.</p>
           <p><b>Цель:</b> дать максимальное количество правильных ответов за 30 секунд.</p>
           </div>
-          <Timer onClick={() => setGameActive(!false)}/>
+          <Timer 
+            setGame={() => {
+              setGameActive(!isGameActive);
+              getVariants(words, setVariants, setCorrectAnswer)
+            }}
+
+          />
           <div className="guess-word-block">
-            <p className="english-word">{arrayEnWords[randomIndexEn]}</p>
-            <p className="russian-word">{arrayRuWords[randomIndexRu]}</p>
+            { isGameActive &&   <>
+          <p className="english-word">{variants[0]}</p>
+          <p className="russian-word">{variants[1]}</p>
+        </>}
               <div className="game-buttons">
                 <button className="yes-button"
-                onClick={() => checkAnswer(true)}
-                >Да</button>
+                  onClick={() => {
+                    if (correctAnswer === 'yes') console.log('верно'); //написать логику
+                    getVariants(words, setVariants, setCorrectAnswer);
+                }}>Да</button>
                 <button className="no-button"
-                onClick={() => checkWrongAnswer(false)}
-                >Нет</button>
+                  onClick={() => {
+                    if (correctAnswer === 'no') console.log('верно'); //написать логику
+                    getVariants(words, setVariants, setCorrectAnswer);
+                }}>Нет</button>
               </div>
               <div className="points">Количество очков:{count}</div>
          </div>
