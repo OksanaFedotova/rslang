@@ -17,15 +17,6 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
-// type textBookProps = {
-//   className: string,
-//   handleClick: (() => void) | undefined
-// }
-// const initialTextbookNav: textBookProps = {
-//     className: "not-active",
-//     handleClick: undefined
-//   }
-
 const Page = () => {
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;

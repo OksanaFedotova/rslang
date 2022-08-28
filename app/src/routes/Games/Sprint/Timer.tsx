@@ -3,11 +3,12 @@ import { Fragment } from "react";
 import './Sprint.css';
 
 interface ITimer {
-  onClick: () => void;
+ // onClick: () => void;
+  setGame: () => void;
 }
 
 
-const Timer: React.FC<ITimer> = () => {
+const Timer: React.FC<ITimer> = ({setGame}) => {
     const [ seconds, setSeconds ] = useState(30);
     const [ timerActive, setTimerActive ] = useState(false);
 
@@ -21,10 +22,14 @@ const Timer: React.FC<ITimer> = () => {
       }, [ seconds, timerActive ]);
 
 return (
-    <div className="timer-field">
+    <div className="timer-field"
+      onClick={setGame}
+    >
       {seconds
         ? <Fragment>
-            <button className="header-button game-button" onClick={() => setTimerActive(!timerActive)}>
+            <button className="header-button game-button" 
+              onClick={() => setTimerActive(!timerActive)}
+            >
               {timerActive ? 'Остановить игру' : 'Начать игру'}
             </button>
             <div className="clock-block">{seconds}</div>

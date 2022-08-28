@@ -1,7 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
+import { Dispatch, SetStateAction } from "react";
+import RegistrationForm from "./RegistrationForm/RegistrationForm";
+import AuthForm from "./Auth-form/Auth-form";
+import { useState } from "react";
+import './NavForm.css';
 
-const Validation = () => {
-    const [email, setEmail] = useState('')
+
+interface INavForm {
+    active: boolean;
+    setActive:Dispatch<SetStateAction<boolean | undefined>>;
+}
+
+const NavForm: React.FunctionComponent<INavForm> = ({setActive}) => {
+  const [formState, setFormState] = useState('auth');
+
+   const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [emailDirty, setEmailDirty] = useState (false)
     const [passwordDirty, setPasswordDirty] = useState (false)
@@ -37,25 +50,34 @@ const Validation = () => {
                 break
         }
     }
-
-    return (
-        <div className="validation">
-            <form className="input-form">
-                <h1>Авторизация</h1>
-                
-                <input className="input-one" onChange={e=>emailHandler(e)} value ={email} onBlur = {e => blurHandler(e)} name="email" type="email" placeholder="Введите емейл..."/>
-                
-                <input className="input-one" onChange={e=>passwordHandler(e)} value={password} onBlur = {e => blurHandler(e)} name='password' type='password' placeholder="Введите пароль..."/>
-                <button className="btn-auth" type="submit">Вход</button>
-                {(emailDirty && emailError) && <div style = {{color: 'red', fontSize: 'small'}}>{emailError}</div>}
-                {(passwordError && passwordDirty) && <div style = {{color: 'red', fontSize: 'small'}}>{passwordError}</div>}
-            </form>
+  
+  return (
+    <>
+    <div className={ "auth-modal active"} onClick={() => setActive(false)}>
+      <div className="auth-modal__content active" onClick={e => e.stopPropagation()}>
+      { formState === 'auth' && <AuthForm 
+        email={email}
+        emailHandler={emailHandler}
+        emailDirty={emailDirty}
+        emailError={emailError}
+        password={password}
+        passwordHandler={passwordHandler}
+        passwordDirty={passwordDirty}
+        passwordError={passwordError}
+        blurHandler={blurHandler}
+      /> }
+      {
+        formState === 'register' &&
+        <RegistrationForm handleSubmit={(e) => console.log(e)}></RegistrationForm>
+      }
+           <button onClick={() => formState === 'auth' ? setFormState('register') : setFormState('auth')}>
+        {
+          formState === 'auth' ? `Регистрация` : `Вход`
+        }
+      </button>
+            </div>
         </div>
-    )
-
-
-
-
+    </>
+  )
 }
-
-export default Validation;
+export default NavForm;

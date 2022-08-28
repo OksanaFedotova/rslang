@@ -1,0 +1,72 @@
+.auth-modal {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0);
+
+}
+
+.auth-modal.active {
+  transform: scale(1);
+}
+
+.auth-modal__content {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: white;
+  height: 250px;
+  width: 400px;
+  transform: scale(0.5);
+  transition: 0.4s all;
+}
+
+.auth-modal__content.active {
+  transform: scale(1);
+}
+
+/* INPUTS AND FORM */
+
+.input-form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-one {
+  display: flex;
+  width: 200px;
+  height: 25px;
+  margin: 10px;
+  /* padding: 1%; */
+}
+
+.btn-auth {
+  margin: 10px;
+}
+
+input {
+  outline: none;
+}
+
+:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+:focus::-moz-placeholder {
+  color: transparent;
+}
+
+:focus:-moz-placeholder {
+  color: transparent;
+}
+
+:focus:-ms-input-placeholder {
+  color: transparent;
+}

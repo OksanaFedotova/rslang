@@ -20,7 +20,7 @@ const HomePage = () => {
       <div className="main-page">
         <div className="main-left-block">
         <div>
-        <p className="main-text"><h2 className="main-h2">RS-Lang</h2> - приложение для эффективного изучения английского языка!</p>
+        <h2 className="main-h2">RS-Lang</h2> <p className="main-text"> - приложение для эффективного изучения английского языка!</p>
       </div>
         <div>
         <p className="second-row-text">Получай новые знания, где угодно и когда угодно! Выбери игру или воспользуйся учебником и начни совершенствовать свои навыки прямо сейчас!</p>
