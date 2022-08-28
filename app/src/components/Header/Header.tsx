@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import Menu from '../Menu/Menu';
 import Burger from '../Menu/Burger';
 import NavForm from '../NavForm/NavForm';
@@ -8,10 +9,10 @@ import './Header.css';
 
 const Header = () => {
 
-
 const navigator = useNavigate();
 
 const [menuActive, setMenuActive] = useState(false);
+const [enterButton, setEnterButton] = React.useState<boolean | undefined>(true);
 const [modalActive, setModalActive] = React.useState<boolean | undefined>(false);
 
   return (
@@ -22,8 +23,14 @@ const [modalActive, setModalActive] = React.useState<boolean | undefined>(false)
            <p className='logo-text'>RSLang</p>
         </div>
         <Menu active={menuActive} setActive={setMenuActive}></Menu>
-         <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>
-       {modalActive && <NavForm active={modalActive} setActive={setModalActive}/>}
+        {enterButton && <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>}
+        {!enterButton && <NavLink className="nav-link" to={'/statistics'}> Моя статистика </NavLink>}
+        {modalActive && 
+        <NavForm 
+         active={modalActive} 
+         setActive={setModalActive}
+         updateEnter={() => setEnterButton(false)}
+         />}
       </header>
   )
 }
