@@ -22,9 +22,7 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
             const audioWord = words[randomizeAudio].audio;
             const audioWordText = words[randomizeAudio].word;
             callback([word, word1, word2, word3, audioWord, audioWordText]) 
-
-          }
-
+}
 
 
 function AudioChellengeCard(): JSX.Element {
@@ -43,9 +41,6 @@ function AudioChellengeCard(): JSX.Element {
 
 
         return (
-            <> <>{console.log(card)}
-            </>
-
             <div>
                 <Auchform key={""}
                     image={""}
@@ -74,12 +69,8 @@ function AudioChellengeCard(): JSX.Element {
                 }}><p className="next-button">Далее</p></div>
 
             </div>
-            </>
                         
         );
 }
-
-
-
 
 export default AudioChellengeCard;
