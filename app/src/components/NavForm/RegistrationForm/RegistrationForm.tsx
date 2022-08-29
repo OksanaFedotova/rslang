@@ -1,14 +1,16 @@
 import React, { Fragment } from 'react';
 import { useEffect, useState } from "react";
-import {postUser} from '../../../services/user'
+import {postUser} from '../../../services/user';
+
+import './RegistrationForm.css'
 
 interface IRegistration {
- // handleSubmit: (e: React.FormEvent<HTMLInputElement>) => void;
   updateState: () => void;
   updateEnter: () => void;
+  updateSwitchButton: () => void;
 }
 
-const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState, updateEnter}) => {
+const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState, updateEnter, updateSwitchButton}) => {
     const [registrationActive, setRegistrationActive] = useState(true);
     const [registrationError, setRegistrationError] = useState(false)
 
@@ -29,15 +31,17 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
           password: password
         }
         postUser(user, (res) => {
-          if (typeof res !== "number") {
+            if (res.status === 'failed') {
+            setRegistrationError(true);
+            setName('')
+            setEmail('');
+            setPassword('')
+            } else {
             setRegistrationActive(false);
-          } else {
-            setRegistrationError(true)
-          }
+            console.log(res);
+            updateSwitchButton();
+            }
         });
-        setName('')
-        setEmail('');
-        setPassword('');
     }
     const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       setName(e.target.value)
@@ -54,8 +58,8 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
 
     const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
-        if (e.target.value.length < 8 || e.target.value.length > 20) {
-            setPasswordError ('Пароль должен быть не меньше 8 и не больше 20 символов')
+        if (e.target.value.length < 8) {
+            setPasswordError ('Пароль должен быть не меньше 8 символов')
         } else {
             setPasswordError("");
         }
@@ -89,8 +93,8 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
         </form>
         }
         {!registrationActive && 
-          <div>
-            <p>{}</p>
+          <div className='registration-success'>
+            <p> Вы успешно зарегестрированы </p>
             <button onClick={() => {
               updateState();
               updateEnter();

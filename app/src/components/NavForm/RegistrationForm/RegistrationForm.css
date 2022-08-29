@@ -1,0 +1,11 @@
+.registration-success {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  width: 60%;
+  margin: 5rem;
+}
+.registration-success > * {
+  margin: 0.5rem;
+}
