@@ -1,0 +1,101 @@
+.game-description {
+    width: 50%;
+    border: 2px #a6c54b solid;
+    border-radius: 15px;
+    text-align: center;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.game-button {
+    margin-bottom: 20px;
+}
+
+.timer-field {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.clock-block {
+    border: 10px #ffff00 solid;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    line-height: 37px;
+    border-left-color: darkorange;
+    border-right-color: darkorange;
+}
+
+.guess-word-block {
+    margin: 25px auto;
+    width: 40%;
+    text-align: center;
+}
+
+.guess-word-block > p {
+    padding: 15px 0;
+}
+
+.english-word {
+    font-size: 2.5rem;
+    font-family: 'Merryweather', sans-serif;
+}
+
+.russian-word {
+    font-size: 1.6rem;
+}
+
+.game-buttons {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.yes-button {
+    width: 180px;
+    height: 50px;
+    background-color: rgb(27, 173, 27);
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.yes-button:hover {
+    background-color: rgb(21, 125, 21);
+    transition: .5s;
+}
+
+.no-button {
+    width: 180px;
+    height: 50px;
+    background-color: red;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.no-button:hover {
+    background-color: rgb(208, 12, 12);
+    transition: .5s;
+}
+
+.points {
+    margin-top: 50px;
+}
+
+@media (max-width: 640px) {
+    .game-description {
+        width: 90%;
+    }
+}

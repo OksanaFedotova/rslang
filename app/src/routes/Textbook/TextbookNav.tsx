@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import cn from 'classnames';
-
-// import './TextbookNav.css';
-
- const GROUPS = ["A1 Elementary", "A2 Pre-intermediate", "B1 Intermediate", "B2 Upper-intermediate", "C1 Advanced", "C2 Proficiency", "Difficult words"]
+let isAuth = false
+if (localStorage.user) {
+  isAuth = true;
+}
+console.log(isAuth)
+ const GROUPS = ["A1 Elementary", "A2 Pre-intermediate", "B1 Intermediate", "B2 Upper-intermediate", "C1 Advanced", "C2 Proficiency"]
 
  interface ITextbookNav {
   className?: string,
@@ -27,6 +29,11 @@ import cn from 'classnames';
       </Link>
       })
     }
+    {isAuth && <Link 
+      className={cn('group', 'Difficult')} 
+      to={'../statistics'}>
+        Difficult words
+      </Link>}
   </div>
   )
 }
