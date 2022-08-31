@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
-import { useEffect, useState } from "react";
-import {postUser} from '../../../services/user';
+import { useState } from "react";
+import {postUser, signIn} from '../../../services/user';
+import Input from '../Input';
+import { blurHandler, passwordHandler, emailHandler, nameHandler } from '../Handlers';
 
 import './RegistrationForm.css'
 
@@ -31,51 +33,21 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
           password: password
         }
         postUser(user, (res) => {
-            if (res.status === 'failed') {
+            if (res.error?.status === 'failed') {
             setRegistrationError(true);
             setName('')
             setEmail('');
             setPassword('')
             } else {
-            setRegistrationActive(false);
-            console.log(res);
-            updateSwitchButton();
+              signIn({email: email, password: password}, (res) => {
+                localStorage.setItem('user', JSON.stringify(res));
+                console.log(JSON.parse(localStorage.user));
+                setRegistrationActive(false);
+                updateSwitchButton();
+              });
             }
         });
     }
-    const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setName(e.target.value)
-    }
-    const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(String(e.target.value))) {
-          setEmailError('Некорректный емейл')
-        } else {
-          setEmailError("");
-        }
-    }
-
-    const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-        if (e.target.value.length < 8) {
-            setPasswordError ('Пароль должен быть не меньше 8 символов')
-        } else {
-            setPasswordError("");
-        }
-    }
-
-    const blurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-        switch (e.target.name) {
-            case 'email':
-                setEmailDirty(true)
-                break
-            case 'password':
-                setPasswordDirty(true)
-                break
-        }
-    }
-
     return (
       <Fragment>
         {registrationActive && 
@@ -83,9 +55,31 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
           className='input-form'
           onSubmit={handleSubmit}>
             <h3>Регистрация</h3>
-            <input className="input-one" onChange={e=>nameHandler(e)} value ={name} name="name" type="text" placeholder="Введите имя..."/>
-            <input className="input-one" onChange={e=>emailHandler(e)} value ={email} onBlur = {e => blurHandler(e)} name="email" type="email" placeholder="Введите емейл..."/>
-            <input className="input-one" onChange={e=>passwordHandler(e)} value={password} onBlur = {e => blurHandler(e)} name='password' type='password' placeholder="Введите пароль..."/>
+             <Input
+              className='input-one'
+              changeHandler={e=>nameHandler(e, setName)}
+              value ={name} 
+              name="name" type="text"
+              placeholder="Введите имя..."
+              />
+            <Input
+              className='input-one'
+              changeHandler={e=>emailHandler(e, setEmail, setEmailError)}
+              value={email}
+              blurHandler={e => blurHandler(e, setEmailDirty, setPasswordDirty)}
+              name="email"
+              type="email" 
+              placeholder="Введите емейл..."
+            />
+            <Input 
+              className='input-one'
+              changeHandler={e => passwordHandler(e, setPassword, setPasswordError)}
+              value={password}
+              blurHandler={e => blurHandler(e, setEmailDirty, setPasswordDirty)}
+              name='password'
+              type='password' 
+              placeholder="Введите пароль..."
+              />
             <button className="btn-auth" type="submit">Регистрация</button>
             {registrationError && <span style = {{color: 'red', fontSize: 'small'}}>Ошибка, попробуйте еще раз!</span>}
             {(emailDirty && emailError) && <div style = {{color: 'red', fontSize: 'small'}}>{emailError}</div>}

@@ -7,6 +7,11 @@ import NavForm from '../NavForm/NavForm';
 import logo  from '../../assets/logo.png'
 import './Header.css';
 
+let isAuth = false
+if (localStorage.user) {
+  isAuth = true;
+}
+
 const Header = () => {
 
 const navigator = useNavigate();
@@ -23,8 +28,9 @@ const [modalActive, setModalActive] = React.useState<boolean | undefined>(false)
            <p className='logo-text'>RSLang</p>
         </div>
         <Menu active={menuActive} setActive={setMenuActive}></Menu>
-        {enterButton && <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>}
-        {!enterButton && <NavLink className="nav-link" to={'/statistics'}> Моя статистика </NavLink>}
+        {/*состояние регистрации*/}
+        {(enterButton && !isAuth) && <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>}
+        {(!enterButton || isAuth) && <NavLink className="nav-link" to={'/statistics'}> Моя статистика </NavLink>}
         {modalActive && 
         <NavForm 
          active={modalActive} 

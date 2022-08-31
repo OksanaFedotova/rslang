@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import HomePage from './routes/Main/Main';
@@ -11,8 +12,12 @@ import Sprint from './routes/Games/Sprint/Sprint';
 import AudioChallenge from './routes/Games/AudioChallenge/AudioChallenge';
 
 import './App.css';
-
-
+//const isAuth
+// const isAuth = {path: '/', element: HomePage};
+// if (localStorage.getItem('user')) {
+//   isAuth.path = '/statistics';
+//   isAuth.element = Statistic;
+// }
 function App() {
   return (
   <BrowserRouter>
@@ -22,9 +27,10 @@ function App() {
           <Route path={'textbook/group/:groupNumber/page/:pageNumber'} element={<Page/>}/>
           <Route path="/team" element={<Team/>}/>
           <Route path="/games" element={<Games/>}/>
-          <Route path="/statistics" element={<Statistic/>}/>
           <Route path="/games/sprint" element={<Sprint/>}/>
           <Route path="/games/audio-challenge" element={<AudioChallenge/>}/>
+          {/*<Route path={isAuth.path} element={<isAuth.element/>}/>*/}
+          <Route path="/statistics" element={<Statistic/>}/>
      </Routes>
   </BrowserRouter>
   );

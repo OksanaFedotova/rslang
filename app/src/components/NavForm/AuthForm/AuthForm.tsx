@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Input from "../Input";
+import { blurHandler, passwordHandler, emailHandler } from "../Handlers";
 import { signIn } from "../../../services/user";
 
 interface IAuthForm {
@@ -24,6 +26,8 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
       }
       signIn(user, (res) => {
         console.log(res);
+        localStorage.setItem('user', JSON.stringify(res));
+        console.log(JSON.parse(localStorage.user));
         updateState();
         updateEnter();
       }, 
@@ -33,45 +37,30 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
           setPassword('');
       });
     }
-
-    const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value)
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!re.test(String(e.target.value))) {
-            setEmailError('Некорректный емейл')
-        } else {
-            setEmailError("");
-        }
-    }
-
-    const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value)
-        if (e.target.value.length < 8) {
-            setPasswordError ('Пароль должен быть не меньше 8 символов')
-        } else {
-            setPasswordError("");
-        }
-    }
-
-    const blurHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-        switch (e.target.name) {
-            case 'email':
-                setEmailDirty(true)
-                break
-            case 'password':
-                setPasswordDirty(true)
-                break
-        }
-    }
-
     return (
     <>
       <div className="form">
         <form className="input-form"
             onSubmit={handleSubmit}>
             <h3>Авторизация</h3>
-            <input className="input-one" onChange={e=>emailHandler(e)} value ={email} onBlur = {e => blurHandler(e)} name="email" type="email" placeholder="Введите емейл..."/>
-            <input className="input-one" onChange={e=>passwordHandler(e)} value={password} onBlur = {e => blurHandler(e)} name='password' type='password' placeholder="Введите пароль..."/>
+              <Input
+              className='input-one'
+              changeHandler={e=>emailHandler(e, setEmail, setEmailError)}
+              value={email}
+              blurHandler={e => blurHandler(e, setEmailDirty, setPasswordDirty)}
+              name="email"
+              type="email" 
+              placeholder="Введите емейл..."
+            />
+            <Input 
+              className='input-one'
+              changeHandler={e => passwordHandler(e, setPassword, setPasswordError)}
+              value={password}
+              blurHandler={e => blurHandler(e, setEmailDirty, setPasswordDirty)}
+              name='password'
+              type='password' 
+              placeholder="Введите пароль..."
+              />
             <button className="btn-auth" type="submit">Вход</button>
             {authError && <span style = {{color: 'red', fontSize: 'small'}}>Ошибка, попробуйте еще раз!</span>}
             {(emailDirty && emailError) && <div style = {{color: 'red', fontSize: 'small'}}>{emailError}</div>}
@@ -83,3 +72,4 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
 }
 
 export default AuthForm;
+ 

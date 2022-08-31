@@ -17,7 +17,15 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
+const user = {};
+if (localStorage.user) {
+  Object.assign(user, JSON.parse(localStorage.user));
+  console.log(user)
+}
+
+const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
 const Page = () => {
+
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
@@ -77,6 +85,7 @@ const Page = () => {
            {words.map((word) => {
              return <Card
                key={word.id.toString()}
+               wordId={word.id.toString()}
                image={`https://rslang-b.herokuapp.com/${word.image}`}
                word={word.word}
                wordTranslate={word.wordTranslate}
@@ -87,7 +96,10 @@ const Page = () => {
                textMeaning={word.textMeaning}
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
-               audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`} />;
+               audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`}
+               user={user}
+               wordDifficulty={test}
+               />;
             }
            )}
          </div>
