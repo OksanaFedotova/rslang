@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
@@ -9,18 +10,14 @@ import Card from "../../components/Card/Card";
 import IWord from "../../Interfaces/IWord";
 
 import { getAllUserWords } from "../../services/user"
+import { setUser, setUserAuth } from "../../store/userSlice";
 
-
-let isAuth = false;
-const user = {};
-if (localStorage.user) {
-  isAuth = true;
-  Object.assign(user, JSON.parse(localStorage.user));
-  console.log(user)
-}
 const initialValue: IWord[] | [] = [];
 
 const Statisctic = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state: any) => state.user.isAuth);
+  const user = useSelector((state: any) => state.user.data);
 
   const navigator = useNavigate();
   const [userWords, setUserWords] = useState(initialValue);
@@ -28,6 +25,8 @@ const Statisctic = () => {
   useEffect(() => getAllUserWords(user, res => setUserWords(res)), []);
 
   const handleClick = () => {
+    dispatch(setUser(null));
+    dispatch(setUserAuth(false));
     localStorage.removeItem('user');
     navigator('..');
   }

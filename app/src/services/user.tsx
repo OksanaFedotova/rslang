@@ -1,3 +1,5 @@
+import { Dispatch } from "@reduxjs/toolkit";
+
 //import IWord from "../Interfaces/IWord"
 interface IUser {
   name?: string,
@@ -5,8 +7,9 @@ interface IUser {
   password?: string;
   error?: {status: 'failed'};
 }
-interface IUserWord {
+interface IUserExist {
   token?: string,
+  refreshToken?: string,
   userId?: string, 
 }
 const postUser = (user: IUser, callback: (res: IUser) => void) => {
@@ -24,7 +27,6 @@ const postUser = (user: IUser, callback: (res: IUser) => void) => {
    };
 
 const signIn = (user: IUser, callback: (res: IUser) => void, callback2?: (error: Error) => void)=> {
-  console.log(user)
      fetch('https://rslang-b.herokuapp.com/signin', {
        method: 'POST',
        headers: {
@@ -37,7 +39,27 @@ const signIn = (user: IUser, callback: (res: IUser) => void, callback2?: (error:
      .then((res) => callback(res))
      .catch((error) =>{ if(callback2) callback2(error)})
    };
-const getAllUserWords = (user: IUserWord, callback: React.Dispatch<React.SetStateAction<any>>) => {
+
+const refreshToken = async (user: IUserExist) => {
+  console.log(user.userId, user.token)
+  return await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/tokens`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${user.token}`,
+      'Accept': 'application/json',
+    }
+  })
+  .then((res) => {
+    if(!res.ok) {
+      return res.status
+    } else {
+      return res.json();
+    }
+  })
+  .catch((error) => console.error(error))
+}
+
+const getAllUserWords = (user: IUserExist, callback: React.Dispatch<React.SetStateAction<any>>) => {
   console.log(user.userId, user.token)
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words}`, {
     method: 'GET',
@@ -51,8 +73,7 @@ const getAllUserWords = (user: IUserWord, callback: React.Dispatch<React.SetStat
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
-const createUserWord = (user: IUserWord, wordId: string, wordDifficulty: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<any>>) => {
-  console.log('user.id:', user.userId, 'wordId:', wordId, 'token:', user.token, wordDifficulty)
+const createUserWord = (user: IUserExist, wordId: string, wordDifficulty: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<any>>) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'POST',
     //withCredentials: true, пришлось отключить, так как ts дает ошибку
@@ -63,12 +84,18 @@ const createUserWord = (user: IUserWord, wordId: string, wordDifficulty: Record<
     },
     body: JSON.stringify(wordDifficulty)
   })
-  .then((res) => res.json())
+  .then((res) => {
+     if(!res.ok) {
+      console.log(res);
+    } else {
+      return res.json();
+    }
+  })
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
 
-const getUserWord = (user: IUserWord, id: string, callback: React.Dispatch<React.SetStateAction<any>>) => {
+const getUserWord = (user: IUserExist, id: string, callback: React.Dispatch<React.SetStateAction<any>>) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${id}`, {
     method: 'GET',
     //withCredentials: true,
@@ -82,4 +109,4 @@ const getUserWord = (user: IUserWord, id: string, callback: React.Dispatch<React
   .catch((error) => console.error(error))
 };
 
-export {postUser, signIn, getAllUserWords, createUserWord, getUserWord}
+export {postUser, signIn, getAllUserWords, createUserWord, getUserWord, refreshToken}

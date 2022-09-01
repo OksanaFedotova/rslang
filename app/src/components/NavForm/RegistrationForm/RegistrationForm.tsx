@@ -1,8 +1,12 @@
 import React, { Fragment } from 'react';
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { setUser, setUserAuth } from '../../../store/userSlice';
+
+
 import {postUser, signIn} from '../../../services/user';
-import Input from '../Input';
 import { blurHandler, passwordHandler, emailHandler, nameHandler } from '../Handlers';
+import Input from '../Input';
 
 import './RegistrationForm.css'
 
@@ -13,6 +17,8 @@ interface IRegistration {
 }
 
 const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState, updateEnter, updateSwitchButton}) => {
+    const dispatch = useDispatch()
+
     const [registrationActive, setRegistrationActive] = useState(true);
     const [registrationError, setRegistrationError] = useState(false)
 
@@ -41,7 +47,11 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
             } else {
               signIn({email: email, password: password}, (res) => {
                 localStorage.setItem('user', JSON.stringify(res));
-                console.log(JSON.parse(localStorage.user));
+                //добавление пользователя в редакс
+                localStorage.setItem('user', JSON.stringify(res));
+                dispatch(setUser(JSON.parse(localStorage.user)));
+                dispatch(setUserAuth(true));
+
                 setRegistrationActive(false);
                 updateSwitchButton();
               });

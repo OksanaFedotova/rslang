@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { setUser, setUserAuth } from '../../../store/userSlice';
+
+
 import Input from "../Input";
 import { blurHandler, passwordHandler, emailHandler } from "../Handlers";
 import { signIn } from "../../../services/user";
@@ -9,6 +13,8 @@ interface IAuthForm {
 }
 
 const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}) => {
+    const dispatch = useDispatch();
+
     const [authError, setAuthError] = useState(false)
   
     const [email, setEmail] = useState('')
@@ -25,9 +31,10 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
         password: password
       }
       signIn(user, (res) => {
-        console.log(res);
+        //добавление пользователя в редакс
         localStorage.setItem('user', JSON.stringify(res));
-        console.log(JSON.parse(localStorage.user));
+        dispatch(setUser(JSON.parse(localStorage.user)));
+        dispatch(setUserAuth(true));
         updateState();
         updateEnter();
       }, 

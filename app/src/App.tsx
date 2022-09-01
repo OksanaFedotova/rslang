@@ -1,6 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser, setUserAuth } from './store/userSlice';
+
+import { refreshToken } from './services/user';
 
 import HomePage from './routes/Main/Main';
 import Textbook from './routes/Textbook/Textbook';
@@ -18,7 +22,30 @@ import './App.css';
 //   isAuth.path = '/statistics';
 //   isAuth.element = Statistic;
 // }
+
 function App() {
+   //тестовый redux
+  const dispatch = useDispatch();
+  const userLocal = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
+  // console.log(userLocal.userId, userLocal.token)
+  // if (userLocal) {
+  //  (async () => {
+  //     const refresh = await refreshToken(userLocal); 
+  //     if (typeof refresh === 'number') {
+  //       dispatch(setUserAuth(false));
+  //       dispatch(setUser(null));
+  //       localStorage.removeItem('user');
+  //     } else {
+  //       dispatch(setUser(userLocal));
+  //       dispatch(setUserAuth(true));
+  //     }
+  //  } )()
+  // }
+  if (userLocal) {
+      dispatch(setUser(userLocal));
+      dispatch(setUserAuth(true));
+  }
+
   return (
   <BrowserRouter>
     <Routes>

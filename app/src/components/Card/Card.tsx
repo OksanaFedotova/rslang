@@ -43,7 +43,14 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
       </div>
         { user && <div className="mark-word">
             <button 
-              onClick={() => createUserWord(user, wordId, wordDifficulty, res => setDifficultWord([...res]))}>
+              onClick={() => {
+                 createUserWord(user, wordId, wordDifficulty, (res) => {
+                  // const updated = difficultWords.concat(res);
+                  // console.log(updated)
+                  setDifficultWord(difficultWords.concat(res));
+                  console.log(difficultWords, res);
+                 });
+                 }}>
               Cложное слово</button>
             <button>Изученное слово</button>
             </div>}
