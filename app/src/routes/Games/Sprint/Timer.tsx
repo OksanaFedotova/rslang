@@ -3,13 +3,13 @@ import { Fragment } from "react";
 import './Sprint.css';
 
 interface ITimer {
-  onClick: () => void;
+  setGame: () => void;
 }
 
 
 const Timer: React.FC<ITimer> = () => {
-    const [ seconds, setSeconds ] = useState(30);
-    const [ timerActive, setTimerActive ] = useState(false);
+    const [seconds, setSeconds] = useState(30);
+    const [timerActive, setTimerActive] = useState(false);
 
 
     useEffect(() => {
@@ -19,17 +19,28 @@ const Timer: React.FC<ITimer> = () => {
           setTimerActive(false);
         }
       }, [ seconds, timerActive ]);
+      
+
 
 return (
     <div className="timer-field">
       {seconds
         ? <Fragment>
-            <button className="header-button game-button" onClick={() => setTimerActive(!timerActive)}>
+            <button className="header-button game-button" onClick={() => {
+              setTimerActive(!timerActive);
+              document.querySelector("#root > div > div.guess-word-block")?.classList.add('open');
+              const focusButton = document.querySelector("#root > div > div.guess-word-block > div.game-buttons > button.yes-button") as HTMLElement;
+              focusButton.focus()
+              }}>
               {timerActive ? 'Остановить игру' : 'Начать игру'}
             </button>
             <div className="clock-block">{seconds}</div>
           </Fragment>
-        : <button className="header-button game-button" onClick={() => setSeconds(30)}>Сыграть ещё раз</button>
+        : <>
+          {document.querySelector("#root > div > div.result-wrapper")?.classList.add('active')}
+          <button className="header-button game-button" onClick={() => window.location.reload()}>Сыграть ещё раз</button>
+
+        </>
       }
     </div>
   );
