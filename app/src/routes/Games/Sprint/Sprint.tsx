@@ -34,6 +34,7 @@ const Sprint = () => {
   const [clicks, setClicks] = useState(0);
 
   const pageRandomNumber = Math.floor(Math.random() * 30);
+  const resultCount = Math.ceil(count * 100 / clicks);
 
   const yesButton = document.querySelector<HTMLButtonElement>('.yes-button');
   const noButton = document.querySelector<HTMLButtonElement>('.no-button');
@@ -187,6 +188,7 @@ const Sprint = () => {
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
           }}>X</div>
             <div className="result-text"><b>Твой результат:</b>
+            <div><b>{resultCount}%</b></div>
             <div>{count} из {clicks}</div>
             </div>
             <button className="header-button" onClick={() => navToPage('..')}>На главную</button>
