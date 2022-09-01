@@ -2,6 +2,9 @@
 import React, { Fragment, useEffect, useState  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+
+import { setUser, setUserAuth } from "../../store/userSlice"
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -17,15 +20,14 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
-const user = {};
-if (localStorage.user) {
-  Object.assign(user, JSON.parse(localStorage.user));
-  console.log(user)
-}
 
 const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
+
 const Page = () => {
 
+  const isAuth = useSelector((state: any) => state.user.isAuth);
+  const user = useSelector((state: any) => state.user.data);
+  //console.log(user.userId)
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
@@ -83,6 +85,7 @@ const Page = () => {
         </div>
          <div className="cards">
            {words.map((word) => {
+          //  console.log(word.id)
              return <Card
                key={word.id.toString()}
                wordId={word.id.toString()}
