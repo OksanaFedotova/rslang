@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ICard from "../../Interfaces/ICard";
+import { createUserWord } from "../../services/user";
 import audioButton from "../../assets/audio.png";
 
 import './Card.css'
 
-const Card: React.FunctionComponent<ICard> = ({image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning}) => {
+const initialValue: Record<string, unknown>[] | [] = [];
+
+const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning, user, wordDifficulty}) => {
+  const [difficultWords, setDifficultWord] = useState(initialValue);
   return (
     <div className="card">
       <img className="card-img" src={image}/>
@@ -37,6 +41,12 @@ const Card: React.FunctionComponent<ICard> = ({image, textExample, textMeaning, 
         <p dangerouslySetInnerHTML={{__html: textMeaning}}/>
         <p dangerouslySetInnerHTML={{__html: textMeaningTranslate}}/>
       </div>
+        { user && <div className="mark-word">
+            <button 
+              onClick={() => createUserWord(user, wordId, wordDifficulty, res => setDifficultWord([...res]))}>
+              Cложное слово</button>
+            <button>Изученное слово</button>
+            </div>}
     </div>
   )
 }

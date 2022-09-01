@@ -10,11 +10,7 @@ const MENU = [
     {
         title: 'Мини-игры',
         to: '/games'
-    },
-    {
-        title: 'Статистика',
-        to: '/statistics'
-    },
+    }
 ]
 
 interface IMenu {

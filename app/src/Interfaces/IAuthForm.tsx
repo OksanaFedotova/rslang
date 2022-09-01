@@ -5,7 +5,8 @@ type NewType = boolean | undefined;
 interface IAuthForm {
     active: NewType;
     setActive:Dispatch<SetStateAction<boolean | undefined>>;
-    children: ReactElement<any, string | JSXElementConstructor<any>>;
+    children: (JSX.Element | boolean)[] ;
 }
 
 export default IAuthForm;
+//ReactElement<any, string | JSXElementConstructor<any>> | JSX.Element[] | boolean

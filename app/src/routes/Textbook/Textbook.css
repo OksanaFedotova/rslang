@@ -49,5 +49,11 @@
   background-color: red;
 }
 .Difficult {
-  background-color: rgb(255, 0, 242);
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+}
+.Difficult:hover {
+  background-color: #4CAF50;
+  color: white;
 }

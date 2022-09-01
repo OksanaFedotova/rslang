@@ -6,7 +6,6 @@ interface ITimer {
   setGame: () => void;
 }
 
-
 const Timer: React.FC<ITimer> = () => {
     const [seconds, setSeconds] = useState(30);
     const [timerActive, setTimerActive] = useState(false);
