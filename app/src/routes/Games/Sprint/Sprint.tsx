@@ -9,6 +9,7 @@ import IWord from "../../../Interfaces/IWord";
 import getWords from "../../../services/request";
 import rightAnswer from "../../../assets/rightAnswer.mp3";
 
+
 const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
   const randomIndex = Math.floor(Math.random() * words.length);
   const word = words[randomIndex];
