@@ -1,5 +1,5 @@
 .header {
-    padding: 10px 20px;
+    padding: 0 20px;
     background-color: #28a3e8;
     display: flex;
     flex-direction: row;
@@ -14,7 +14,7 @@
 
 .logo {
     width: 70px;
-    height: 10vh;
+    height: 5vh;
     cursor: pointer;
 }
 
