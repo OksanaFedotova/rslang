@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import { useParams} from "react-router";
+import React, {useState} from "react";
+import { useNavigate } from 'react-router';
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import Layout from "../../../components/Layout/Layout";
@@ -7,39 +7,46 @@ import Timer from "./Timer";
 import './Sprint.css';
 import IWord from "../../../Interfaces/IWord";
 import getWords from "../../../services/request";
+import rightAnswer from "../../../assets/rightAnswer.mp3";
 
-const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>, callback2: React.Dispatch<React.SetStateAction<any>>) => {
+
+const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
   const randomIndex = Math.floor(Math.random() * words.length);
   const word = words[randomIndex];
   const englishWord = word.word;
   const isItCorrectCombination = Math.floor(Math.random() * 2);
   const russianWord = isItCorrectCombination ? word.wordTranslate : words[Math.floor(Math.random() * words.length)].wordTranslate;
   callback([englishWord, russianWord]);
-  isItCorrectCombination ? callback2("yes") : callback2("no");
 }
 
 const Sprint = () => {
  
   const initialValue: IWord[] | [] = [];
+  const rightSound = new Audio(rightAnswer);
   const arrayWords: string[] = [];
+  const navToPage = useNavigate();
 
-  const {groupNumber, pageNumber} = useParams();
-  const group = groupNumber? +groupNumber: 0;
-  const page = pageNumber? +pageNumber: 0
 
   const [words, setWords] = useState(initialValue);
   const [count, setCount] = useState(0);
   const [isGameActive, setGameActive] = useState(false);
-  const [correctAnswer, setCorrectAnswer] = useState('');
   const [variants, setVariants] = useState(arrayWords);
+  const [clicks, setClicks] = useState(0);
 
-  useEffect(() => {
-    getWords(group, page, res => { 
-       setWords(res);
-       getVariants(res, setVariants, setCorrectAnswer)
-    })
-  }, []);
+  const pageRandomNumber = Math.floor(Math.random() * 30);
+  const resultCount = Math.ceil(count * 100 / clicks);
 
+  const yesButton = document.querySelector<HTMLButtonElement>('.yes-button');
+  const noButton = document.querySelector<HTMLButtonElement>('.no-button');
+
+    const handleKey = (event: React.KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        yesButton?.click();
+      }
+      if (event.key === 'ArrowRight') {
+        noButton?.click();
+      }
+    }
   return  (
      <>
       <Header/>
@@ -48,32 +55,146 @@ const Sprint = () => {
           <p>В этой игре ты сможешь проверить свои знания на время.</p>
           <p><b>Цель:</b> дать максимальное количество правильных ответов за 30 секунд.</p>
           </div>
-          <Timer 
-            setGame={() => {
-              setGameActive(!isGameActive);
-              getVariants(words, setVariants, setCorrectAnswer)
-            }}
-
-          />
+          <h3 className="level-title">Выбери уровень:</h3>
+          <div className="level-block">
+            <div className="level" onClick={() => {
+              getWords(0, 0, res => { 
+                setWords(res)
+                getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+              document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.add('active');
+              }
+              }>A1</div>
+            <div  className="level" onClick={() => {
+              getWords(1, 0, res => { 
+                setWords(res)
+                getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.add('active');
+              }}>A2</div>
+            <div  className="level" onClick={() => {
+              getWords(2, pageRandomNumber, res => { 
+                setWords(res)
+                getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.add('active');
+              }}>B1</div>
+            <div  className="level"  onClick={() => {
+                getWords(3, pageRandomNumber, res => { 
+                  setWords(res)
+                  getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.add('active');
+              }}>B2</div>
+            <div  className="level"  onClick={() => {
+                getWords(4, pageRandomNumber, res => { 
+                  setWords(res)
+                  getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.add('active');
+              }}>C1</div>
+            <div  className="level"  onClick={() => {
+                getWords(5, pageRandomNumber, res => { 
+                  setWords(res)
+                  getVariants(res, setVariants)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.add('active');
+              }}>C2</div>
+            </div>
+          <Timer setGame = {() => { 
+               setGameActive(!isGameActive);
+               getVariants(words, setVariants);
+               
+             }
+            }
+           />
           <div className="guess-word-block">
-            { isGameActive &&   <>
-          <p className="english-word">{variants[0]}</p>
-          <p className="russian-word">{variants[1]}</p>
-        </>}
-              <div className="game-buttons">
+            <p className="english-word">{variants[0]}</p>
+            <p className="russian-word">{variants[1]}</p>
+              <div className="game-buttons" onKeyDown={handleKey}>
                 <button className="yes-button"
-                  onClick={() => {
-                    if (correctAnswer === 'yes') console.log('верно'); //написать логику
-                    getVariants(words, setVariants, setCorrectAnswer);
-                }}>Да</button>
+                onClick={() => {
+                  let currentCount = count;
+                  let clicksCount = clicks;
+                  clicksCount = clicksCount +1;
+                  setClicks(clicksCount);
+                  {words.forEach((word) => {
+                    if(word.word == variants[0] && (word.wordTranslate == variants[1])) {
+                      currentCount = currentCount + 1;
+                      setCount(currentCount);
+                      rightSound.play();
+                      } else {
+                        getVariants(words, setVariants);
+                      }
+                  })
+                }
+                }}
+                >Да</button>
                 <button className="no-button"
-                  onClick={() => {
-                    if (correctAnswer === 'no') console.log('верно'); //написать логику
-                    getVariants(words, setVariants, setCorrectAnswer);
-                }}>Нет</button>
+                onClick={() => {
+                  let currentCount = count;
+                  let clicksCount = clicks;
+                  clicksCount = clicksCount +1;
+                  setClicks(clicksCount);
+                  {words.forEach((word) => {
+                    if((word.word !== variants[0] && (word.wordTranslate == variants[1]))) {
+                      currentCount = currentCount + 1;
+                      setCount(currentCount);
+                      rightSound.play();
+                    } else {
+                      getVariants(words, setVariants);
+                    }
+                  })
+                }
+                }}
+                >Нет</button>
               </div>
-              <div className="points">Количество очков:{count}</div>
+              <div className="points">Количество очков: {count}</div>
          </div>
+         <div className="result-wrapper">
+         <div className='result-modal'>
+          <div className="close-modal" onClick={() => {
+          document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
+          document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
+          }}>X</div>
+            <div className="result-text"><b>Твой результат:</b>
+            <div><b>{resultCount}%</b></div>
+            <div>{count} из {clicks}</div>
+            </div>
+            <button className="header-button" onClick={() => navToPage('..')}>На главную</button>
+            <button className="header-button" onClick={() => navToPage('../textbook')}>В учебник</button>
+        </div>
+        </div>
       </Layout>
       <Footer/>
     </>

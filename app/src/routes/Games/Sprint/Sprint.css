@@ -15,6 +15,19 @@
     margin: 0 auto;
     text-align: center;
     padding-top: 50px;
+    display: none;
+}
+.timer-field.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: .3s;
+}
+
+.update-button {
+    margin-top: 35px;
+    width: 350px;
 }
 
 .clock-block {
@@ -29,9 +42,13 @@
 }
 
 .guess-word-block {
+    display: none;
     margin: 25px auto;
     width: 40%;
     text-align: center;
+}
+.guess-word-block.open {
+    display: block;
 }
 
 .guess-word-block > p {
@@ -92,6 +109,99 @@
 
 .points {
     margin-top: 50px;
+}
+
+.result-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(36, 35, 35, 0.234);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.result-modal {
+    width: 420px;
+    height: 420px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -210px;
+    margin-top: -210px;
+    z-index: 5;
+}
+
+.result-wrapper.active {
+    display: flex;
+}
+
+.result-text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    text-align: center;
+    font-size: 1.7rem;
+    padding: 10px;
+}
+
+.close-modal {
+    border: 2px #000 solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.close-modal:hover {
+    cursor: pointer;
+    border: 2px #28a3e8 solid;
+    color: #28a3e8;
+    transition: .3s;
+}
+
+.level-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 15px;
+    column-gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.level {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #a6c54b;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.level:hover {
+    cursor: pointer;
+    background-color: darkorange;
+    transition: .5s;
+}
+
+.level.active {
+    background-color: darkorange;
 }
 
 @media (max-width: 640px) {
