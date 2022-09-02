@@ -13,7 +13,5 @@ interface ICard {
   audio: string;
   audioExample: string;
   audioMeaning: string;
-  user?: Record<string, unknown>;
-  wordDifficulty: Record<string, unknown>;
 }
 export default ICard;

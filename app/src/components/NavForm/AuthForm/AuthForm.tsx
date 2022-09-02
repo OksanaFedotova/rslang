@@ -31,8 +31,12 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
         password: password
       }
       signIn(user, (res) => {
-        //добавление пользователя в редакс
+        res = {
+          ...res,
+          expire: Date.now() + 16200000
+        }
         localStorage.setItem('user', JSON.stringify(res));
+        //добавление пользователя в редакс
         dispatch(setUser(JSON.parse(localStorage.user)));
         dispatch(setUserAuth(true));
         updateState();

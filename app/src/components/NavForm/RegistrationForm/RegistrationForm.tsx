@@ -46,12 +46,14 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
             setPassword('')
             } else {
               signIn({email: email, password: password}, (res) => {
+                res = {
+                  ...res,
+                  expire: Date.now() + 16200000
+                }
                 localStorage.setItem('user', JSON.stringify(res));
                 //добавление пользователя в редакс
-                localStorage.setItem('user', JSON.stringify(res));
                 dispatch(setUser(JSON.parse(localStorage.user)));
                 dispatch(setUserAuth(true));
-
                 setRegistrationActive(false);
                 updateSwitchButton();
               });

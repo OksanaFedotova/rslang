@@ -24,8 +24,17 @@
 }
 .mark-word > button {
   margin: 0.5rem;
+  font-size: medium;
+  background-color: transparent;
+  color: black;
+  border: 2px solid #ffff00;
 }
-
+.mark-word>button:hover {
+  background-color: #ffff00;
+}
+.difficult {
+  background-color: rgb(255, 197, 212);
+}
 @media (max-width: 900px) {
   .card {
     display: grid;

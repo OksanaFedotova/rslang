@@ -30,7 +30,7 @@ import cn from 'classnames';
     }
     {isAuth && <Link 
       className={cn('group', 'Difficult')} 
-      to={'../statistics'}>
+      to={'../textbook/difficult'}>
         Difficult words
       </Link>}
   </div>

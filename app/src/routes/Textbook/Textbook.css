@@ -1,6 +1,7 @@
 .textbook {
   display: flex;
   flex-direction: column;
+  min-height: 600px;
 }
 .textbook-wrapper {
   display: flex;
@@ -11,13 +12,12 @@
 .groups-wrapper {
   display: flex;
   flex-wrap: wrap;
-  width: 50%;
+  flex-direction: row;
 }
 .group {
   display: inline-block;
   width: 200px;
   height: 60px;
-  padding: 20px 20px;
   margin: 5px;
   text-decoration: none;
   color: #000;
