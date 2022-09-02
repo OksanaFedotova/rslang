@@ -48,13 +48,13 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
             if (propWord === propaudioWord) {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('correct')
                 handleWin();
-                knowWords.push(propWord)
+                knowWords.push(propWord, wordsCard[4])
                 console.log(knowWords)
 
             } else {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('incorrect')
                 handleFail();
-                dontknowWords.push(propWord)
+                dontknowWords.push(propWord, wordsCard[4])
                 console.log(dontknowWords)
             }
             document.querySelector("#root > div > div.audiocard > div > div")?.classList.add('noclick')
@@ -132,8 +132,17 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 {knowWords.map((item,index) => {
 
                     return (
-                    <div key={index}> {item} </div>
-            )
+                      index % 2 ? <img
+                      src={audioButton}
+                      className="audio-control small small-pic"
+                      title="audio"
+                      onClick={() => {
+                        const audioWord = new Audio(item);
+                        audioWord.play();
+                      }}
+                      />  : <div className="small-word"> {/* key={index} */} {item} </div>
+                      
+                      )
         })}
                 </div>
 
@@ -145,7 +154,16 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 {dontknowWords.map((item,index) => {
 
 return (
-<div key={index}> {item} </div>
+  index % 2 ? <img
+  src={audioButton}
+  className="audio-control small small-pic"
+  title="audio"
+  onClick={() => {
+    const audioWord = new Audio(item);
+    audioWord.play();
+  }}
+  />  : <div className="small-word"> {/* key={index} */} {item} </div>
+
 )
 })}
                 </div>

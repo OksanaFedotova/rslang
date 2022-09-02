@@ -12,7 +12,7 @@
     top: 47%;
     display: block;
     width: 320px;
-    height: 350px;
+    height: 500px;
     background-color: #28a3e8;
     transform: translate(-50%, -50%);
     border-radius: 12px;
@@ -60,4 +60,18 @@ background-color: #ffff00;
   margin: 0;
   align-items: center;
   text-align: center;
+}
+
+.small.small-pic {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 auto;
+  margin-bottom: 5px;
+}
+
+.small-word {
+  margin: 0 auto;
+  display: inline-block;
+  font-size: 12px;
 }
