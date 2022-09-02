@@ -22,7 +22,7 @@ const Statisctic = () => {
   const navigator = useNavigate();
   const [userWords, setUserWords] = useState(initialValue);
 
-  useEffect(() => getAllUserWords(user, res => setUserWords(res)), []);
+  // useEffect(() => getAllUserWords(user, res => setUserWords(res)), []);
 
   const handleClick = () => {
     dispatch(setUser(null));
@@ -30,13 +30,14 @@ const Statisctic = () => {
     localStorage.removeItem('user');
     navigator('..');
   }
-  const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}}
+
   return (
     <Fragment>
     <Header/>
     {isAuth && 
       <Layout>
       <button onClick={handleClick}>Выйти</button>
+      {/* <button onClick={() => getAllUserWords(user, (res) => console.log(res))}></button> */}
       <div className="difficult-words">
          {userWords.map((word) => {
              return <Card
@@ -53,8 +54,6 @@ const Statisctic = () => {
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
                audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`} 
-               user={user}
-               wordDifficulty={test}
                />;
             }
            )}
