@@ -26,6 +26,8 @@ const Page = () => {
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
 
+  const differentStyles = ['A1','A2','B1','B2','C1','C2'];
+  
   const [words, setWords] = useState(initialValue);
   const [isActive, setActive] = useState(false);
   const [isMenuGames, setMenuGames] = useState(false);
@@ -43,7 +45,7 @@ const Page = () => {
    return (
     <Fragment>
        <Header />
-       <div className="page">
+       <div className={`page ${differentStyles[group]}`}>
          <div className="button-container">
            <Button
              className="button textbook-button"
