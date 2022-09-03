@@ -1,5 +1,5 @@
 interface IWord {
-  id: string
+  id: string;
   image: string;
   textExample: string;
   textExampleTranslate: string;

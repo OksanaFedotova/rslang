@@ -1,4 +1,3 @@
-import IWord from "../Interfaces/IWord"
 interface ICard {
   wordId: string;
   key?: string;
@@ -13,5 +12,6 @@ interface ICard {
   audio: string;
   audioExample: string;
   audioMeaning: string;
+  redraw?: () => void;
 }
 export default ICard;

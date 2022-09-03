@@ -2,6 +2,7 @@
 import React, { Fragment, useEffect, useState  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -14,18 +15,25 @@ import Pagination from "../../components/Pagination/Pagination";
 
 
 import './Page.css';
+import { setGroup, setPage } from "../../store/pageSlice";
 
 const initialValue: IWord[] | [] = [];
 
 
-const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
+//const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
 
 const Page = () => {
 
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
-  const page = pageNumber? +pageNumber: 0
+  const page = pageNumber? +pageNumber: 0;
 
+  const dispatch = useDispatch();
+  dispatch(setGroup(group));
+  dispatch(setPage(page));
+
+  const differentStyles = ['A1','A2','B1','B2','C1','C2'];
+  
   const [words, setWords] = useState(initialValue);
   const [isActive, setActive] = useState(false);
   const [isMenuGames, setMenuGames] = useState(false);
@@ -43,7 +51,7 @@ const Page = () => {
    return (
     <Fragment>
        <Header />
-       <div className="page">
+       <div className={`page ${differentStyles[group]}`}>
          <div className="button-container">
            <Button
              className="button textbook-button"
