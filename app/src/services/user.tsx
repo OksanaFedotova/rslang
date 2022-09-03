@@ -13,6 +13,12 @@ interface IUserExist {
   refreshToken?: string,
   userId?: string, 
 }
+interface IUserWord {
+  id: string;
+  difficulty: string;
+  optional: Record<string, string | number | boolean>;
+  wordId: string;
+}
 const postUser = (user: IUser, callback: (res: IUser) => void) => {
   fetch('https://rslang-b.herokuapp.com/users', {
        method: 'POST',
@@ -46,7 +52,7 @@ const refreshToken = async (user: IUserExist) => {
   return await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/tokens`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer refreshTokentest`,
+      'Authorization': `Bearer ${user.refreshToken}`,
       'Accept': 'application/json',
     }
   })
@@ -60,11 +66,9 @@ const refreshToken = async (user: IUserExist) => {
   .catch((error) => console.error(error))
 }
 
-const getAllUserWords = (user: IUserExist, callback: React.Dispatch<React.SetStateAction<any>>) => {
-  console.log(user.userId, user.token)
+const getAllUserWords = (user: IUserExist, callback: (res: IUserWord[]) => void) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words`, {
     method: 'GET',
-
     headers: {
       'Authorization': `Bearer ${user.token}`,
       'Accept': 'application/json',
@@ -74,7 +78,7 @@ const getAllUserWords = (user: IUserExist, callback: React.Dispatch<React.SetSta
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
-const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<any>>) => {
+const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<IUserWord>>) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
@@ -94,7 +98,7 @@ const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<strin
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
-const updateUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<any>>) => {
+const updateUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<IUserWord>>) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'PUT',
     headers: {
@@ -126,7 +130,7 @@ const deleteUserWord = async (user: IUserExist, wordId: string) => {
   //.then((res) => callback(res))
   .catch((error) => console.error(error))
 }; 
-const getUserWord = (user: IUserExist, id: string, callback: React.Dispatch<React.SetStateAction<any>>) => {
+const getUserWord = (user: IUserExist, id: string, callback: (res: IUserWord) => void) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${id}`, {
     method: 'GET',
     headers: {
@@ -144,5 +148,21 @@ const getUserWord = (user: IUserExist, id: string, callback: React.Dispatch<Reac
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
+const getAggregatedWords = (user: IUserExist, callback: React.Dispatch<React.SetStateAction<any>>) => {
+  fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/aggregatedWords?filter={"$or":[{"userWord.difficulty":"medium"},{"userWord.difficulty":"weak"}]}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${user.token}`,
+      'Accept': 'application/json',
+    }
+  })
+  .then((res) => res.json())
+  .then((res) => callback(res))
+  .catch((err) => console.log(err))
+}
 
-export {postUser, signIn, getAllUserWords, createUserWord, updateUserWord, getUserWord, deleteUserWord, refreshToken}
+//?difficulty=medium
+//{"$and":[{"userWord.difficulty":"medium", "userWord.difficulty":"weak"}]}
+//{"$or":[{"userWord.difficulty":"medium"},{"userWord.difficulty":"weak"}]}
+
+export {postUser, signIn, getAllUserWords, createUserWord, updateUserWord, getUserWord, deleteUserWord, getAggregatedWords, refreshToken}

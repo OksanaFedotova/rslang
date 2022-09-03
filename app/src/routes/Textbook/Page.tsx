@@ -18,7 +18,7 @@ import './Page.css';
 const initialValue: IWord[] | [] = [];
 
 
-const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
+//const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
 
 const Page = () => {
 

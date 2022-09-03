@@ -10,10 +10,11 @@ import HomePage from './routes/Main/Main';
 import Textbook from './routes/Textbook/Textbook';
 import Team from './routes/Team/Team';
 import Page from './routes/Textbook/Page';
-import Statistic from './routes/Statisctic/Statistic'
+import Statistic from './routes/Statisctic/Statistic';
 import Games from './routes/Games/Games';
 import Sprint from './routes/Games/Sprint/Sprint';
 import AudioChallenge from './routes/Games/AudioChallenge/AudioChallenge';
+import Difficult from './routes/Textbook/Difficult';
 
 import './App.css';
 //const isAuth
@@ -49,6 +50,7 @@ function App() {
   //  } )()
   // }
   if (userLocal) {
+    console.log(userLocal)
       dispatch(setUser(userLocal));
       dispatch(setUserAuth(true));
   }
@@ -65,6 +67,7 @@ function App() {
           <Route path="/games/audio-challenge" element={<AudioChallenge/>}/>
           {/*<Route path={isAuth.path} element={<isAuth.element/>}/>*/}
           <Route path="/statistics" element={<Statistic/>}/>
+          <Route path="/textbook/difficult" element={<Difficult/>}/>
      </Routes>
   </BrowserRouter>
   );

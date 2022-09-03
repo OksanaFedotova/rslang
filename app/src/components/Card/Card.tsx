@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ICard from "../../Interfaces/ICard";
 import { createUserWord, getUserWord, updateUserWord, deleteUserWord } from "../../services/user";
-import { setDifficultWords } from "../../store/wordsSlice"
+//import { setDifficultWords } from "../../store/wordsSlice"
 import audioButton from "../../assets/audio.png";
 import cn from 'classnames';
 
 import './Card.css'
 
-const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning}) => {
+const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning, redraw}) => {
 
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
+
+  // const dispatch = useDispatch();
 
   const [isDifficult, setDifficult] = useState(false);
   const [isStudied, setStudied] = useState(false);
@@ -20,7 +22,7 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
     getUserWord(user, wordId, (res) => {
       if (!res) return;
       if (res.difficulty) setDifficult(true);
-      if (res.studied) setStudied(true);
+      if (res.optional.studied) setStudied(true);
     })
   }, []);
   return (
@@ -61,7 +63,6 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
               onClick={() => { 
                 createUserWord(user, wordId, {"difficulty": "medium", "optional": {studied: false, newWord: false}}, 
                 () => { 
-                // dispatch(setDifficultWords(res));
                 setDifficult(true);
               });
               }}> Cложное слово</button>}
@@ -71,6 +72,7 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
                   () => { 
                     deleteUserWord(user, wordId);
                     setDifficult(false);
+                    if(redraw) redraw();
                   }
                   }> Несложное слово </button>}
             <button>Изученное слово</button>
