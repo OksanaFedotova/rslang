@@ -17,16 +17,11 @@ import './Page.css';
 
 const initialValue: IWord[] | [] = [];
 
-// type textBookProps = {
-//   className: string,
-//   handleClick: (() => void) | undefined
-// }
-// const initialTextbookNav: textBookProps = {
-//     className: "not-active",
-//     handleClick: undefined
-//   }
+
+const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
 
 const Page = () => {
+
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0
@@ -86,6 +81,7 @@ const Page = () => {
            {words.map((word) => {
              return <Card
                key={word.id.toString()}
+               wordId={word.id.toString()}
                image={`https://rslang-b.herokuapp.com/${word.image}`}
                word={word.word}
                wordTranslate={word.wordTranslate}
@@ -96,7 +92,8 @@ const Page = () => {
                textMeaning={word.textMeaning}
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
-               audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`} />;
+               audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`}
+               />;
             }
            )}
          </div>

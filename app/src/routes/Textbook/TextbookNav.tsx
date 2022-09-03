@@ -1,16 +1,17 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import cn from 'classnames';
 
-// import './TextbookNav.css';
-
- const GROUPS = ["A1 Elementary", "A2 Pre-intermediate", "B1 Intermediate", "B2 Upper-intermediate", "C1 Advanced", "C2 Proficiency", "Difficult words"]
+ const GROUPS = ["A1 Elementary", "A2 Pre-intermediate", "B1 Intermediate", "B2 Upper-intermediate", "C1 Advanced", "C2 Proficiency"]
 
  interface ITextbookNav {
   className?: string,
   handleClick?: () => void
  }
  const TextbookNav: React.FunctionComponent<ITextbookNav>  = ({className, handleClick}) => {
+  
+  const isAuth = useSelector((state: any) => state.user.isAuth);
 
   const pageNumber = 0
   return (
@@ -27,6 +28,11 @@ import cn from 'classnames';
       </Link>
       })
     }
+    {isAuth && <Link 
+      className={cn('group', 'Difficult')} 
+      to={'../textbook/difficult'}>
+        Difficult words
+      </Link>}
   </div>
   )
 }

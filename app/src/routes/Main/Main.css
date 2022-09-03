@@ -1,19 +1,20 @@
 .main-page {
-    padding: 50px 20px;
     display: flex;
     flex: 1 0 auto;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    height: 79vh;
     font-size: 1.5rem;
     box-sizing: border-box;
     text-align: justify;
+    align-content: center;
+    height: 100%;
 }
 
-.main-h2 {
+.main-span {
     color: #a6c54b;
     display: inline-block;
+    font-size: 2rem;
 }
 
 .main-img {
@@ -32,9 +33,9 @@
 @media (max-width: 1080px) {
     .main-page {
         flex-direction: column;
-        row-gap: 30px;
+        justify-content: center;
+        row-gap: 70px;
         text-align: center;
-        height: auto;
     }
 
     .main-left-block {

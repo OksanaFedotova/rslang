@@ -1,5 +1,7 @@
+import IWord from "../Interfaces/IWord"
 interface ICard {
-  key: string
+  wordId: string;
+  key?: string;
   image: string;
   textExample: string;
   textExampleTranslate: string;
