@@ -2,6 +2,7 @@
 import React, { Fragment, useEffect, useState  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -14,6 +15,7 @@ import Pagination from "../../components/Pagination/Pagination";
 
 
 import './Page.css';
+import { setGroup, setPage } from "../../store/pageSlice";
 
 const initialValue: IWord[] | [] = [];
 
@@ -24,7 +26,11 @@ const Page = () => {
 
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
-  const page = pageNumber? +pageNumber: 0
+  const page = pageNumber? +pageNumber: 0;
+
+  const dispatch = useDispatch();
+  dispatch(setGroup(group));
+  dispatch(setPage(page));
 
   const differentStyles = ['A1','A2','B1','B2','C1','C2'];
   
