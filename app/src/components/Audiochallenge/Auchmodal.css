@@ -62,16 +62,18 @@ background-color: #ffff00;
   text-align: center;
 }
 
-.small.small-pic {
+.small {
   display: inline-block;
   width: 20px;
   height: 20px;
-  margin: 0 auto;
+  margin: 0;
   margin-bottom: 5px;
 }
 
 .small-word {
-  margin: 0 auto;
-  display: inline-block;
-  font-size: 12px;
+  display: flex;
+  /* row-gap: 5px; */
+  /* margin: 0 auto; */
+  font-size: 14px;
+  justify-content: space-between;
 }

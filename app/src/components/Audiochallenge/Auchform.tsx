@@ -132,15 +132,18 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 {knowWords.map((item,index) => {
 
                     return (
-                      index % 2 ? <img
+                      index % 2 ? null :
+                      <div className="small-word"> {item} 
+                      
+                      <img
                       src={audioButton}
-                      className="audio-control small small-pic"
+                      className="audio-control small"
                       title="audio"
                       onClick={() => {
-                        const audioWord = new Audio(item);
+                        const audioWord = new Audio(knowWords[index+1]);
                         audioWord.play();
-                      }}
-                      />  : <div className="small-word"> {/* key={index} */} {item} </div>
+                      }} />
+                      </div>
                       
                       )
         })}
@@ -154,16 +157,18 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 {dontknowWords.map((item,index) => {
 
 return (
-  index % 2 ? <img
-  src={audioButton}
-  className="audio-control small small-pic"
-  title="audio"
-  onClick={() => {
-    const audioWord = new Audio(item);
-    audioWord.play();
-  }}
-  />  : <div className="small-word"> {/* key={index} */} {item} </div>
-
+  index % 2 ? null :
+                      <div className="small-word"> {item} 
+                      
+                      <img
+                      src={audioButton}
+                      className="audio-control small"
+                      title="audio"
+                      onClick={() => {
+                        const audioWord = new Audio(dontknowWords[index+1]);
+                        audioWord.play();
+                      }} />
+                      </div>
 )
 })}
                 </div>
