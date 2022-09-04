@@ -17,6 +17,7 @@
     padding-top: 50px;
     display: none;
 }
+
 .timer-field.active {
     display: flex;
     flex-direction: column;
@@ -44,11 +45,14 @@
 .guess-word-block {
     display: none;
     margin: 25px auto;
-    width: 40%;
+    width: 100%;
+    height: 300px;
     text-align: center;
+    background-color: rgb(211, 235, 247);
 }
 .guess-word-block.open {
     display: block;
+    transition: .5s;
 }
 
 .guess-word-block > p {
@@ -143,7 +147,7 @@
 .result-modal {
     width: 420px;
     height: 420px;
-    background-color: rgb(255, 255, 255);
+    background-color: #28a3e8;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
@@ -165,6 +169,7 @@
 
 .result-text {
     display: flex;
+    color: #fff;
     flex-direction: column;
     row-gap: 20px;
     text-align: center;
@@ -173,7 +178,8 @@
 }
 
 .close-modal {
-    border: 2px #000 solid;
+    border: 2px #fff solid;
+    color: #fff;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -187,8 +193,8 @@
 }
 .close-modal:hover {
     cursor: pointer;
-    border: 2px #28a3e8 solid;
-    color: #28a3e8;
+    border: 2px darkorange solid;
+    color: darkorange;
     transition: .3s;
 }
 
@@ -234,22 +240,34 @@
 .level.active {
     background-color: darkorange;
 }
-.level-wrapper.notactive {
-    pointer-events: none;
-}
+
 
 @media (max-width: 640px) {
     .game-description {
         width: 90%;
     }
+
     .level {
         width: 40px;
         height: 40px;
     }
+
     .no-button::after {
         display: none;
     }
+
     .yes-button::after {
         display: none;
+    }
+}
+
+@media (max-width: 440px) {
+    .game-description {
+        display: none;
+    }
+
+    .level {
+        width: 60px;
+        height: 60px;
     }
 }

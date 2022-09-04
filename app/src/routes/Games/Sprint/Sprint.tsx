@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router';
-import  setStatistic  from "../../../services/setStatistic";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import Layout from "../../../components/Layout/Layout";
@@ -20,6 +19,8 @@ const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateActi
   callback([englishWord, russianWord]);
 }
 
+const correctAnswers: string[] = [];
+
 const Sprint = () => {
 
   const groupCurrent = useSelector((state: any) => state.page.currentGroup);
@@ -37,6 +38,7 @@ const Sprint = () => {
   const [isGameActive, setGameActive] = useState(false);
   const [variants, setVariants] = useState(arrayWords);
   const [clicks, setClicks] = useState(0);
+
 
   const pageRandomNumber = Math.floor(Math.random() * 30);
   const resultCount = Math.ceil(count * 100 / clicks);
@@ -62,7 +64,6 @@ const Sprint = () => {
         noButton?.click();
       }
     }
-  
 
   return  (
      <>
@@ -80,12 +81,12 @@ const Sprint = () => {
                 setWords(res)
                 getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.add('active');
               }
               }>A1</div>
             <div  className="level" onClick={() => {
@@ -93,60 +94,60 @@ const Sprint = () => {
                 setWords(res)
                 getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.add('active');
               }}>A2</div>
             <div  className="level" onClick={() => {
               getWords(2, pageRandomNumber, res => { 
                 setWords(res)
                 getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.add('active');
               }}>B1</div>
             <div  className="level"  onClick={() => {
                 getWords(3, pageRandomNumber, res => { 
                   setWords(res)
                   getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.add('active');
               }}>B2</div>
             <div  className="level"  onClick={() => {
                 getWords(4, pageRandomNumber, res => { 
                   setWords(res)
                   getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.add('active');
               }}>C1</div>
             <div  className="level"  onClick={() => {
                 getWords(5, pageRandomNumber, res => { 
                   setWords(res)
                   getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
-                document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.add('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div > div.level-block > div:nth-child(6)")?.classList.add('active');
               }}>C2</div>
             </div>
             </div>
@@ -172,6 +173,8 @@ const Sprint = () => {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
                       rightSound.play();
+                      correctAnswers.push(word.id)
+                      console.log(correctAnswers)
                       } else {
                         getVariants(words, setVariants);
                       }
@@ -190,6 +193,8 @@ const Sprint = () => {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
                       rightSound.play();
+                      correctAnswers.push(word.id);
+                      console.log(correctAnswers);
                     } else {
                       getVariants(words, setVariants);
                     }
@@ -205,6 +210,7 @@ const Sprint = () => {
           <div className="close-modal" onClick={() => {
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
+          navToPage('../games');
           }}>X</div>
             <div className="result-text"><b>Твой результат:</b>
             <div><b>{resultCount}%</b></div>
