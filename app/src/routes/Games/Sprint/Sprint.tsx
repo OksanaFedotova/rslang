@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react"
+import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router';
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
@@ -20,7 +21,11 @@ const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateActi
 }
 
 const Sprint = () => {
+
+  const groupCurrent = useSelector((state: any) => state.page.currentGroup);
+  const pageCurrent = useSelector((state: any) => state.page.currentPage);
  
+
   const initialValue: IWord[] | [] = [];
   const rightSound = new Audio(rightAnswer);
   const arrayWords: string[] = [];
@@ -39,6 +44,18 @@ const Sprint = () => {
   const yesButton = document.querySelector<HTMLButtonElement>('.yes-button');
   const noButton = document.querySelector<HTMLButtonElement>('.no-button');
 
+  useEffect(()=>{
+    if (groupCurrent !== null) {
+      document.querySelector("#root > div > div.level-wrapper")?.classList.add('hidden');
+      document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+      getWords(groupCurrent, pageCurrent, res => { 
+        setWords(res)
+        getVariants(res, setVariants)})
+    }
+    }, [])
+  
+console.log(groupCurrent, pageCurrent)
+
     const handleKey = (event: React.KeyboardEvent) => {
       if (event.key === 'ArrowLeft') {
         yesButton?.click();
@@ -47,6 +64,8 @@ const Sprint = () => {
         noButton?.click();
       }
     }
+  
+
   return  (
      <>
       <Header/>
@@ -55,10 +74,11 @@ const Sprint = () => {
           <p>В этой игре ты сможешь проверить свои знания на время.</p>
           <p><b>Цель:</b> дать максимальное количество правильных ответов за 30 секунд.</p>
           </div>
+          <div className="level-wrapper">
           <h3 className="level-title">Выбери уровень:</h3>
           <div className="level-block">
             <div className="level" onClick={() => {
-              getWords(0, 0, res => { 
+              getWords(0, pageRandomNumber, res => { 
                 setWords(res)
                 getVariants(res, setVariants)})
                 document.querySelector("#root > div > div.timer-field")?.classList.add('active');
@@ -67,7 +87,7 @@ const Sprint = () => {
                 document.querySelector("#root > div > div.level-block > div:nth-child(4)")?.classList.remove('active');
                 document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
                 document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.remove('active');
-              document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.add('active');
+                document.querySelector("#root > div > div.level-block > div:nth-child(1)")?.classList.add('active');
               }
               }>A1</div>
             <div  className="level" onClick={() => {
@@ -130,6 +150,7 @@ const Sprint = () => {
                 document.querySelector("#root > div > div.level-block > div:nth-child(5)")?.classList.remove('active');
                 document.querySelector("#root > div > div.level-block > div:nth-child(6)")?.classList.add('active');
               }}>C2</div>
+            </div>
             </div>
           <Timer setGame = {() => { 
                setGameActive(!isGameActive);

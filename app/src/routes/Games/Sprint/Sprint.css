@@ -83,6 +83,17 @@
     border: none;
     cursor: pointer;
     font-family: inherit;
+    position: relative;
+    outline:none;
+}
+
+.yes-button::after {
+    content: '⟵';
+    width: 20px;
+    height: 12px;
+    position: absolute;
+    left: 10px;
+    top: 10px;
 }
 
 .yes-button:hover {
@@ -100,8 +111,16 @@
     border: none;
     cursor: pointer;
     font-family: inherit;
+    position: relative;
 }
-
+.no-button::after {
+    content: '⟶'; 
+    width: 20px;
+    height: 12px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
 .no-button:hover {
     background-color: rgb(208, 12, 12);
     transition: .5s;
@@ -173,6 +192,18 @@
     transition: .3s;
 }
 
+.level-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+    padding-top: 20px;
+}
+
+.level-wrapper.hidden{
+    display: none;
+}
+
 .level-block {
     display: flex;
     flex-direction: row;
@@ -207,5 +238,15 @@
 @media (max-width: 640px) {
     .game-description {
         width: 90%;
+    }
+    .level {
+        width: 40px;
+        height: 40px;
+    }
+    .no-button::after {
+        display: none;
+    }
+    .yes-button::after {
+        display: none;
     }
 }
