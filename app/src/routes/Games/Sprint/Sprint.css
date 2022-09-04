@@ -234,6 +234,9 @@
 .level.active {
     background-color: darkorange;
 }
+.level-wrapper.notactive {
+    pointer-events: none;
+}
 
 @media (max-width: 640px) {
     .game-description {

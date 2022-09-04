@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate } from 'react-router';
 import { Fragment } from "react";
 import './Sprint.css';
 
@@ -9,6 +10,7 @@ interface ITimer {
 const Timer: React.FC<ITimer> = () => {
     const [seconds, setSeconds] = useState(30);
     const [timerActive, setTimerActive] = useState(false);
+    const navFromSprint = useNavigate();
 
 
     useEffect(() => {
@@ -37,7 +39,11 @@ return (
           </Fragment>
         : <>
           {document.querySelector("#root > div > div.result-wrapper")?.classList.add('active')}
+          {document.querySelector("#root > div > div.level-wrapper")?.classList.add('hidden')}
           <button className="header-button game-button" onClick={() => window.location.reload()}>Сыграть ещё раз</button>
+          <button className="header-button game-button" onClick={() => navFromSprint('../games/audio-challenge')}>Игра Аудиовызов</button>
+          <button className="header-button game-button" onClick={() => navFromSprint('..')}>На главную</button>
+          <button className="header-button game-button" onClick={() => navFromSprint('../textbook')}>В учебник</button>
 
         </>
       }

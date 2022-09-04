@@ -53,8 +53,6 @@ const Sprint = () => {
         getVariants(res, setVariants)})
     }
     }, [])
-  
-console.log(groupCurrent, pageCurrent)
 
     const handleKey = (event: React.KeyboardEvent) => {
       if (event.key === 'ArrowLeft') {
