@@ -35,6 +35,9 @@
 .difficult {
   background-color: rgb(255, 197, 212);
 }
+.studied {
+  background-color: aquamarine;
+}
 @media (max-width: 900px) {
   .card {
     display: grid;

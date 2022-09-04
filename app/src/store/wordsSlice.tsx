@@ -23,10 +23,13 @@ export const slice = createSlice({
     setStudiedtWords: (state, action) => {
       state.studied.push(action.payload);
     },
-    setnewWords: (state, action) => {
+    setNewWords: (state, action) => {
       state.newWords.push(action.payload);
     },
-  }
+    setAllDifficultWords: (state, action) => {
+       state.difficult = action.payload;
+    }
+  } 
 })
-export const { setDifficultWords } = slice.actions;
+export const { setDifficultWords, setAllDifficultWords } = slice.actions;
 export default slice.reducer
