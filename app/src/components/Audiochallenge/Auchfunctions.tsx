@@ -16,16 +16,6 @@ import { getAllUserWords } from "../../services/user";
 
 const pageRandomNumber = Math.floor(Math.random() * 30);
 
-/* const historyLink = document.referrer;
-const wordsPage = historyLink[historyLink.length - 1]
-const wordsGroup = historyLink[historyLink.length - 8]
-
-console.log(document.referrer, historyLink[historyLink.length - 1], historyLink[historyLink.length - 8]) 
-
-console.log('prevurl:', ) */
-
-
-
 const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
             const randomizeWord:number = Math.floor(Math.random() * 16);
             const wordOne:number = randomizeWord + 1;
@@ -46,18 +36,34 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
           
 function AudioChellengeCard(): JSX.Element {
 
-    const user = useSelector((state: any) => state.user.data);
-    const data = useSelector((state: any) => state.words.words);
-    //const pages = useSelector((state: any) => page.words.words);
 
-    const name = user.name;
-    const userWords = user.page;
+    // ГРУППА И СТРАНИЦА СЛОВ ИЗ REDUX
+    const PageGroup = useSelector((state: any) => state.page);
 
-    const newWords = data.words;
-    //console.log(name)
-    console.log(data,newWords)
+    const userGroup = PageGroup.currentGroup;
+    const userPage = PageGroup.currentPage;
+    
+    let numGroup:any = 0;
+    let numPage:any = 0;
+    
+    function getGroup () {
+    if (userGroup !== null) {
+        numGroup = userGroup;
+    } else {
+        numGroup = 0}
+    return numGroup
+}
+    function getPage () {
+    if (numPage !== null) {
+        numGroup = numPage;
+    } else {
+        numPage = 0}
+        return numPage
+    }
 
-
+        console.log("numGroup:",getGroup(), "numPage:", getPage())
+    
+    //
 
 
     const initialValue: IWord[] | [] = [];
@@ -67,22 +73,11 @@ function AudioChellengeCard(): JSX.Element {
     const [KeyCode, setKeyCode] = useState(0);
 
           useEffect(() => {
-             getWords(0, 0, res => { 
+             getWords(getGroup(), getPage(), res => { 
                 setWords(res);
                 getCard(res, setCard)
              })
            }, []);
-
-/*            if ((historyLink[historyLink.length - 1]) !== "e") {
-            console.log('from book')
-            useEffect(() => {
-                getWords(+wordsGroup, +wordsPage, res => { 
-                   setWords(res);
-                   getCard(res, setCard)
-                })
-              }, []);
-        } */
-        
 
            // СОБЫТИЕ ПО КЛИКУ "ДАЛЕЕ"
 
@@ -228,7 +223,6 @@ function AudioChellengeCard(): JSX.Element {
                     <button className="header-button next noclick" onClick={() => {
                     clickNext()
                 }}><p className="next-button">Далее</p></button>
-                <div>{name}</div>
             </div>
         );
 }
