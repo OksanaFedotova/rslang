@@ -49,6 +49,7 @@ function AudioChellengeCard(): JSX.Element {
     function getGroup () {
     if (userGroup !== null) {
         numGroup = userGroup;
+        //document.querySelector("#root > div > div.layout.layout-auch > div.level-block > div:nth-child("+(numGroup+1)+")?.classList.add('active')");
     } else {
         numGroup = 0}
     return numGroup
