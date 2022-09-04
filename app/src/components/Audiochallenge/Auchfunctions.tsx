@@ -1,10 +1,30 @@
 
-import React, { SelectHTMLAttributes, useEffect, useState } from "react";
+import React, { DOMElement, SelectHTMLAttributes, useEffect, useState } from "react";
 import IWord from "../../Interfaces/IWord";
 import getWords from "../../services/request";
 import Auchform from "./Auchform";
+//import {group, page} from "../../routes/Textbook/Page";
+import { useSelector } from 'react-redux';
 
 import "./Audiochallenge.css"
+import Layout from "../Layout/Layout";
+import ReactDOM from "react-dom";
+import wordsSlice, { setDifficultWords } from "../../store/wordsSlice";
+import { getAllUserWords } from "../../services/user";
+
+
+
+const pageRandomNumber = Math.floor(Math.random() * 30);
+
+/* const historyLink = document.referrer;
+const wordsPage = historyLink[historyLink.length - 1]
+const wordsGroup = historyLink[historyLink.length - 8]
+
+console.log(document.referrer, historyLink[historyLink.length - 1], historyLink[historyLink.length - 8]) 
+
+console.log('prevurl:', ) */
+
+
 
 const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
             const randomizeWord:number = Math.floor(Math.random() * 16);
@@ -26,6 +46,20 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
           
 function AudioChellengeCard(): JSX.Element {
 
+    const user = useSelector((state: any) => state.user.data);
+    const data = useSelector((state: any) => state.words.words);
+    //const pages = useSelector((state: any) => page.words.words);
+
+    const name = user.name;
+    const userWords = user.page;
+
+    const newWords = data.words;
+    //console.log(name)
+    console.log(data,newWords)
+
+
+
+
     const initialValue: IWord[] | [] = [];
 
     const [words, setWords] = useState(initialValue);
@@ -38,6 +72,17 @@ function AudioChellengeCard(): JSX.Element {
                 getCard(res, setCard)
              })
            }, []);
+
+/*            if ((historyLink[historyLink.length - 1]) !== "e") {
+            console.log('from book')
+            useEffect(() => {
+                getWords(+wordsGroup, +wordsPage, res => { 
+                   setWords(res);
+                   getCard(res, setCard)
+                })
+              }, []);
+        } */
+        
 
            // СОБЫТИЕ ПО КЛИКУ "ДАЛЕЕ"
 
@@ -87,6 +132,94 @@ function AudioChellengeCard(): JSX.Element {
     
         return (
             <div>
+                <Layout className="layout-auch" title='Игра "Аудиовызов"'>
+        <div className="game-description">
+        <p>В этой игре ты сможешь проверить свои знания на слух.</p>
+          <p><b>Цель:</b> выбрать слово, которое слышишь</p>
+        </div>
+          <h3 className="level-title">Выбери уровень:</h3>
+          
+          <div className="level-block">
+
+          <div className="level" onClick={() => {
+              getWords(0, 0, res => { 
+                setWords(res)
+                getCard(res, setCard)
+            })
+            
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.remove('active');
+              document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.add('active');
+              }
+              }>A1</div>
+
+                <div  className="level" onClick={() => {
+              getWords(1, 0, res => { 
+                setWords(res)
+                getCard(res, setCard)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.add('active');
+              }}>A2</div>
+              <div  className="level" onClick={() => {
+              getWords(2, pageRandomNumber, res => { 
+                setWords(res)
+                getCard(res, setCard)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.add('active');
+              }}>B1</div>
+            <div  className="level"  onClick={() => {
+                getWords(3, pageRandomNumber, res => { 
+                  setWords(res)
+                  getCard(res, setCard)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.add('active');
+              }}>B2</div>
+            <div  className="level"  onClick={() => {
+                getWords(4, pageRandomNumber, res => { 
+                  setWords(res)
+                  getCard(res, setCard)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.add('active');
+              }}>C1</div>
+            <div  className="level"  onClick={() => {
+                getWords(5, pageRandomNumber, res => { 
+                  setWords(res)
+                  getCard(res, setCard)})
+                document.querySelector("#root > div > div.timer-field")?.classList.add('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(1)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(2)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(3)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(4)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(5)")?.classList.remove('active');
+                document.querySelector("#root > div > div.layout > div.level-block > div:nth-child(6)")?.classList.add('active');
+              }}>C2</div>
+
+          </div>
+            </Layout>
                 <Auchform
                     wordsCard = {card}
                     KeyCode = {KeyCode}
@@ -95,6 +228,7 @@ function AudioChellengeCard(): JSX.Element {
                     <button className="header-button next noclick" onClick={() => {
                     clickNext()
                 }}><p className="next-button">Далее</p></button>
+                <div>{name}</div>
             </div>
         );
 }
