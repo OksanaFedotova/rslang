@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from 'react-router';
 import { useDispatch } from "react-redux";
 import { setGroup, setPage } from "../../store/pageSlice";
@@ -10,10 +10,6 @@ import sprintGamePic from "../../assets/sprintGamePic.jpg";
 import audioGamePic from "../../assets/audioGamePic.jpg";
 
 const Games = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-  dispatch(setGroup(null));
-  })
   const navToGames = useNavigate();
 
   const dispatch = useDispatch();
