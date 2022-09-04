@@ -1,8 +1,12 @@
 import React, { Fragment, useEffect, useState  } from "react";
-import { useSelector} from 'react-redux';
-import { getAggregatedWords } from '../../services/user';
-import Card from "../../components/Card/Card";
+import { useSelector, useDispatch} from 'react-redux';
 
+import { getAggregatedWords } from '../../services/user';
+import { setAllDifficultWords } from '../../store/wordsSlice';
+
+import Header from "../../components/Header/Header";
+import Card from "../../components/Card/Card";
+import Footer from "../../components/Footer/Footer";
 
 const initialValue: _IWord[] | [] = [];
 interface _IWord {
@@ -27,12 +31,18 @@ const Difficult = () => {
   const [difficultWords, setDifficultWords] = useState(initialValue);
   
   useEffect(() => getAggregatedWords(user, res => setDifficultWords(res[0].paginatedResults)), []);
-  const handleRedraw = () => {
-    getAggregatedWords(user, res => setDifficultWords(res[0].paginatedResults))
-  }
 
+  const handleRedraw = () => {
+    getAggregatedWords(user, res => {setDifficultWords(res[0].paginatedResults)})
+  };
+
+  //redux
+  const dispatch = useDispatch();
+  getAggregatedWords(user, res => dispatch(setAllDifficultWords(res[0].paginatedResults)));
+  
   return (
     <Fragment>
+      <Header/>
     {
       difficultWords.map((word: _IWord) => {
         return <Card
@@ -54,7 +64,9 @@ const Difficult = () => {
       }
     )
     }
+     <Footer/>
   </Fragment>
    )
+
 }
 export default Difficult;

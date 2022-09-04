@@ -1,8 +1,9 @@
 
-import React, { Fragment, useEffect, useState  } from "react";
+import React, { Fragment, useEffect, useState, useRef  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {  useSelector, useDispatch } from "react-redux";
+import { setGroup, setMarkedWords, setPage } from "../../store/pageSlice";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -12,15 +13,13 @@ import Button from "../../components/Button/Button";
 import IWord from "../../Interfaces/IWord";
 import TextbookNav from "./TextbookNav";
 import Pagination from "../../components/Pagination/Pagination";
-
+import cn from 'classnames';
 
 import './Page.css';
-import { setGroup, setPage } from "../../store/pageSlice";
+
+
 
 const initialValue: IWord[] | [] = [];
-
-
-//const test = {"difficulty": "weak", "optional": {testFieldString: 'test', testFieldBoolean: true}} //временно, для проверки запроса
 
 const Page = () => {
 
@@ -31,6 +30,14 @@ const Page = () => {
   const dispatch = useDispatch();
   dispatch(setGroup(group));
   dispatch(setPage(page));
+  //выделять страницу, если слова отмечены
+  const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
+  let allMarked = false;
+  let menuGamesActive = true;
+  if (markedWords === 20) {
+    allMarked = true;
+    menuGamesActive = false;
+  }
 
   const differentStyles = ['A1','A2','B1','B2','C1','C2'];
   
@@ -39,9 +46,11 @@ const Page = () => {
   const [isMenuGames, setMenuGames] = useState(false);
 
   useEffect(() => {
-    getWords(group, page, res => setWords(res))
+    getWords(group, page, res => {
+      setWords(res);
+    })
   }, []);
-
+  //dispatch(setMarkedWords(marked))
   const handleClickButton = () => {
     setActive(!isActive)
   };
@@ -51,7 +60,7 @@ const Page = () => {
    return (
     <Fragment>
        <Header />
-       <div className={`page ${differentStyles[group]}`}>
+       <div className={cn("page", differentStyles[group], {allMarked: allMarked})}>
          <div className="button-container">
            <Button
              className="button textbook-button"
@@ -66,7 +75,7 @@ const Page = () => {
           <Button
             className="button games-button"
             title="Мини игры"
-            handleClick={showGames}
+            handleClick={() => {if (menuGamesActive) showGames()}}
           />
           {isMenuGames && 
             <ul className="page__menu-games">
@@ -86,7 +95,8 @@ const Page = () => {
           }
         </div>
          <div className="cards">
-           {words.map((word) => {
+           {
+            words.map((word) => {
              return <Card
                key={word.id.toString()}
                wordId={word.id.toString()}

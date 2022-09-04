@@ -50,7 +50,6 @@ function App() {
   //  } )()
   // }
   if (userLocal) {
-    console.log(userLocal)
       dispatch(setUser(userLocal));
       dispatch(setUserAuth(true));
   }

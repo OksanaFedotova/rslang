@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import ICard from "../../Interfaces/ICard";
 import { createUserWord, getUserWord, updateUserWord, deleteUserWord } from "../../services/user";
 //import { setDifficultWords } from "../../store/wordsSlice"
+import { calculateMarkedWords } from "../../store/pageSlice";
 import audioButton from "../../assets/audio.png";
 import cn from 'classnames';
 
@@ -13,7 +14,7 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [isDifficult, setDifficult] = useState(false);
   const [isStudied, setStudied] = useState(false);
@@ -21,12 +22,17 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
   useEffect(() => {
     getUserWord(user, wordId, (res) => {
       if (!res) return;
-      if (res.difficulty) setDifficult(true);
-      if (res.optional.studied) setStudied(true);
+      if (res.difficulty && res.difficulty !== 'none') {
+        setDifficult(true);
+      }
+      if (res.optional.studied) {
+        setStudied(true);
+      }
     })
   }, []);
+ 
   return (
-    <div className={cn("card", {difficult: isDifficult})}>
+    <div className={cn("card", {difficult: isDifficult}, {studied: isStudied})}>
       <img className="card-img" src={image}/>
       <div className="wrapper-word">
         <p className="word">{<b>{word}</b>} - {<i>{wordTranslate}</i>}</p>
@@ -60,22 +66,42 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
         { isAuth && <div className="mark-word">
             {!isDifficult && 
             <button 
-              onClick={() => { 
+              onClick={() => {
+                dispatch(calculateMarkedWords(1));
+                isStudied ? 
+                updateUserWord(user, wordId, {"difficulty": "medium", "optional": {studied: false, newWord: false}},
+                () => {
+                  setDifficult(true);
+                  setStudied(false);
+                })
+                 :
                 createUserWord(user, wordId, {"difficulty": "medium", "optional": {studied: false, newWord: false}}, 
-                () => { 
-                setDifficult(true);
-              });
+                () => setDifficult(true));
               }}> Cложное слово</button>}
               {isDifficult && 
               <button 
                 onClick={
                   () => { 
+                    dispatch(calculateMarkedWords(-1));
                     deleteUserWord(user, wordId);
                     setDifficult(false);
                     if(redraw) redraw();
-                  }
-                  }> Несложное слово </button>}
-            <button>Изученное слово</button>
+                  }}> Несложное слово </button>}
+            {!isStudied && <button
+              onClick={() => {
+                isDifficult ? 
+                updateUserWord(user, wordId, {"difficulty": "none", "optional": {studied: true, newWord: false}}, 
+                () => {
+                  setDifficult(false); 
+                  setStudied(true);
+                }) :
+                dispatch(calculateMarkedWords(1));
+                createUserWord(user, wordId, {"difficulty": "none", "optional": {studied: true, newWord: false}}, 
+                () => {
+                  setStudied(true);
+                });
+                if(redraw) redraw();
+              }}>Изученное слово</button>}
             </div>}
     </div>
   )
