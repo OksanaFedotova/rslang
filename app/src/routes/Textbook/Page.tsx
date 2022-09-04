@@ -1,9 +1,9 @@
 
-import React, { Fragment, useEffect, useState, useRef  } from "react";
+import React, { Fragment, useEffect, useState  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
 import {  useSelector, useDispatch } from "react-redux";
-import { setGroup, setMarkedWords, setPage } from "../../store/pageSlice";
+import { setGroup, setPage } from "../../store/pageSlice";
 
 import getWords from "../../services/request";
 import Card from "../../components/Card/Card";
@@ -34,7 +34,7 @@ const Page = () => {
   const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
   let allMarked = false;
   let menuGamesActive = true;
-  if (markedWords === 20) {
+  if (markedWords.length === 20) {
     allMarked = true;
     menuGamesActive = false;
   }
@@ -50,7 +50,7 @@ const Page = () => {
       setWords(res);
     })
   }, []);
-  //dispatch(setMarkedWords(marked))
+
   const handleClickButton = () => {
     setActive(!isActive)
   };
