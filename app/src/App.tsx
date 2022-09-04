@@ -30,6 +30,7 @@ function App() {
   const userLocal = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
   
    if (userLocal && userLocal.expire < Date.now()) {
+    console.log(userLocal.expire, Date.now())
     dispatch(setUserAuth(false));
     dispatch(setUser(null));
     localStorage.removeItem('user');
