@@ -9,7 +9,7 @@ b{
 
 
     background-color: rgb(211, 235, 247);
-    margin: 1em;
+    margin: 0 0 1em 0;
     padding: 1em;
     border-radius: 5px;
 }
@@ -104,4 +104,9 @@ b{
     text-align: center;
     margin-top: 20px;
     padding: 5px;
+}
+
+.layout-auch {
+    height: 350px;
+
 }
