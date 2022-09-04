@@ -55,7 +55,7 @@ function AudioChellengeCard(): JSX.Element {
 }
     function getPage () {
     if (numPage !== null) {
-        numGroup = numPage;
+        numPage = userPage;
     } else {
         numPage = 0}
         return numPage
