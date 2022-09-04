@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router';
+import  setStatistic  from "../../../services/setStatistic";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
 import Layout from "../../../components/Layout/Layout";
@@ -9,19 +10,6 @@ import './Sprint.css';
 import IWord from "../../../Interfaces/IWord";
 import getWords from "../../../services/request";
 import rightAnswer from "../../../assets/rightAnswer.mp3";
-
-import  setStatistic  from "../../../services/setStatistic"
-
-const userTest = {
-  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGU1N2U4NzAyYjBlMDAxNmU2MmNhNyIsImlhdCI6MTY2MjI5NzIyMywiZXhwIjoxNjYyMzExNjIzfQ.oXbIGOvUAi2uCqyg_fP2owZYDg8IgP_BVHiCgLFtrWU",
-  userId: "630e57e8702b0e0016e62ca7"
-};
-
-const gameName = 'sprint';
-const rightWords = [{'5e9f5ee35eb9e72bc21af4b4': 2}, {'5e9f5ee35eb9e72bc21af4b5': 1}]
-const wrongWords = [{'5e9f5ee35eb9e72bc21af4b6': 1}, {'5e9f5ee35eb9e72bc21b005a': 1}]
-
-//setStatistic(userTest, gameName, rightWords, wrongWords);
  
 const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
   const randomIndex = Math.floor(Math.random() * words.length);
