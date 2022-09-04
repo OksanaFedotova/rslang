@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router';
+import { useDispatch } from "react-redux";
+import { setGroup, setPage } from "../../store/pageSlice";
 import Header from "../../components/Header/Header";
 import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
@@ -7,9 +9,13 @@ import './Games.css';
 import sprintGamePic from "../../assets/sprintGamePic.jpg";
 import audioGamePic from "../../assets/audioGamePic.jpg";
 
-
 const Games = () => {
   const navToGames = useNavigate();
+
+  const dispatch = useDispatch();
+  dispatch(setPage(null));
+  dispatch(setGroup(null));
+  
   return  (
      <>
       <Header/>

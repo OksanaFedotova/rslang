@@ -10,8 +10,8 @@ const blurHandler = (e: React.FocusEvent<HTMLInputElement, Element>, callback: R
 }
 const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>, callback: React.Dispatch<React.SetStateAction<any>>, callback2: React.Dispatch<React.SetStateAction<any>>) => {
   callback(e.target.value)
-    if (e.target.value.length < 8) {
-      callback2('Пароль должен быть не меньше 8 символов')
+    if (e.target.value.length < 8 && e.target.value.length > 15) {
+      callback2('Пароль должен быть не меньше 8 символов и не больше 15')
     } else {
       callback2("");
     }

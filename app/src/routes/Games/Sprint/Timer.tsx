@@ -20,7 +20,6 @@ const Timer: React.FC<ITimer> = () => {
       }, [ seconds, timerActive ]);
       
 
-
 return (
     <div className="timer-field">
       {seconds
@@ -37,8 +36,7 @@ return (
           </Fragment>
         : <>
           {document.querySelector("#root > div > div.result-wrapper")?.classList.add('active')}
-          <button className="header-button game-button" onClick={() => window.location.reload()}>Сыграть ещё раз</button>
-
+          {document.querySelector("#root > div > div.level-wrapper")?.classList.add('hidden')}
         </>
       }
     </div>

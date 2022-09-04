@@ -48,6 +48,9 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({updateState, updateEnter}
           setPassword('');
       });
     }
+
+    document.querySelector(".input-form")?.addEventListener('click', () =>  setAuthError(false))
+
     return (
     <>
       <div className="form">

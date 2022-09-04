@@ -7,10 +7,6 @@ import Layout from "../../components/Layout/Layout";
 import textbookImg from "../../assets/textbook.jpeg"
 import './Textbook.css';
 
-if (localStorage.user) {
-    const user = JSON.parse(localStorage.user);
-}
-
 const Textbook = () => {
 
   return (
