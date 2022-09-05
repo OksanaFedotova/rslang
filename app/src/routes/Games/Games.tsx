@@ -27,10 +27,9 @@ const Games = () => {
           Спринт
         </div>
         <div className="audio-challenge game-block"  onClick={() => navToGames('../games/audio-challenge')}>
-        <a className="audio-challenge game-block" href="../games/audio-challenge">
           <img src={audioGamePic} alt={"audio-game-image"} className="game-image" />
           <p>Аудио вызов</p>
-          </a></div>
+        </div>
         </div>
       </Layout>
       <Footer/>
