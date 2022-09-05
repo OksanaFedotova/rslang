@@ -7,6 +7,8 @@ import { setAllDifficultWords } from '../../store/wordsSlice';
 import Header from "../../components/Header/Header";
 import Card from "../../components/Card/Card";
 import Footer from "../../components/Footer/Footer";
+import empty from "../../assets/empty.jpg";
+import './Difficult.css';
 
 const initialValue: _IWord[] | [] = [];
 interface _IWord {
@@ -36,13 +38,28 @@ const Difficult = () => {
     getAggregatedWords(user, res => {setDifficultWords(res[0].paginatedResults)})
   };
 
+  
+useEffect(() => {
+  const elem = document.querySelector('.difficult-page-base');
+  const cardBlock = document.querySelector('.card');
+  console.log(cardBlock)
+    if(cardBlock) {
+    elem?.classList.add('hidden');
+  } else {
+    elem?.classList.remove('hidden')
+  }
+})
+
   //redux
   const dispatch = useDispatch();
   getAggregatedWords(user, res => dispatch(setAllDifficultWords(res[0].paginatedResults)));
+
+
   
   return (
     <Fragment>
       <Header/>
+        <div className='difficult-words-wrapper'>
     {
       difficultWords.map((word: _IWord) => {
         return <Card
@@ -64,9 +81,15 @@ const Difficult = () => {
       }
     )
     }
+    <div className='difficult-page-base hidden'>
+          <h3 className="difficult-h3">Сложные слова еще не отмечены...</h3>
+        <img className="difficult-image" src={empty} alt="difficult-image"/>
+      </div>
+    </div>
      <Footer/>
   </Fragment>
    )
 
 }
 export default Difficult;
+
