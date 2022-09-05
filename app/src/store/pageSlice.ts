@@ -26,10 +26,8 @@ export const slice = createSlice({
     },
     addMarkedWords: (state, action) => {state.markedWordsOnPage.push(action.payload)},
     removeMarkedWords: (state, action) => {
-      
       const temp = [...state.markedWordsOnPage].filter((word) => word.wordId !== action.payload);
       state.markedWordsOnPage = temp;
-      console.log(temp)
     }
   }
 })

@@ -4,6 +4,6 @@ const getWords = (group: number, page: number, callback: React.Dispatch<React.Se
   fetch(`https://rslang-b.herokuapp.com/words?group=${group}&page=${page}`)
   .then((res) => res.json())
   .then((res) => callback(res))
-  .catch((err) => console.log(err))
+  .catch((err) => console.error(err))
 }
 export default getWords;

@@ -47,7 +47,6 @@ const Difficult = () => {
 useEffect(() => {
   const elem = document.querySelector('.difficult-page-base');
   const cardBlock = document.querySelector('.card');
-  console.log(cardBlock)
     if(cardBlock) {
     elem?.classList.add('hidden');
   } else {
