@@ -8,6 +8,11 @@ import './Auchmodal.css'
 export const knowWords: string[] = [];
 export const dontknowWords: string[] = [];
 
+export const knowWordsId: string[] = [];
+export const dontknowWordsId: string[] = [];
+
+
+
 const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => {
     
     // счетчик правильных и неправильных ответов 
@@ -26,12 +31,10 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
     function GetStat () {
         if (countWin + countfail >= 10) {
             document.querySelector(".auch-wrap")?.classList.remove('disable');
-
-
         }
       }
 
-      GetStat () 
+      GetStat ()
 
         
         useEffect(() => {
@@ -49,13 +52,16 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('correct')
                 handleWin();
                 knowWords.push(propWord, wordsCard[4])
-                console.log(knowWords)
+                knowWordsId.push(wordsCard[num+5])
+
+                console.log(knowWords, knowWordsId)
 
             } else {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('incorrect')
                 handleFail();
                 dontknowWords.push(propWord, wordsCard[4])
-                console.log(dontknowWords)
+                dontknowWordsId.push(wordsCard[num+5])
+                console.log(dontknowWords, dontknowWordsId)
             }
             document.querySelector("#root > div > div.audiocard > div > div")?.classList.add('noclick')
             document.querySelector("#root > div > button.header-button.next.noclick")?.classList.remove('noclick')

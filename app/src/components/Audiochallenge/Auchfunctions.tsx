@@ -3,7 +3,7 @@ import React, { DOMElement, SelectHTMLAttributes, useEffect, useState } from "re
 import IWord from "../../Interfaces/IWord";
 import getWords from "../../services/request";
 import Auchform from "./Auchform";
-//import {group, page} from "../../routes/Textbook/Page";
+import {knowWordsId, dontknowWordsId} from "./Auchform"
 import { useSelector } from 'react-redux';
 
 import "./Audiochallenge.css"
@@ -11,6 +11,7 @@ import Layout from "../Layout/Layout";
 import ReactDOM from "react-dom";
 import wordsSlice, { setDifficultWords } from "../../store/wordsSlice";
 import { getAllUserWords } from "../../services/user";
+import setStatistic from "../../services/setStatistic";
 
 
 
@@ -28,9 +29,16 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
             const word1 = words[wordOne].word;
             const word2 = words[wordTwo].word;
             const word3 = words[wordThree].word;
+
+            const wordId = words[randomizeWord].id;
+            const word1Id = words[wordOne].id;
+            const word2Id = words[wordTwo].id;
+            const word3Id = words[wordThree].id;
+
             const audioWord = words[randomizeAudio].audio;
             const audioWordText = words[randomizeAudio].word;
-            callback([word, word1, word2, word3, `https://rslang-b.herokuapp.com/${audioWord}`, audioWordText])
+
+            callback([word, word1, word2, word3, `https://rslang-b.herokuapp.com/${audioWord}`, audioWordText, wordId, word1Id, word2Id, word3Id])
           }
 
           
@@ -39,6 +47,7 @@ function AudioChellengeCard(): JSX.Element {
 
     // ГРУППА И СТРАНИЦА СЛОВ ИЗ REDUX
     const PageGroup = useSelector((state: any) => state.page);
+    const user = useSelector((state: any) => state.user.data);
 
     const userGroup = PageGroup.currentGroup;
     const userPage = PageGroup.currentPage;
@@ -49,7 +58,7 @@ function AudioChellengeCard(): JSX.Element {
     function getGroup () {
     if (userGroup !== null) {
         numGroup = userGroup;
-        //document.querySelector("#root > div > div.layout.layout-auch > div.level-block > div:nth-child("+(numGroup+1)+")?.classList.add('active')");
+
     } else {
         numGroup = 0}
     return numGroup
@@ -63,9 +72,44 @@ function AudioChellengeCard(): JSX.Element {
     }
 
         console.log("numGroup:",getGroup(), "numPage:", getPage())
-    
-    //
 
+//преобразование массива статистики для передачи в бэк
+
+        function pushStat (arr: string[]) {
+
+                const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
+                    get: any; set: (arg0: any, arg1: number) => void; 
+                    }; result: any[]; }, cur: string | number) {
+                    if (!acc.hash[cur]) {
+                      acc.hash[cur] = { [cur]: 1 };
+                      acc.map.set(acc.hash[cur], 1);
+                      acc.result.push(acc.hash[cur]);
+                    } else {
+                      acc.hash[cur][cur] += 1;
+                      acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
+                    }
+                    return acc;
+                  }, {
+                    hash: {},
+                    map: new Map(),
+                    result: []
+                  });
+                  
+                  const result = resultReduce.result.sort(function(a: any, b: any) {
+                    return resultReduce.map.get(b) - resultReduce.map.get(a);
+                  });
+
+                return result
+
+          }
+
+        if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
+            pushStat (knowWordsId)
+        }
+
+        setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
+
+        //useStates
 
     const initialValue: IWord[] | [] = [];
 
