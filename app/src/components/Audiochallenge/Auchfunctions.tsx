@@ -48,6 +48,7 @@ function AudioChellengeCard(): JSX.Element {
 
     // ГРУППА И СТРАНИЦА СЛОВ ИЗ REDUX
     const PageGroup = useSelector((state: any) => state.page);
+
     const user = useSelector((state: any) => state.user.data);
 
     const userGroup = PageGroup.currentGroup;
@@ -65,7 +66,7 @@ function AudioChellengeCard(): JSX.Element {
     return numGroup
 }
     function getPage () {
-    if (numPage !== null) {
+    if (userGroup !== null) {
         numPage = userPage;
     } else {
         numPage = 0}
@@ -85,6 +86,13 @@ function AudioChellengeCard(): JSX.Element {
     const [KeyCode, setKeyCode] = useState(0);
 
           useEffect(() => {
+
+            if (userGroup !== null) {
+              document.querySelector('.level-title')?.classList.add('disable')
+              document.querySelector('.level-block')?.classList.add('disable')
+              document.querySelector('#root > div > div.layout.layout-auch')?.classList.add('layout-auch2')
+          }
+
              getWords(getGroup(), getPage(), res => { 
                 setWords(res);
                 getCard(res, setCard)
