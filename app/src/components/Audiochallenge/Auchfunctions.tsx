@@ -72,8 +72,6 @@ function AudioChellengeCard(): JSX.Element {
         return numPage
     }
 
-        console.log("numGroup:",getGroup(), "numPage:", getPage())
-
 //преобразование массива статистики для передачи в бэк
 
 
@@ -110,7 +108,6 @@ function AudioChellengeCard(): JSX.Element {
             setTimeout( () => {
           if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
             setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
-        console.log("push:", pushStat(knowWordsId),pushStat(dontknowWordsId))
         }else {return}},100)
          
 

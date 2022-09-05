@@ -38,7 +38,6 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
 
         
         useEffect(() => {
-            console.log('Iam', KeyCode)
             if (KeyCode) {
                 CheckWord(wordsCard[KeyCode - 1], wordsCard[5], KeyCode)
             }
@@ -54,14 +53,11 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 knowWords.push(propWord, wordsCard[4])
                 knowWordsId.push(wordsCard[num+5])
 
-                console.log(knowWords, knowWordsId)
-
             } else {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('incorrect')
                 handleFail();
                 dontknowWords.push(propWord, wordsCard[4])
                 dontknowWordsId.push(wordsCard[num+5])
-                console.log(dontknowWords, dontknowWordsId)
             }
             document.querySelector("#root > div > div.audiocard > div > div")?.classList.add('noclick')
             document.querySelector("#root > div > button.header-button.next.noclick")?.classList.remove('noclick')
