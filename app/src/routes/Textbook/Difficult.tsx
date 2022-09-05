@@ -1,13 +1,17 @@
 import React, { Fragment, useEffect, useState  } from "react";
 import { useSelector, useDispatch} from 'react-redux';
+import { Link } from "react-router-dom";
 
 import { getAggregatedWords } from '../../services/user';
 import { setAllDifficultWords } from '../../store/wordsSlice';
+import getWords from "../../services/request";
 
 import Header from "../../components/Header/Header";
 import Card from "../../components/Card/Card";
 import Footer from "../../components/Footer/Footer";
 import empty from "../../assets/empty.jpg";
+import Button from "../../components/Button/Button";
+import TextbookNav from "./TextbookNav";
 import './Difficult.css';
 
 const initialValue: _IWord[] | [] = [];
@@ -29,6 +33,7 @@ const Difficult = () => {
 
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
+  const page = useSelector((state: any) => state.page.currentPage);
 
   const [difficultWords, setDifficultWords] = useState(initialValue);
   
@@ -53,12 +58,50 @@ useEffect(() => {
   //redux
   const dispatch = useDispatch();
   getAggregatedWords(user, res => dispatch(setAllDifficultWords(res[0].paginatedResults)));
-
-
-  
+  //
+  const [isActive, setActive] = useState(false);
+  const [isMenuGames, setMenuGames] = useState(false);
+   const [menuGamesActive, setMenuGamesActive] = useState(true);
+  const handleClickButton = () => {
+    setActive(!isActive)
+  };
+  const showGames = () => {
+    setMenuGames(!isMenuGames)
+  }
   return (
     <Fragment>
       <Header/>
+         <div className="button-container">
+           <Button
+             className="button textbook-button"
+             title="Выберите раздел учебника"
+             handleClick={handleClickButton} />
+          {
+            isActive && <TextbookNav/> 
+          }
+          <Button
+            className="button games-button"
+            title="Мини игры"
+            handleClick={() => {if (menuGamesActive) showGames()}}
+          />
+          {isMenuGames && 
+            <ul className="page__menu-games">
+              <Link
+                key={'link-sprint'}
+                to={'../games/sprint'}
+              >
+                Спринт
+              </Link>
+              <Link
+                key={'link-audio-challenge'}
+                to={'../games/audio-challenge'} 
+              >
+                Аудио-вызов
+              </Link>
+            </ul>
+          }
+        </div>
+
         <div className='difficult-words-wrapper'>
     {
       difficultWords.map((word: _IWord) => {
