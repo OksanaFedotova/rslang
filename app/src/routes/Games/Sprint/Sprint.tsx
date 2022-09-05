@@ -283,6 +283,7 @@ const Sprint = () => {
          </div>
          <div className="result-wrapper"> 
          <div className='result-modal' onClick={() => {
+          console.log(pushStat(correctAnswers))
           setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers));
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');

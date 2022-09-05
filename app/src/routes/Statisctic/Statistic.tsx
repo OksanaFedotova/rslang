@@ -65,7 +65,7 @@ const Statisctic = () => {
       {!newUser && 
       <div>
        <div>Всего выученных слов: <p>{data[1]}</p></div> 
-       <div>Всего выученных слов: <p>{data[2].learnedWordsPerDay}</p></div> 
+       <div>Выученных слов за день: <p>{data[2].learnedWordsPerDay}</p></div> 
        
        </div>
       }
