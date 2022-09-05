@@ -245,7 +245,6 @@ const Sprint = () => {
                         }
 
                         currentSerie.current = 0;
-                        console.log("cur", currentSerie.current)
                       }
                     }
                   })
@@ -286,7 +285,6 @@ const Sprint = () => {
                         maxSerie.current = currentSerie.current;
                       }
                       currentSerie.current = 0;
-                      console.log("cur", currentSerie.current)
                     }
                   }
                   })
