@@ -48,6 +48,7 @@ function AudioChellengeCard(): JSX.Element {
 
     // ГРУППА И СТРАНИЦА СЛОВ ИЗ REDUX
     const PageGroup = useSelector((state: any) => state.page);
+
     const user = useSelector((state: any) => state.user.data);
 
     const userGroup = PageGroup.currentGroup;
@@ -65,57 +66,13 @@ function AudioChellengeCard(): JSX.Element {
     return numGroup
 }
     function getPage () {
-    if (numPage !== null) {
+    if (userGroup !== null) {
         numPage = userPage;
     } else {
         numPage = 0}
         return numPage
     }
 
-//преобразование массива статистики для передачи в бэк
-
-
-
-        function pushStat (arr: string[]) {
-
-                const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
-                    get: any; set: (arg0: any, arg1: number) => void; 
-                    }; result: any[]; }, cur: string | number) {
-                    if (!acc.hash[cur]) {
-                      acc.hash[cur] = { [cur]: 1 };
-                      acc.map.set(acc.hash[cur], 1);
-                      acc.result.push(acc.hash[cur]);
-                    } else {
-                      acc.hash[cur][cur] += 1;
-                      acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
-                    }
-                    return acc;
-                  }, {
-                    hash: {},
-                    map: new Map(),
-                    result: []
-                  });
-                  
-                  const result = resultReduce.result.sort(function(a: any, b: any) {
-                    return resultReduce.map.get(b) - resultReduce.map.get(a);
-                  });
-
-                return result
-
-          }
-
-
-            setTimeout( () => {
-          if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
-            setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
-        }else {return}},100)
-         
-
-
-
-
-
-        
 
         //useStates
 
@@ -126,6 +83,13 @@ function AudioChellengeCard(): JSX.Element {
     const [KeyCode, setKeyCode] = useState(0);
 
           useEffect(() => {
+
+            if (userGroup !== null) {
+              document.querySelector('.level-title')?.classList.add('disable')
+              document.querySelector('.level-block')?.classList.add('disable')
+              document.querySelector('#root > div > div.layout.layout-auch')?.classList.add('layout-auch2')
+          }
+
              getWords(getGroup(), getPage(), res => { 
                 setWords(res);
                 getCard(res, setCard)
