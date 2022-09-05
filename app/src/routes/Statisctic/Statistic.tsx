@@ -75,13 +75,13 @@ const Statisctic = () => {
           </div>
           <div className="game-stat-block">
             <div className="block-title">Спринт</div>
-       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsPerDay}</p></div>
+       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsSprint}</p></div>
        <div>Процент правильных ответов за день: <p className="data-block">{data[2].percent}%</p></div>
        <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
           </div>
           <div className="game-stat-block">
             <div className="block-title">Аудиовызов</div>
-       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsPerDay}</p></div>
+       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsAudio}</p></div>
        <div>Процент правильных ответов за день: <p className="data-block">{data[2].percent}%</p></div>
        <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
           </div>

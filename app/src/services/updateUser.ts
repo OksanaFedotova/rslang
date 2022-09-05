@@ -25,11 +25,12 @@ const updateLearnedWords = async (user: IUserExist, type: string) => {
     }
   } else {
     const lw = type == 'add' ? userStat.learnedWords + 1 : userStat.learnedWords - 1;
+    const lwpd = type == 'add' ? userStat.optional.learnedWordsPerDay + 1 : userStat.optional.learnedWordsPerDay - 1;
     data = {
       learnedWords: lw,
       optional: {
         currentDate: currentDate,
-        learnedWordsPerDay: userStat.optional.learnedWordsPerDay || 0,
+        learnedWordsPerDay: lwpd  || 0,
         newWordsPerDay: userStat.optional.newWordsPerDay || 0,
         sprintCorrect: userStat.optional.sprintCorrect || 0,
         sprintWrong: userStat.optional.sprintWrong || 0,
