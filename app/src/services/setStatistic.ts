@@ -86,14 +86,13 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   }
  // const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
 
- //процент
- const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
- percent += percentPerGame;
-  
+  //процент
+  const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
+  percent += percentPerGame;
+  //новые слова
   const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
   const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
   const allWordsPerGame = rightWordsPerGame.concat(wrongWordsPerGame)
-  //новые слова
   const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;
   newWordsPerDay += newWordsPerGame;
   //выученные слова

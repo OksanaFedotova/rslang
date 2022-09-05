@@ -32,11 +32,17 @@ const Page = () => {
   dispatch(setPage(page));
   //выделять страницу, если слова отмечены
   const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
-  let allMarked = false;
-  let menuGamesActive = true;
-  if (markedWords.length === 20) {
-    allMarked = true;
-    menuGamesActive = false;
+  const [allMarked, setAllMarked] = useState(false);
+  const [menuGamesActive, setMenuGamesActive] = useState(true);
+  const handlePageStyle = () => {
+    if (markedWords.length == 19) {
+      setAllMarked(true);
+      setMenuGamesActive(false);
+    } 
+    if (markedWords.length < 19) {
+      setAllMarked(false);
+      setMenuGamesActive(true);
+    }
   }
 
   const differentStyles = ['A1','A2','B1','B2','C1','C2'];
@@ -48,6 +54,11 @@ const Page = () => {
   useEffect(() => {
     getWords(group, page, res => {
       setWords(res);
+       if (markedWords.length == 20) {
+      setAllMarked(true);
+      setMenuGamesActive(false);
+      console.log(allMarked)
+    }
     })
   }, []);
 
@@ -111,6 +122,7 @@ const Page = () => {
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
                audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`}
+               setPageStyle={handlePageStyle}
                />;
             }
            )}

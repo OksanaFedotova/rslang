@@ -13,5 +13,6 @@ interface ICard {
   audioExample: string;
   audioMeaning: string;
   redraw?: () => void;
+  setPageStyle? : () => void;
 }
 export default ICard;
