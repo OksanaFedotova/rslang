@@ -24,11 +24,6 @@ const correctAnswers: string[] = [];
 const wrongAnswers: string[] = [];
 
 
-interface Serie {
-  serie: number;
-}
-
-
 const Sprint = () => {
   const groupCurrent = useSelector((state: any) => state.page.currentGroup);
   const pageCurrent = useSelector((state: any) => state.page.currentPage);
