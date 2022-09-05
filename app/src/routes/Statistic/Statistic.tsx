@@ -8,6 +8,7 @@ import Footer from "../../components/Footer/Footer";
 
 import { getStatistic } from "../../services/requestStatistic";
 import { setUser, setUserAuth } from "../../store/userSlice";
+import './Statisctic.css'
 
 const Statistic = () => {
   const dispatch = useDispatch();
@@ -44,14 +45,33 @@ const Statistic = () => {
     <Fragment>
     <Header/>
     {isAuth && 
-      <div>
-      <button onClick={handleClick}>Выйти</button>
+      <div className="page-stat-wrapper">
       <div>
       {newUser && <div>Вы новый пользователь, не можем отобразить статистику для Вас</div>}
       {!newUser && 
-      <div>
-       <div>Всего выученных слов: <p>{data[1]}</p></div> 
-       <div>Выученных слов за день: <p>{data[2].learnedWordsPerDay}</p></div>   
+      <div className="wrapper-stat-page">
+      <h3 className="stat-title">Статистика</h3>
+       <div className="user-name">Пользователь: {user.name}</div>
+       <div className="stat-blocks-wrapper">
+       <div className="game-stat-block">
+            <div className="block-title">Учебник</div>
+       <div>Всего выученных слов: <p className="data-block">{data[1]}</p></div> 
+       <div>Выученных слов за день: <p className="data-block">{data[2].learnedWordsPerDay}</p></div>
+       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsPerDay}</p></div>
+          </div>
+          <div className="game-stat-block">
+            <div className="block-title">Спринт</div>
+       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsSprint}</p></div>
+       <div>Процент правильных ответов за день: <p className="data-block">{data[2].percent}%</p></div>
+       <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
+          </div>
+          <div className="game-stat-block">
+            <div className="block-title">Аудиовызов</div>
+       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsAudio}</p></div>
+       <div>Процент правильных ответов за день: <p className="data-block">{data[2].percent}%</p></div>
+       <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
+          </div>
+        </div>
        </div>
       }
       </div>
