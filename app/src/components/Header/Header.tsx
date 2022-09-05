@@ -12,7 +12,7 @@ import './Header.css';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: any) => state.user.isAuth)
+  let isAuth = useSelector((state: any) => state.user.isAuth)
 
   const navigator = useNavigate();
 
@@ -24,6 +24,8 @@ const Header = () => {
     dispatch(setUserAuth(false));
     localStorage.removeItem('user');
     navigator('..');
+    setEnterButton(true);
+    isAuth = false;
   }
 
     return (
@@ -35,7 +37,8 @@ const Header = () => {
           </div>
           <Menu active={menuActive} setActive={setMenuActive}></Menu>
           {/*состояние регистрации*/}
-          {(enterButton && !isAuth) && <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>}
+          {(enterButton && !isAuth) && 
+          <button className="header-button" onClick={() => setModalActive(true) }>Войти</button>}
           {(!enterButton || isAuth) && 
           <div>
           <NavLink className="nav-link" to={'/statistics'}>Моя статистика </NavLink>
