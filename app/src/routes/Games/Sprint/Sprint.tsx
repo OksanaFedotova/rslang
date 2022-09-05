@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router';
 import Header from "../../../components/Header/Header";
-import Footer from "../../../components/Footer/Footer";
 import Layout from "../../../components/Layout/Layout";
 import Timer from "./Timer";
 import './Sprint.css';
@@ -299,7 +298,6 @@ const Sprint = () => {
         </div>
         </div>
       </Layout>
-      <Footer/>
     </>
   )
 }

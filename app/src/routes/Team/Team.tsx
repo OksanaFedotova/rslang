@@ -3,6 +3,8 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import './Team.css';
 import testPicture from "../../assets/testPicture.jpg";
+import sashaPicture from "../../assets/Sasha.jpg";
+
 import githubIcon from "../../assets/githubIcon.svg";
 
 const Team = () => {
@@ -20,10 +22,10 @@ const Team = () => {
           <a target="blank" rel="noreferer" href='https://github.com/OksanaFedotova' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">
-          <img src={testPicture} alt={"team-member-image"} className="team-member-image"/>
+          <img src={sashaPicture} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Александр</p>
           <p className="team-member-role">Developer</p>
-          <p className="team-member-decription">Добавить пару слов о себе</p>
+          <p className="team-member-decription">печатает...</p>
           <a target="blank" rel="noreferer" href='https://github.com/sashajozwiak' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">
