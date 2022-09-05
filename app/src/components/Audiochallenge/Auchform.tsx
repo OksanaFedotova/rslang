@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IAuchForm from "../../Interfaces/IAuchForm";
 import audioButton from "../../assets/audio.png";
 
 import './Audiochallenge.css'
 import './Auchmodal.css'
+
+import setStatistic from "../../services/setStatistic";
+import { useSelector } from "react-redux";
 
 export const knowWords: string[] = [];
 export const dontknowWords: string[] = [];
@@ -13,8 +16,42 @@ export const dontknowWordsId: string[] = [];
 
 
 
-const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => {
+function pushStat (arr: string[]) {
+
+
+  const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
+      get: any; set: (arg0: any, arg1: number) => void; 
+      }; result: any[]; }, cur: string | number) {
+      if (!acc.hash[cur]) {
+        acc.hash[cur] = { [cur]: 1 };
+        acc.map.set(acc.hash[cur], 1);
+        acc.result.push(acc.hash[cur]);
+      } else {
+        acc.hash[cur][cur] += 1;
+        acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
+      }
+      return acc;
+    }, {
+      hash: {},
+      map: new Map(),
+      result: []
+    });
     
+    const result = resultReduce.result.sort(function(a: any, b: any) {
+      return resultReduce.map.get(b) - resultReduce.map.get(a);
+    });
+
+  return result
+
+}
+
+const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => {
+
+  const maxSerie = useRef(0);
+  const currentSerie = useRef(0);
+    
+
+  const user = useSelector((state: any) => state.user.data);
     // счетчик правильных и неправильных ответов 
     const [countWin, setCounterWin] = useState(0)
     const [countfail, setCounterfail] = useState(0)
@@ -31,14 +68,15 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
     function GetStat () {
         if (countWin + countfail >= 10) {
             document.querySelector(".auch-wrap")?.classList.remove('disable');
+            setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId), maxSerie.current)
+
         }
       }
 
       GetStat ()
 
-        
+
         useEffect(() => {
-            console.log('Iam', KeyCode)
             if (KeyCode) {
                 CheckWord(wordsCard[KeyCode - 1], wordsCard[5], KeyCode)
             }
@@ -46,23 +84,31 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
 
         // ПРОВЕРКА СЛОВА
 
+
+
         function CheckWord (propWord:string, propaudioWord:string, num:number) {
             
+
             if (propWord === propaudioWord) {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('correct')
                 handleWin();
                 knowWords.push(propWord, wordsCard[4])
                 knowWordsId.push(wordsCard[num+5])
+                ++currentSerie.current;
 
-                console.log(knowWords, knowWordsId)
+
 
             } else {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('incorrect')
                 handleFail();
                 dontknowWords.push(propWord, wordsCard[4])
                 dontknowWordsId.push(wordsCard[num+5])
-                console.log(dontknowWords, dontknowWordsId)
+                if (currentSerie.current > maxSerie.current) {
+                  maxSerie.current = currentSerie.current;
+                }
+                currentSerie.current = 0; 
             }
+
             document.querySelector("#root > div > div.audiocard > div > div")?.classList.add('noclick')
             document.querySelector("#root > div > button.header-button.next.noclick")?.classList.remove('noclick')
         }
@@ -103,7 +149,7 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
 
     return (
 
-     <div key={index} className="word-block word" onClick={() => {
+     <div key={`word${index}`} className="word-block word" onClick={() => {
         CheckWord(item, wordsCard[5], index + 1)
 
 }} >{<b>{index + 1}.{item}</b>}</div>
@@ -139,7 +185,7 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
 
                     return (
                       index % 2 ? null :
-                      <div className="small-word"> {item} 
+                      <div className="small-word" key={`small${index}`}> {item} 
                       
                       <img
                       src={audioButton}
@@ -164,7 +210,7 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
 
 return (
   index % 2 ? null :
-                      <div className="small-word"> {item} 
+                      <div className="small-word" key={`smallword${index}`}> {item} 
                       
                       <img
                       src={audioButton}

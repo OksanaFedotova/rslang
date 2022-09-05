@@ -72,53 +72,9 @@ function AudioChellengeCard(): JSX.Element {
         return numPage
     }
 
-        console.log("numGroup:",getGroup(), "numPage:", getPage())
+        
 
 //преобразование массива статистики для передачи в бэк
-
-
-
-        function pushStat (arr: string[]) {
-
-                const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
-                    get: any; set: (arg0: any, arg1: number) => void; 
-                    }; result: any[]; }, cur: string | number) {
-                    if (!acc.hash[cur]) {
-                      acc.hash[cur] = { [cur]: 1 };
-                      acc.map.set(acc.hash[cur], 1);
-                      acc.result.push(acc.hash[cur]);
-                    } else {
-                      acc.hash[cur][cur] += 1;
-                      acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
-                    }
-                    return acc;
-                  }, {
-                    hash: {},
-                    map: new Map(),
-                    result: []
-                  });
-                  
-                  const result = resultReduce.result.sort(function(a: any, b: any) {
-                    return resultReduce.map.get(b) - resultReduce.map.get(a);
-                  });
-
-                return result
-
-          }
-
-
-            setTimeout( () => {
-          if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
-            setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
-        console.log("push:", pushStat(knowWordsId),pushStat(dontknowWordsId))
-        }else {return}},100)
-         
-
-
-
-
-
-        
 
         //useStates
 
