@@ -13,12 +13,13 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  width: fit-content;
 }
 .group {
   display: inline-block;
-  width: 200px;
-  height: 60px;
-  margin: 5px;
+  width: 12rem;
+  height: 3.75rem;
+  margin: 0.313rem;
   text-decoration: none;
   color: #000;
   text-align: center;

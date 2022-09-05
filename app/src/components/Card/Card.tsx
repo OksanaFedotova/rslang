@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import ICard from "../../Interfaces/ICard";
 import { createUserWord, getUserWord, updateUserWord, deleteUserWord } from "../../services/user";
-import { setMarkedWords, addMarkedWords } from "../../store/pageSlice";
+import { setMarkedWords, addMarkedWords, removeMarkedWords} from "../../store/pageSlice";
 import audioButton from "../../assets/audio.png";
 import cn from 'classnames';
 
@@ -35,7 +35,7 @@ const prepareData = (arr: any, wordId: string, difficulty: string, studied: bool
   return dataToLoad;
 }
 
-const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning, redraw}) => {
+const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textMeaning, textExampleTranslate, textMeaningTranslate, transcription, word, wordTranslate, audio, audioExample, audioMeaning, redraw, setPageStyle}) => {
 
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
@@ -44,6 +44,8 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
 
   const [isDifficult, setDifficult] = useState(false);
   const [isStudied, setStudied] = useState(false);
+
+  const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
 
   let correctAnswerNumber = '-';
   let wrongAnswerNumber = '-';
@@ -64,9 +66,10 @@ useEffect(() => {
       if(res.optional.wrong) {
         wrongAnswerNumber = res.optional.wrong.toString()
       }
+
     })
   }, []);
-const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
+
   return (
     <div className={cn("card", {difficult: isDifficult}, {studied: isStudied})}>
       <img className="card-img" src={image}/>
@@ -106,26 +109,30 @@ const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
               //отметить слово сложным
               const dataToLoad = prepareData(markedWords, wordId, "medium", false, false)
                 isStudied ?
+                //обновить, если раньше относилось к изученным 
                 updateUserWord(user, wordId, dataToLoad,
                 () => {
                   setDifficult(true);
                   setStudied(false);
                 })
                  :
+                 //создать новое
                 createUserWord(user, wordId, dataToLoad, 
                 () => {
                   setDifficult(true);
-                  dispatch(addMarkedWords(dataToLoad))
+                  dispatch(addMarkedWords({id: wordId, ...dataToLoad}))
+                  if (setPageStyle) setPageStyle()
                 });
               }}> Cложное слово</button>}
               {isDifficult && 
               <button 
                 onClick={
                   () => { 
-                    //написать reducer для удаления 
+                    dispatch(removeMarkedWords(wordId)); //не работает
                     deleteUserWord(user, wordId);
                     setDifficult(false);
                     if(redraw) redraw();
+                    if (setPageStyle) setPageStyle()
                   }}> Несложное слово </button>}
             {!isStudied && <button
               onClick={() => {
@@ -136,10 +143,11 @@ const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
                   setDifficult(false); 
                   setStudied(true);
                 }) :
-                dispatch(addMarkedWords(dataToLoad))
+                dispatch(addMarkedWords({id: wordId, ...dataToLoad }));
                 createUserWord(user, wordId, dataToLoad, 
                 () => {
                   setStudied(true);
+                   if (setPageStyle) setPageStyle()
                 });
                 if(redraw) redraw();
               }}>Изученное слово</button>}

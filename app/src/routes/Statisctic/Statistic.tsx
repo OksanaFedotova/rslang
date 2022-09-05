@@ -27,16 +27,24 @@ const Statisctic = () => {
   //     audioWrong: audioWrong
   //   }
   // }
-  let newUser = true;
-  const [data, setData] = useState({});
+  const [newUser, setIsNew] = useState(true);
+  type Obj = {
+    [key: string]: number | undefined
+  }
+  const initialValue: any[] | [] = [];
+
+  const [data, setData] = useState(initialValue);
   useEffect(() => {
     const getStat = async () => {
       const res = await getStatistic(user);
+     // console.log(res)
       if (res) {
-        newUser = false;
-        setData(res);
+        setIsNew(false)
+        setData(Object.values(res));
+        console.log(res)
       }
     }
+    getStat()
   }, []);
 
   const handleClick = () => {
@@ -50,11 +58,19 @@ const Statisctic = () => {
     <Fragment>
     <Header/>
     {isAuth && 
-      <Layout>
+      <div>
       <button onClick={handleClick}>Выйти</button>
+      <div>
       {newUser && <div>Вы новый пользователь, не можем отобразить статистику для Вас</div>}
-      {/*Object.values(data).map()*/}
-    </Layout>
+      {!newUser && 
+      <div>
+       <div>Всего выученных слов: <p>{data[1]}</p></div> 
+       <div>Всего выученных слов: <p>{data[2].learnedWordsPerDay}</p></div> 
+       
+       </div>
+      }
+      </div>
+    </div>
     }
     {!isAuth && <div><p>Для просмотра статистики войдите или зарегестрируйтесь</p></div>}
     <Footer/>

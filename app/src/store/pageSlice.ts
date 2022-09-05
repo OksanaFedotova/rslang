@@ -24,8 +24,14 @@ export const slice = createSlice({
       })
       state.markedWordsOnPage = setTemp;
     },
-    addMarkedWords: (state, action) => {state.markedWordsOnPage.push(action.payload)}
+    addMarkedWords: (state, action) => {state.markedWordsOnPage.push(action.payload)},
+    removeMarkedWords: (state, action) => {
+      
+      const temp = [...state.markedWordsOnPage].filter((word) => word.wordId !== action.payload);
+      console.log(temp)
+      state.markedWordsOnPage = temp;
+    }
   }
 })
-export const { setGroup, setPage, setMarkedWords, addMarkedWords } = slice.actions;
+export const { setGroup, setPage, setMarkedWords, addMarkedWords, removeMarkedWords} = slice.actions;
 export default slice.reducer

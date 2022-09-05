@@ -1,5 +1,5 @@
 import { getStatistic, putStatistic } from "./requestStatistic";
-
+import { createUserWord, updateUserWord } from "../services/user"
 
 interface IUserExist {
   token?: string,
@@ -7,11 +7,13 @@ interface IUserExist {
   userId: string, 
 }
 type Obj = {
- [key: string]: number | undefined
+ [key: string]: number 
 }
 
-const calculateNewWords = async (user: IUserExist, wordsIds: string[]) => {
-  const promises =  wordsIds.map(async (wordId) =>  {
+const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) => {
+  const promises =  words.map(async (word) =>  {
+    const wordId = Object.keys(word)[0];
+    const number = Object.values(word)[0]
     const res = await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'GET',
     headers: {
@@ -21,13 +23,36 @@ const calculateNewWords = async (user: IUserExist, wordsIds: string[]) => {
   })
   if (!res.ok) { 
     if (res.status === 404) {
+      const studied = type == 'wright' ? true : false;
+      const correct =  type == 'wright' ? number : 0;
+      const wrong =  type == 'wrong' ? number : 0;
+        const wordInfo =  {
+        "difficulty": "medium",
+        "optional": {
+          "studied": studied, 
+          "newWord": false,
+          "correct": correct,
+          "wrong": wrong,
+    }}
+      createUserWord(user, wordId, wordInfo, res => console.log(res))
       return 1;
     } else {
       alert ('Попробуйте выйти и зайти еще раз')
     }
   } else {
     const json = await res.json();
-    return json
+    const correct =  type == 'wright' ? json.optional.correct + number : json.correct;
+    const wrong =  type == 'wrong' ? json.optional.wrong + number : json.wrong;
+
+    const wordInfo =  {
+        "difficulty": "medium",
+        "optional": {
+          "studied": json.studied, 
+          "newWord": false,
+          "correct": correct,
+          "wrong": wrong,
+    }}
+    updateUserWord(user, wordId, wordInfo, res => console.log(res))
   }
   })
   const result= await Promise.all(promises).then((v) => v)
@@ -44,24 +69,31 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   let sprintWrong = 0;
   let audioCorrect = 0;
   let audioWrong = 0;
+  let percent = 0
   if (userStatistic) {
     if (currentDate) {
       if (currentDate == userStatistic.optional.currentDate) {
-      newWordsPerDay = userStatistic.optional.newWordsPerDay;
-      learnedWordsPerDay = userStatistic.optional.learnedWordsPerDay;
-      learnedWords = userStatistic.learnedWords;
-      sprintCorrect = userStatistic.optional.sprintCorrect;
-      sprintWrong = userStatistic.optional.sprintWrong;
-      audioCorrect = userStatistic.optional.audioCorrect;
-      audioWrong = userStatistic.optional.audioWrong;
+      newWordsPerDay = userStatistic.optional.newWordsPerDay || 0;
+      learnedWordsPerDay = userStatistic.optional.learnedWordsPerDay || 0;
+      learnedWords = userStatistic.learnedWords || 0;
+      sprintCorrect = userStatistic.optional.sprintCorrect || 0;
+      sprintWrong = userStatistic.optional.sprintWrong || 0;
+      audioCorrect = userStatistic.optional.audioCorrect || 0;
+      audioWrong = userStatistic.optional.audioWrong || 0;
+      percent = userStatistic.optional.percent || 0;
       }
     }
   }
-  const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
-  
-  const wordsPerGame = await calculateNewWords(user, allWordsPerGame);
+ // const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
+
+  //процент
+  const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
+  percent += percentPerGame;
   //новые слова
-  const newWordsPerGame = wordsPerGame.filter(v => typeof v === 'number').length;
+  const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
+  const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
+  const allWordsPerGame = rightWordsPerGame.concat(wrongWordsPerGame)
+  const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;
   newWordsPerDay += newWordsPerGame;
   //выученные слова
   const  learnedWordsPerGame = rightWords.map((word) => {
@@ -94,7 +126,8 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       sprintCorrect: sprintCorrect,
       sprintWrong: sprintWrong,
       audioCorrect: audioCorrect,
-      audioWrong: audioWrong
+      audioWrong: audioWrong,
+      percent: percent
     }
   }
   putStatistic(user, data)

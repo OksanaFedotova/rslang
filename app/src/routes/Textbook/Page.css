@@ -24,6 +24,10 @@
   background-color: #ffff00;
   margin: 10px;
 }
+.textbook-button {
+  height: fit-content;
+  padding: 0.5rem;
+}
 .button:hover {
   background-color: darkorange;
   transition: .5s;
