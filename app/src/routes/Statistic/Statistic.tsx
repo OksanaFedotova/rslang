@@ -8,7 +8,7 @@ import Footer from "../../components/Footer/Footer";
 
 import { getStatistic } from "../../services/requestStatistic";
 import { setUser, setUserAuth } from "../../store/userSlice";
-import './Statisctic.css'
+import './Statistic.css'
 
 const Statistic = () => {
   const dispatch = useDispatch();
