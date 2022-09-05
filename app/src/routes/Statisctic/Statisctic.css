@@ -1,0 +1,81 @@
+.page-stat-wrapper {
+    min-height: 79vh;
+    padding: 20px 20px;
+}
+
+.stat-blocks-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    padding-top: 50px;
+    width: 100%;
+    }
+
+.stat-title {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.user-name {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+.game-stat-block {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    row-gap: 15px;
+    justify-content: flex-start;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border: 2px #a6c54b solid;
+    border-radius: 25px;
+    width: 30%;
+}
+
+.block-title {
+    text-align: center;
+    padding: 10px 0;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.data-block {
+    font-weight: bold;
+    display: inline-block;
+    padding: 0 15px;
+}
+
+@media (max-width: 1180px) {
+    .stat-blocks-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50px;
+        }
+
+    .game-stat-block {
+        width: 45%;
+        column-gap: 20px;
+        justify-content: center;
+}
+}
+
+@media (max-width: 558px) {
+    .stat-blocks-wrapper {
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 50px;
+        }
+
+    .game-stat-block {
+        width: 60%;
+}
+
+.data-block {
+    padding: 0;
+}
+}
