@@ -35,11 +35,11 @@ const Page = () => {
   const [allMarked, setAllMarked] = useState(false);
   const [menuGamesActive, setMenuGamesActive] = useState(true);
   const handlePageStyle = () => {
-    if (markedWords.length == 19) {
+    if (!allMarked && markedWords.length >= 19) {
       setAllMarked(true);
       setMenuGamesActive(false);
     } 
-    if (markedWords.length < 19) {
+    if (allMarked && markedWords.length <= 20) {
       setAllMarked(false);
       setMenuGamesActive(true);
     }
@@ -57,7 +57,6 @@ const Page = () => {
        if (markedWords.length == 20) {
       setAllMarked(true);
       setMenuGamesActive(false);
-      console.log(allMarked)
     }
     })
   }, []);
@@ -131,8 +130,9 @@ const Page = () => {
        <Pagination 
         group={group}
         page={page}
-        handleClick={() => 
+        handleClick={() => {
           useEffect(() => {getWords(group, page, res => setWords(res))}, [])
+        }
         }
        />
      <Footer />

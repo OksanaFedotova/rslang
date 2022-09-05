@@ -73,9 +73,6 @@ function AudioChellengeCard(): JSX.Element {
         return numPage
     }
 
-        
-
-//преобразование массива статистики для передачи в бэк
 
         //useStates
 

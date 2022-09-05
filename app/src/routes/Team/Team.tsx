@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header";
 import './Team.css';
 import testPicture from "../../assets/testPicture.jpg";
 import sashaPicture from "../../assets/Sasha.jpg";
+import Oksana from "../../assets/Oksana.png"
 
 import githubIcon from "../../assets/githubIcon.svg";
 
@@ -15,10 +16,10 @@ const Team = () => {
       </div>
       <div className="team-wrapper">
         <div className="team-member">
-          <img src={testPicture} alt={"team-member-image"} className="team-member-image"/>
+          <img src={Oksana} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Оксана</p>
           <p className="team-member-role">Team lead</p>
-          <p className="team-member-decription">Добавить пару слов о себе</p>
+          <p className="team-member-decription">Начинающий фронтенд разработчик</p>
           <a target="blank" rel="noreferer" href='https://github.com/OksanaFedotova' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">

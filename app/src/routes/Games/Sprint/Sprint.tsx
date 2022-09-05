@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {useSelector} from "react-redux";
 import { useNavigate } from 'react-router';
 import Header from "../../../components/Header/Header";
@@ -24,6 +24,9 @@ const correctAnswers: string[] = [];
 const wrongAnswers: string[] = [];
 
 
+interface Serie {
+  serie: number;
+}
 
 
 const Sprint = () => {
@@ -70,14 +73,13 @@ const Sprint = () => {
       }
     }
 
-    const [countRight, setCountRight] = useState(0)
-    const [countWrong, setCountWrong] = useState(0)
-
+    const countRight = useRef(0);
+    const countWrong= useRef(0);
     const correctAnswersCount = () => {
-      setCountRight(countRight + 1)
+      ++countRight.current;
     }
     const wrongAnswersCount = () => {
-      setCountWrong(countWrong + 1)
+      ++countWrong.current;   
     }
 
 
@@ -110,6 +112,8 @@ const Sprint = () => {
 
       return result
 }
+  const maxSerie = useRef(0);
+  const currentSerie = useRef(0);
 
 
 
@@ -231,10 +235,16 @@ const Sprint = () => {
                       rightSound.play();
                       correctAnswers.push(word.id)
                       correctAnswersCount();
+                      ++currentSerie.current;
                       } else {
                         wrongAnswers.push(word.id)
                         wrongAnswersCount();
                         wrongSound.play()
+                        if (currentSerie.current > maxSerie.current) {
+                          maxSerie.current = currentSerie.current;
+                        }
+
+                        currentSerie.current = 0;
                       }
                     }
                   })
@@ -266,10 +276,15 @@ const Sprint = () => {
                       rightSound.play();
                       correctAnswers.push(word.id);   
                       correctAnswersCount();
+                      ++currentSerie.current;
                     } else {
                       wrongAnswers.push(word.id)
                       wrongAnswersCount();
                       wrongSound.play()
+                      if (currentSerie.current > maxSerie.current) {
+                        maxSerie.current = currentSerie.current;
+                      }
+                      currentSerie.current = 0;
                     }
                   }
                   })
@@ -282,8 +297,7 @@ const Sprint = () => {
          </div>
          <div className="result-wrapper"> 
          <div className='result-modal' onClick={() => {
-          console.log(pushStat(correctAnswers))
-          setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers));
+          setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers), maxSerie.current);
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
           navToPage('../games')

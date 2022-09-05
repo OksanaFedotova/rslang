@@ -96,17 +96,17 @@ const Auchform: React.FunctionComponent<IAuchForm> = ({ wordsCard, KeyCode}) => 
                 knowWordsId.push(wordsCard[num+5])
                 ++currentSerie.current;
 
-
-
             } else {
                 document.querySelector("#root > div > div.audiocard > div > div > div:nth-child("+num+") > b")?.classList.add('incorrect')
                 handleFail();
                 dontknowWords.push(propWord, wordsCard[4])
                 dontknowWordsId.push(wordsCard[num+5])
+
                 if (currentSerie.current > maxSerie.current) {
                   maxSerie.current = currentSerie.current;
                 }
                 currentSerie.current = 0; 
+
             }
 
             document.querySelector("#root > div > div.audiocard > div > div")?.classList.add('noclick')

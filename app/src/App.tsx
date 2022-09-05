@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { setUser, setUserAuth } from './store/userSlice';
@@ -10,7 +10,7 @@ import HomePage from './routes/Main/Main';
 import Textbook from './routes/Textbook/Textbook';
 import Team from './routes/Team/Team';
 import Page from './routes/Textbook/Page';
-import Statistic from './routes/Statisctic/Statistic';
+import Statistic from './routes/Statistic/Statistic';
 import Games from './routes/Games/Games';
 import Sprint from './routes/Games/Sprint/Sprint';
 import AudioChallenge from './routes/Games/AudioChallenge/AudioChallenge';
@@ -30,7 +30,6 @@ function App() {
   const userLocal = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : null;
   
    if (userLocal && userLocal.expire < Date.now()) {
-    console.log(userLocal.expire, Date.now())
     dispatch(setUserAuth(false));
     dispatch(setUser(null));
     localStorage.removeItem('user');
@@ -56,7 +55,7 @@ function App() {
   }
 
   return (
-  <HashRouter>
+  <BrowserRouter>
     <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/textbook" element={<Textbook/>}/>
@@ -69,7 +68,7 @@ function App() {
           <Route path="/statistics" element={<Statistic/>}/>
           <Route path="/textbook/difficult" element={<Difficult/>}/>
      </Routes>
-  </HashRouter>
+  </BrowserRouter>
   );
 }
 
