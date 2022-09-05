@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6dc27be4.css",
+    "main.js": "/static/js/main.bb1fb836.js",
+    "static/js/787.c1112931.chunk.js": "/static/js/787.c1112931.chunk.js",
+    "static/media/Oksana.png": "/static/media/Oksana.cc0d0b92190ad85c7f2d.png",
+    "static/media/homePageImage.jpg": "/static/media/homePageImage.35cbfcdbbb635930bdc9.jpg",
+    "static/media/empty.jpg": "/static/media/empty.6f0ec14b643d4b462424.jpg",
+    "static/media/audio.png": "/static/media/audio.812b9565a3b01ca28c03.png",
+    "static/media/textbook.jpeg": "/static/media/textbook.b0c6c57ccf3ac2ee4580.jpeg",
+    "static/media/audioGamePic.jpg": "/static/media/audioGamePic.514e357f880f4025b814.jpg",
+    "static/media/Sasha.jpg": "/static/media/Sasha.9b950cbd587b027e9505.jpg",
+    "static/media/sprintGamePic.jpg": "/static/media/sprintGamePic.9230792dc562a2627d69.jpg",
+    "static/media/logo.png": "/static/media/logo.ccc3fe4aa73069759cf1.png",
+    "static/media/wrongAnswerSound.mp3": "/static/media/wrongAnswerSound.5b7bab24cf28e527bfb6.mp3",
+    "static/media/rightAnswer.mp3": "/static/media/rightAnswer.007e7772b55bc2a3e3ad.mp3",
+    "static/media/testPicture.jpg": "/static/media/testPicture.2e2841ee35f458f9b64b.jpg",
+    "static/media/githubIcon.svg": "/static/media/githubIcon.04be58c17b3d5e9744424d414240dd85.svg",
+    "index.html": "/index.html",
+    "main.6dc27be4.css.map": "/static/css/main.6dc27be4.css.map",
+    "main.bb1fb836.js.map": "/static/js/main.bb1fb836.js.map",
+    "787.c1112931.chunk.js.map": "/static/js/787.c1112931.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6dc27be4.css",
+    "static/js/main.bb1fb836.js"
+  ]
+}
