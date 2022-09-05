@@ -12,6 +12,7 @@ import ReactDOM from "react-dom";
 import wordsSlice, { setDifficultWords } from "../../store/wordsSlice";
 import { getAllUserWords } from "../../services/user";
 import setStatistic from "../../services/setStatistic";
+import { func } from "prop-types";
 
 
 
@@ -75,6 +76,8 @@ function AudioChellengeCard(): JSX.Element {
 
 //преобразование массива статистики для передачи в бэк
 
+
+
         function pushStat (arr: string[]) {
 
                 const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
@@ -103,11 +106,19 @@ function AudioChellengeCard(): JSX.Element {
 
           }
 
-        if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
-            pushStat (knowWordsId)
-        }
 
-        setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
+            setTimeout( () => {
+          if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
+            setStatistic(user, 'AudioChallenge', pushStat(knowWordsId), pushStat(dontknowWordsId))
+        console.log("push:", pushStat(knowWordsId),pushStat(dontknowWordsId))
+        }else {return}},100)
+         
+
+
+
+
+
+        
 
         //useStates
 
@@ -169,6 +180,10 @@ function AudioChellengeCard(): JSX.Element {
         if (!document.querySelector(".auch-wrap")?.classList.contains('disable')) {
             document.body.removeEventListener('keyup', clickNextToo)
         }
+
+        
+
+
     
         return (
             <div>
