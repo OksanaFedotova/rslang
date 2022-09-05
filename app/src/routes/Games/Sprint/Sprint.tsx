@@ -24,6 +24,9 @@ const correctAnswers: string[] = [];
 const wrongAnswers: string[] = [];
 
 
+interface Serie {
+  serie: number;
+}
 
 
 const Sprint = () => {
@@ -109,9 +112,9 @@ const Sprint = () => {
 
       return result
 }
+  const maxSerie = useRef(0);
+  const currentSerie = useRef(0);
 
-const maxSerie = useRef(0);
-const currentSerie = useRef(0);
 
 
 
@@ -296,7 +299,7 @@ const currentSerie = useRef(0);
          </div>
          <div className="result-wrapper"> 
          <div className='result-modal' onClick={() => {
-          setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers));
+          setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers), maxSerie.current);
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
           navToPage('../games')
