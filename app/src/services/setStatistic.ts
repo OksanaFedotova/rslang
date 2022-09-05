@@ -10,8 +10,8 @@ type Obj = {
  [key: string]: number | undefined
 }
 
-const calculateNewWords = async (user: IUserExist, wordsIds: string[]) => {
-  const promises =  wordsIds.map(async (wordId) =>  {
+const calculateNewWords = async (user: IUserExist, wordsIds: Obj[], type: string) => {
+  const promises =  wordsIds.map(async ({wordId, number}) =>  {
     const res = await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'GET',
     headers: {
@@ -27,7 +27,16 @@ const calculateNewWords = async (user: IUserExist, wordsIds: string[]) => {
     }
   } else {
     const json = await res.json();
-    return json
+    //дописать обновление правильных и неправильных ответов 
+    const copy = json;
+    if(type === 'wright') {
+     if (copy.optional.correct) {
+      copy.optional.correct += number
+    } else {
+      copy.optional.correct = number
+    }
+    }
+    return copy;
   }
   })
   const result= await Promise.all(promises).then((v) => v)
@@ -57,11 +66,13 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       }
     }
   }
-  const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
+ // const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
   
-  const wordsPerGame = await calculateNewWords(user, allWordsPerGame);
+  const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
+  const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
+  const allWordsPerGame = rightWordsPerGame.concat(wrongWords)
   //новые слова
-  const newWordsPerGame = wordsPerGame.filter(v => typeof v === 'number').length;
+  const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;
   newWordsPerDay += newWordsPerGame;
   //выученные слова
   const  learnedWordsPerGame = rightWords.map((word) => {
