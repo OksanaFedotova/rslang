@@ -60,6 +60,9 @@ const RegistrationForm:  React.FunctionComponent<IRegistration> = ({updateState,
             }
         });
     }
+
+    document.querySelector(".input-form")?.addEventListener('click', () =>  setRegistrationError(false))
+
     return (
       <Fragment>
         {registrationActive && 
