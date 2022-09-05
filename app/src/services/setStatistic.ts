@@ -27,7 +27,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
       const correct =  type == 'wright' ? number : 0;
       const wrong =  type == 'wrong' ? number : 0;
         const wordInfo =  {
-        "difficulty": "medium",
+        "difficulty": "none",
         "optional": {
           "studied": studied, 
           "newWord": false,
@@ -45,7 +45,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
     const wrong =  type == 'wrong' ? json.optional.wrong + number : json.wrong;
 
     const wordInfo =  {
-        "difficulty": "medium",
+        "difficulty": json.difficulty,
         "optional": {
           "studied": json.studied, 
           "newWord": false,

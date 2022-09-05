@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import ICard from "../../Interfaces/ICard";
 import { createUserWord, getUserWord, updateUserWord, deleteUserWord } from "../../services/user";
 import { setMarkedWords, addMarkedWords, removeMarkedWords} from "../../store/pageSlice";
+import updateLearnedWords from "../../services/updateUser";
+import ICard from "../../Interfaces/ICard";
 import audioButton from "../../assets/audio.png";
 import cn from 'classnames';
 
@@ -103,54 +104,57 @@ useEffect(() => {
         <p dangerouslySetInnerHTML={{__html: textMeaningTranslate}}/>
       </div>
         { isAuth && <div className="mark-word">
+          {/*отметить слово сложным */}
             {!isDifficult && 
-            <button 
-              onClick={() => {
-              //отметить слово сложным
+            <button onClick={() => {
               const dataToLoad = prepareData(markedWords, wordId, "medium", false, false)
-                isStudied ?
+                if(isStudied)
                 //обновить, если раньше относилось к изученным 
+               { 
+                updateLearnedWords(user, 'remove');
                 updateUserWord(user, wordId, dataToLoad,
                 () => {
                   setDifficult(true);
                   setStudied(false);
-                })
-                 :
-                 //создать новое
+                })}
+                 else
+               {  //создать новое
                 createUserWord(user, wordId, dataToLoad, 
                 () => {
                   setDifficult(true);
                   dispatch(addMarkedWords({id: wordId, ...dataToLoad}))
                   if (setPageStyle) setPageStyle()
-                });
+                })}
               }}> Cложное слово</button>}
+              {/*отметить слово несложным */}
               {isDifficult && 
-              <button 
-                onClick={
-                  () => { 
-                    dispatch(removeMarkedWords(wordId)); //не работает
-                    deleteUserWord(user, wordId);
-                    setDifficult(false);
-                    if(redraw) redraw();
-                    if (setPageStyle) setPageStyle()
-                  }}> Несложное слово </button>}
-            {!isStudied && <button
-              onClick={() => {
-                const dataToLoad = prepareData(markedWords, wordId, "none", true, false)
-                isDifficult ? 
-                updateUserWord(user, wordId, dataToLoad, 
-                () => {
-                  setDifficult(false); 
-                  setStudied(true);
-                }) :
-                dispatch(addMarkedWords({id: wordId, ...dataToLoad }));
-                createUserWord(user, wordId, dataToLoad, 
-                () => {
-                  setStudied(true);
-                   if (setPageStyle) setPageStyle()
-                });
+              <button onClick={() => { 
+                dispatch(removeMarkedWords(wordId)); //не работает
+                deleteUserWord(user, wordId);
+                setDifficult(false);
                 if(redraw) redraw();
-              }}>Изученное слово</button>}
+                if (setPageStyle) setPageStyle()
+              }}> Несложное слово </button>}
+
+              {/*Отметить изученным */}
+              {!isStudied && <button
+                onClick={() => {
+                  const dataToLoad = prepareData(markedWords, wordId, "none", true, false);
+                  updateLearnedWords(user, 'add')
+                  isDifficult?
+                    updateUserWord(user, wordId, dataToLoad, 
+                    () => {
+                    setDifficult(false); 
+                    setStudied(true);
+                  }) :
+                    dispatch(addMarkedWords({id: wordId, ...dataToLoad }));
+                    createUserWord(user, wordId, dataToLoad, 
+                    () => {
+                    setStudied(true);
+                    if (setPageStyle) setPageStyle()
+                    });
+                    if(redraw) redraw();
+                }}>Изученное слово</button>}
               <div><p>Количество правильных ответов: {correctAnswerNumber}</p></div>
               <div><p>Количество ошибок: {wrongAnswerNumber}</p></div>
             </div>

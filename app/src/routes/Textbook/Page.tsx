@@ -4,8 +4,8 @@ import { useParams} from "react-router";
 import { Link } from "react-router-dom";
 import {  useSelector, useDispatch } from "react-redux";
 import { setGroup, setPage } from "../../store/pageSlice";
-
 import getWords from "../../services/request";
+
 import Card from "../../components/Card/Card";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
