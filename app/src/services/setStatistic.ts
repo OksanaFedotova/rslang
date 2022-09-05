@@ -59,7 +59,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
   return result;
 }
 
-const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[], series: number) => {
+const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[], series = 0) => {
   if (rightWords.length == 0 && wrongWords.length == 0) return
   const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
   const userStatistic = await getStatistic(user);
