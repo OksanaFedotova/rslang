@@ -5,6 +5,7 @@ import './Team.css';
 import testPicture from "../../assets/testPicture.jpg";
 import sashaPicture from "../../assets/Sasha.jpg";
 import Oksana from "../../assets/Oksana.png"
+import daryadak from "../../assets/daryadak.jpg"
 
 import githubIcon from "../../assets/githubIcon.svg";
 
@@ -19,21 +20,21 @@ const Team = () => {
           <img src={Oksana} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Оксана</p>
           <p className="team-member-role">Team lead</p>
-          <p className="team-member-decription">Начинающий фронтенд разработчик</p>
+          <p className="team-member-decription">Разработала структуру приложения, создала раздел Учебник, настроила бекенд</p>
           <a target="blank" rel="noreferer" href='https://github.com/OksanaFedotova' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">
           <img src={sashaPicture} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Александр</p>
           <p className="team-member-role">Developer</p>
-          <p className="team-member-decription">печатает...</p>
+          <p className="team-member-decription">Разработал игру Аудиовызов, создал форму регистрации</p>
           <a target="blank" rel="noreferer" href='https://github.com/sashajozwiak' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">
-          <img src={testPicture} alt={"team-member-image"} className="team-member-image"/>
+          <img src={daryadak} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Дарья</p>
           <p className="team-member-role">Developer</p>
-          <p className="team-member-decription">Добавить пару слов о себе</p>
+          <p className="team-member-decription">Разработала игру Спринт, создала бургер-меню, занималась оформлением приложения</p>
           <a target="blank" rel="noreferer" href='https://github.com/daryadak' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
       </div>
