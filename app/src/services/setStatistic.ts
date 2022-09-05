@@ -59,7 +59,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
   return result;
 }
 
-const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[]) => {
+const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[], series: number) => {
   if (rightWords.length == 0 && wrongWords.length == 0) return
   const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
   const userStatistic = await getStatistic(user);
@@ -70,7 +70,8 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   let sprintWrong = 0;
   let audioCorrect = 0;
   let audioWrong = 0;
-  let percent = 0
+  let percent = 0;
+  let longestSeries = 0;
   if (userStatistic) {
     if (currentDate) {
       if (currentDate == userStatistic.optional.currentDate) {
@@ -82,6 +83,7 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       audioCorrect = userStatistic.optional.audioCorrect || 0;
       audioWrong = userStatistic.optional.audioWrong || 0;
       percent = userStatistic.optional.percent || 0;
+      longestSeries = (userStatistic.optional.longestSeries > series) ? userStatistic.optional.longestSeries : series || 0;
       }
     }
   }
@@ -117,6 +119,8 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
     audioCorrect += rightWords.length;
     audioWrong += wrongWords.length;
   }
+  //самая длинная серия
+
   //отправить запрос 
   const data = {
     learnedWords: learnedWords,
@@ -128,7 +132,8 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       sprintWrong: sprintWrong,
       audioCorrect: audioCorrect,
       audioWrong: audioWrong,
-      percent: percent
+      percent: percent,
+      longestSeries: longestSeries
     }
   }
   putStatistic(user, data)
