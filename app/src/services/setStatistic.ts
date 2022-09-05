@@ -34,7 +34,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
           "correct": correct,
           "wrong": wrong,
     }}
-      createUserWord(user, wordId, wordInfo, res => console.log(res))
+      createUserWord(user, wordId, wordInfo)
       return 1;
     } else {
       alert ('Попробуйте выйти и зайти еще раз')
@@ -52,7 +52,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
           "correct": correct,
           "wrong": wrong,
     }}
-    updateUserWord(user, wordId, wordInfo, res => console.log(res))
+    updateUserWord(user, wordId, wordInfo)
   }
   })
   const result= await Promise.all(promises).then((v) => v)
@@ -95,7 +95,7 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
 
   //процент
   const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
-  percent = percentPerGame;
+  percent = Math.round(percentPerGame);
   //новые слова
   const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
   const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');

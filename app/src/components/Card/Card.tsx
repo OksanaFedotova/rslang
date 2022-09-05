@@ -122,7 +122,7 @@ useEffect(() => {
                 createUserWord(user, wordId, dataToLoad, 
                 () => {
                   setDifficult(true);
-                  dispatch(addMarkedWords({id: wordId, ...dataToLoad}))
+                  dispatch(addMarkedWords({wordId: wordId, ...dataToLoad}))
                   if (setPageStyle) setPageStyle()
                 })}
               }}> Cложное слово</button>}
@@ -147,7 +147,7 @@ useEffect(() => {
                     setDifficult(false); 
                     setStudied(true);
                   }) :
-                    dispatch(addMarkedWords({id: wordId, ...dataToLoad }));
+                    dispatch(addMarkedWords({wordId: wordId, ...dataToLoad }));
                     createUserWord(user, wordId, dataToLoad, 
                     () => {
                     setStudied(true);

@@ -48,7 +48,6 @@ const signIn = (user: IUser, callback: (res: IUser) => void, callback2?: (error:
    };
 
 const refreshToken = async (user: IUserExist) => {
-  console.log(user.userId, user.refreshToken)
   return await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/tokens`, {
     method: 'GET',
     headers: {
@@ -78,7 +77,7 @@ const getAllUserWords = (user: IUserExist, callback: (res: IUserWord[]) => void)
   .then((res) => callback(res))
   .catch((error) => console.error(error))
 };
-const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: React.Dispatch<React.SetStateAction<IUserWord>>) => {
+const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback?: React.Dispatch<React.SetStateAction<IUserWord>>) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'POST',
     headers: {
@@ -95,10 +94,10 @@ const createUserWord = (user: IUserExist, wordId: string, wordInfo: Record<strin
       return res.json();
     }
   })
-  .then((res) => callback(res))
+  .then((res) => {if(callback)callback(res)})
   .catch((error) => console.error(error))
 };
-const updateUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback: (res: IUserWord) => void) => {
+const updateUserWord = (user: IUserExist, wordId: string, wordInfo: Record<string, unknown>, callback?: (res: IUserWord) => void) => {
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
     method: 'PUT',
     headers: {
@@ -115,7 +114,7 @@ const updateUserWord = (user: IUserExist, wordId: string, wordInfo: Record<strin
       return res.json();
     }
   })
-  .then((res) => callback(res))
+  .then((res) => {if(callback)callback(res)})
   .catch((error) => console.error(error))
 }; 
 const deleteUserWord = async (user: IUserExist, wordId: string) => {
@@ -159,7 +158,7 @@ const getAggregatedWords = (user: IUserExist, callback: React.Dispatch<React.Set
   })
   .then((res) => res.json())
   .then((res) => callback(res))
-  .catch((err) => console.log(err))
+  .catch((err) => console.error(err))
 }
 //{"$or":[{"userWord.difficulty":"medium"},{"userWord.optional.studied":"true"}]}
 

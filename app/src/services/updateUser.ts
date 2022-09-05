@@ -6,7 +6,6 @@ interface IUserExist {
 }
 const updateLearnedWords = async (user: IUserExist, type: string) => {
   const userStat = await getStatistic(user);
-  console.log(userStat)
   const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
   let data;
   if (!userStat) {

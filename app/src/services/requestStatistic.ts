@@ -12,10 +12,9 @@ const getStatistic = async (user: IUserExist) => {
     }
   })
   .then((res) => res.json())
-  .catch((err) => console.log(err))
+  .catch((err) => console.error(err))
 }
 const putStatistic =  (user: IUserExist, data: any) => {
-  console.log(data)
   fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/statistics`, {
        method: 'PUT',
        headers: {
@@ -26,7 +25,6 @@ const putStatistic =  (user: IUserExist, data: any) => {
        body: JSON.stringify(data)
      })
      .then((res) => res.json())
-     .then((res) => console.log(res))
      .catch((err) => console.error(err));
 }
 export { getStatistic, putStatistic }

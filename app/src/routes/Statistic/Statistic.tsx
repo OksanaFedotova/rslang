@@ -10,24 +10,12 @@ import { getStatistic } from "../../services/requestStatistic";
 import { setUser, setUserAuth } from "../../store/userSlice";
 import './Statisctic.css'
 
-const Statisctic = () => {
+const Statistic = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
 
   const navigator = useNavigate();
-  //const data = {
-  //   learnedWords: learnedWords,
-  //   optional: {
-  //     currentDate: currentDate,
-  //     learnedWordsPerDay: learnedWordsPerDay,
-  //     newWordsPerDay: newWordsPerDay,
-  //     sprintCorrect: sprintCorrect,
-  //     sprintWrong: sprintWrong,
-  //     audioCorrect: audioCorrect,
-  //     audioWrong: audioWrong
-  //   }
-  // }
   const [newUser, setIsNew] = useState(true);
   type Obj = {
     [key: string]: number | undefined
@@ -38,11 +26,9 @@ const Statisctic = () => {
   useEffect(() => {
     const getStat = async () => {
       const res = await getStatistic(user);
-     // console.log(res)
       if (res) {
         setIsNew(false)
         setData(Object.values(res));
-        console.log(res)
       }
     }
     getStat()
@@ -96,4 +82,4 @@ const Statisctic = () => {
     </Fragment>
   ) 
 }
-export default Statisctic;
+export default Statistic;
