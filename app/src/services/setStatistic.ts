@@ -60,6 +60,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
 }
 
 const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[]) => {
+  if (rightWords.length == 0 && wrongWords.length == 0) return
   const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
   const userStatistic = await getStatistic(user);
   let newWordsPerDay = 0;
@@ -88,7 +89,7 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
 
   //процент
   const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
-  percent += percentPerGame;
+  percent = percentPerGame;
   //новые слова
   const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
   const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');

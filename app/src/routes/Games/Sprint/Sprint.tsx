@@ -7,7 +7,9 @@ import Timer from "./Timer";
 import './Sprint.css';
 import IWord from "../../../Interfaces/IWord";
 import getWords from "../../../services/request";
-import rightAnswer from "../../../assets/rightAnswer.mp3";
+import rightAnswerSound from "../../../assets/rightAnswer.mp3";
+import wrongAnswerSound from "../../../assets/wrongAnswerSound.mp3";
+import setStatistic from "../../../services/setStatistic";
  
 const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateAction<any>>) => {
   const randomIndex = Math.floor(Math.random() * words.length);
@@ -19,15 +21,19 @@ const getVariants = (words: IWord[], callback: React.Dispatch<React.SetStateActi
 }
 
 const correctAnswers: string[] = [];
+const wrongAnswers: string[] = [];
+
+
+
 
 const Sprint = () => {
-
   const groupCurrent = useSelector((state: any) => state.page.currentGroup);
   const pageCurrent = useSelector((state: any) => state.page.currentPage);
  
 
   const initialValue: IWord[] | [] = [];
-  const rightSound = new Audio(rightAnswer);
+  const rightSound = new Audio(rightAnswerSound);
+  const wrongSound = new Audio(wrongAnswerSound);
   const arrayWords: string[] = [];
   const navToPage = useNavigate();
 
@@ -63,6 +69,50 @@ const Sprint = () => {
         noButton?.click();
       }
     }
+
+    const [countRight, setCountRight] = useState(0)
+    const [countWrong, setCountWrong] = useState(0)
+
+    const correctAnswersCount = () => {
+      setCountRight(countRight + 1)
+    }
+    const wrongAnswersCount = () => {
+      setCountWrong(countWrong + 1)
+    }
+
+
+
+    const user = useSelector((state: any) => state.user.data);
+
+ function pushStat(arr: string[]) {
+
+      const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
+          get: any; set: (arg0: any, arg1: number) => void; 
+          }; result: any[]; }, cur: string | number) {
+          if (!acc.hash[cur]) {
+            acc.hash[cur] = { [cur]: 1 };
+            acc.map.set(acc.hash[cur], 1);
+            acc.result.push(acc.hash[cur]);
+          } else {
+            acc.hash[cur][cur] += 1;
+            acc.map.set(acc.hash[cur], acc.hash[cur][cur]);
+          }
+          return acc;
+        }, {
+          hash: {},
+          map: new Map(),
+          result: []
+        });
+        
+        const result = resultReduce.result.sort(function(a: any, b: any) {
+          return resultReduce.map.get(b) - resultReduce.map.get(a);
+        });
+
+      return result
+}
+
+
+
 
   return  (
      <>
@@ -153,9 +203,7 @@ const Sprint = () => {
           <Timer setGame = {() => { 
                setGameActive(!isGameActive);
                getVariants(words, setVariants);
-               
-             }
-            }
+            }}
            />
           <div className="guess-word-block">
             <p className="english-word">{variants[0]}</p>
@@ -167,17 +215,30 @@ const Sprint = () => {
                   let clicksCount = clicks;
                   clicksCount = clicksCount +1;
                   setClicks(clicksCount);
+
+                  let wordId = '';
                   {words.forEach((word) => {
+                    if (word.word == variants[0]) {
+                      wordId = word.id
+                     }
+                  }
+                )}
+                  {words.forEach((word) => {
+                    if (word.id == wordId) {
                     if(word.word == variants[0] && (word.wordTranslate == variants[1])) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
                       rightSound.play();
                       correctAnswers.push(word.id)
-                      console.log(correctAnswers)
+                      correctAnswersCount();
                       } else {
-                        getVariants(words, setVariants);
+                        wrongAnswers.push(word.id)
+                        wrongAnswersCount();
+                        wrongSound.play()
                       }
+                    }
                   })
+                  getVariants(words, setVariants);
                 }
                 }}
                 >Да</button>
@@ -187,30 +248,47 @@ const Sprint = () => {
                   let clicksCount = clicks;
                   clicksCount = clicksCount +1;
                   setClicks(clicksCount);
+
+
+                  let wordId = '';
                   {words.forEach((word) => {
-                    if((word.word !== variants[0] && (word.wordTranslate == variants[1]))) {
+                    if (word.word == variants[0]) {
+                      wordId = word.id
+                     }
+                  }
+                )}
+
+                  {words.forEach((word) => {
+                    if (word.id == wordId) {
+                    if((word.word == variants[0] && (word.wordTranslate !== variants[1]))) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
                       rightSound.play();
-                      correctAnswers.push(word.id);
-                      console.log(correctAnswers);
+                      correctAnswers.push(word.id);   
+                      correctAnswersCount();
                     } else {
-                      getVariants(words, setVariants);
+                      wrongAnswers.push(word.id)
+                      wrongAnswersCount();
+                      wrongSound.play()
                     }
+                  }
                   })
+                  getVariants(words, setVariants);
                 }
                 }}
                 >Нет</button>
               </div>
               <div className="points">Количество очков: {count}</div>
          </div>
-         <div className="result-wrapper">
-         <div className='result-modal'>
-          <div className="close-modal" onClick={() => {
+         <div className="result-wrapper"> 
+         <div className='result-modal' onClick={() => {
+          console.log(pushStat(correctAnswers))
+          setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers));
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
-          navToPage('../games');
-          }}>X</div>
+          navToPage('../games')
+          }}>
+          <div className="close-modal">X</div>
             <div className="result-text"><b>Твой результат:</b>
             <div><b>{resultCount}%</b></div>
             <div>{count} из {clicks}</div>
