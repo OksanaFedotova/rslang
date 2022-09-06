@@ -73,7 +73,7 @@ b{
 
 @media (max-width:768px) {
     .words-container {
-        flex-direction:column
+        flex-direction:column;
     }
 }
 
