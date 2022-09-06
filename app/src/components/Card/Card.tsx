@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { createUserWord, getUserWord, updateUserWord, deleteUserWord } from "../../services/user";
 import { setMarkedWords, addMarkedWords, removeMarkedWords} from "../../store/pageSlice";
@@ -11,6 +11,7 @@ import './Card.css'
 
 const prepareData = (arr: any, wordId: string, difficulty: string, studied: boolean, newWord: boolean) => {
   const wordData = arr.filter((wordRed: any) => wordRed.wordId === wordId)[0];
+  console.log(wordData)
   let dataToLoad = {};
   if (wordData) {
     dataToLoad  = {
@@ -18,8 +19,8 @@ const prepareData = (arr: any, wordId: string, difficulty: string, studied: bool
        "optional": {
         "studied": studied, 
         "newWord": newWord,
-        "correct": wordData.correct ? wordData.correct : '-',
-        "wrong":  wordData.wrong ? wordData.wrong : '-',
+        "correct": wordData.correct ? wordData.correct : 0,
+        "wrong":  wordData.wrong ? wordData.wrong : 0,
       },
     }
   } else {
@@ -28,8 +29,8 @@ const prepareData = (arr: any, wordId: string, difficulty: string, studied: bool
        "optional": {
         "studied": studied, 
         "newWord": newWord,
-        "correct": '-',
-        "wrong": '-',
+        "correct": 0,
+        "wrong": 0,
       },
     }
   }
@@ -48,8 +49,8 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
 
   const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
 
-  let correctAnswerNumber = '-';
-  let wrongAnswerNumber = '-';
+  const correctAnswerNumber = useRef(0);
+  const wrongAnswerNumber = useRef(0);
 
 useEffect(() => {
   getUserWord(user, wordId, (res) => {
@@ -62,10 +63,10 @@ useEffect(() => {
         setStudied(true);
       }
       if(res.optional.correct) {
-        correctAnswerNumber = res.optional.correct.toString()
+        correctAnswerNumber.current = res.optional.correct
       }
       if(res.optional.wrong) {
-        wrongAnswerNumber = res.optional.wrong.toString()
+        wrongAnswerNumber.current = res.optional.wrong
       }
 
     })
@@ -129,8 +130,9 @@ useEffect(() => {
               {/*отметить слово несложным */}
               {isDifficult && 
               <button onClick={() => { 
-                dispatch(removeMarkedWords(wordId)); //не работает
-                deleteUserWord(user, wordId);
+                dispatch(removeMarkedWords(wordId)); 
+                const dataToLoad = prepareData(markedWords, wordId, "none", false , false);
+                updateUserWord(user, wordId, dataToLoad,);
                 setDifficult(false);
                 if(redraw) redraw();
                 if (setPageStyle) setPageStyle()
@@ -155,8 +157,8 @@ useEffect(() => {
                     });
                     if(redraw) redraw();
                 }}>Изученное слово</button>}
-              <div><p>Количество правильных ответов: {correctAnswerNumber}</p></div>
-              <div><p>Количество ошибок: {wrongAnswerNumber}</p></div>
+              <div><p>Количество правильных ответов: {correctAnswerNumber.current}</p></div>
+              <div><p>Количество ошибок: {wrongAnswerNumber.current}</p></div>
             </div>
             }
     </div>

@@ -1,4 +1,4 @@
-import { Dispatch } from "@reduxjs/toolkit";
+
 
 //import IWord from "../Interfaces/IWord"
 interface IUser {
@@ -16,7 +16,7 @@ interface IUserExist {
 interface IUserWord {
   id: string;
   difficulty: string;
-  optional: Record<string, string | number | boolean>;
+  optional: any;
   wordId: string;
 }
 const postUser = (user: IUser, callback: (res: IUser) => void) => {

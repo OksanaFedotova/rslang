@@ -20,7 +20,7 @@ const Team = () => {
           <img src={Oksana} alt={"team-member-image"} className="team-member-image"/>
           <p className="team-member-name">Оксана</p>
           <p className="team-member-role">Team lead</p>
-          <p className="team-member-decription">Разработала структуру приложения, создала раздел Учебник, настроила бекенд</p>
+          <p className="team-member-decription">Реализовала структуру приложения, создала раздел Учебник, настроила бекенд, реализовала весь обмен данными с сервером</p>
           <a target="blank" rel="noreferer" href='https://github.com/OksanaFedotova' className="github-link"><img src={githubIcon} alt={"github-image"}/></a>
         </div>
         <div className="team-member">
