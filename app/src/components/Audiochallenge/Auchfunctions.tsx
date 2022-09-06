@@ -37,7 +37,7 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
             const word3Id = words[wordThree].id;
 
             const audioWord = words[randomizeAudio].audio;
-            const audioWordText = words[randomizeAudio].word;
+            const audioWordText = words[randomizeAudio].wordTranslate;
 
             callback([word, word1, word2, word3, `https://rslang-b.herokuapp.com/${audioWord}`, audioWordText, wordId, word1Id, word2Id, word3Id])
           }
