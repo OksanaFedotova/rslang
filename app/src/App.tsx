@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { setUser, setUserAuth } from './store/userSlice';
@@ -55,7 +55,7 @@ function App() {
   }
 
   return (
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/textbook" element={<Textbook/>}/>
@@ -68,7 +68,7 @@ function App() {
           <Route path="/statistics" element={<Statistic/>}/>
           <Route path="/textbook/difficult" element={<Difficult/>}/>
      </Routes>
-  </BrowserRouter>
+  </ HashRouter>
   );
 }
 
