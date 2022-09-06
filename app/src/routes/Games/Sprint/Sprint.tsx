@@ -297,7 +297,9 @@ const Sprint = () => {
          </div>
          <div className="result-wrapper"> 
          <div className='result-modal' onClick={() => {
+            if (user !== null){
           setStatistic(user, 'Sprint', pushStat(correctAnswers), pushStat(wrongAnswers), maxSerie.current);
+            }
           document.querySelector("#root > div > div.result-wrapper")?.classList.remove('active');
           document.querySelector("#root > div > div.guess-word-block")?.classList.remove('open');
           navToPage('../games')
