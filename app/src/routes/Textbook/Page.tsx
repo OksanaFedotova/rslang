@@ -12,20 +12,47 @@ import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import IWord from "../../Interfaces/IWord";
 import TextbookNav from "./TextbookNav";
-import Pagination from "../../components/Pagination/Pagination";
 import cn from 'classnames';
 
 import './Page.css';
+import './Pagination.css';
 
 
 
 const initialValue: IWord[] | [] = [];
 
 const Page = () => {
-
   const {groupNumber, pageNumber} = useParams();
   const group = groupNumber? +groupNumber: 0;
   const page = pageNumber? +pageNumber: 0;
+
+  const PAGINATION = [
+    {
+      title: '<<',
+      to: `../textbook/group/${group}/page/0`,
+      result: 0
+    },
+    {
+      title: '<',
+      to: `../textbook/group/${group}/page/${page - 1}`,
+      result: page - 1
+    },
+    {
+      title: `${page + 1}`,
+      to: `../textbook/group/${group}/page/${page}`,
+      result: page
+    },
+    {
+      title: `>`,
+      to: `../textbook/group/${group}/page/${page + 1}`,
+      result: page + 1
+    },
+     {
+      title: `>>`,
+      to: `../textbook/group/${group}/page/29`,
+      result: 29
+    },
+]
 
   const dispatch = useDispatch();
   dispatch(setGroup(group));
@@ -34,7 +61,7 @@ const Page = () => {
   const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
   const [allMarked, setAllMarked] = useState(false);
   const [menuGamesActive, setMenuGamesActive] = useState(true);
-  const handlePageStyle = () => {
+   const handlePageStyle = () => {
     if (!allMarked && markedWords.length >= 19) {
       setAllMarked(true);
       setMenuGamesActive(false);
@@ -60,7 +87,6 @@ const Page = () => {
     }
     })
   }, []);
-
   const handleClickButton = () => {
     setActive(!isActive)
   };
@@ -78,8 +104,7 @@ const Page = () => {
              handleClick={handleClickButton} />
           {
             isActive && <TextbookNav
-              handleClick={() => 
-                useEffect(() => {getWords(group, page, res => setWords(res))}, [])
+              handleClick={() => {getWords(group, page, res => setWords(res))}
               }/> 
           }
           <Button
@@ -127,16 +152,37 @@ const Page = () => {
            )}
          </div>
        </div>
-       <Pagination 
-        group={group}
-        page={page}
-        handleClick={() => {
-          useEffect(() => {getWords(group, page, res => setWords(res))}, [])
+       <div className="pagination">
+      <ul className="pagination-ul">
+        {
+          PAGINATION.map(({title, to, result}, index) => (
+            <li className="pagination__list-item" key={index}>
+              <Link
+                key={index}
+                to={to}
+                style={
+                  result < 0 || result > 29 ? {pointerEvents: 'none'} : undefined
+                } 
+                onClick={
+                  () => getWords(group, result, res => {
+                    setWords(res);
+                    if (markedWords.length == 20) {
+                      setAllMarked(true);
+                      setMenuGamesActive(false);
+                    }
+                  })
+                  }>
+                {title}
+              </Link>
+            </li>
+            )
+          )
         }
-        }
-       />
+      </ul>
+    </div>
      <Footer />
     </Fragment>
    )
 }
 export default Page;
+
