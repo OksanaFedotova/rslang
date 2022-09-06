@@ -26,10 +26,10 @@ const getCard = (words:IWord[], callback: React.Dispatch<React.SetStateAction<an
             const arrWords:[number, number, number, number] = [randomizeWord, wordOne, wordTwo, wordThree]
             const randomizeAudio:number = arrWords[Math.floor(Math.random() * arrWords.length)];
             
-            const word = words[randomizeWord].word;
-            const word1 = words[wordOne].word;
-            const word2 = words[wordTwo].word;
-            const word3 = words[wordThree].word;
+            const word = words[randomizeWord].wordTranslate;
+            const word1 = words[wordOne].wordTranslate;
+            const word2 = words[wordTwo].wordTranslate;
+            const word3 = words[wordThree].wordTranslate;
 
             const wordId = words[randomizeWord].id;
             const word1Id = words[wordOne].id;
