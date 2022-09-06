@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     padding-top: 30px;
     row-gap: 40px;
+    min-height: 79vh;
 }
 
 .team-member {
@@ -18,7 +19,10 @@
 }
 
 .team-member-image {
-    width: 80%;
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .team-member-name {
@@ -32,7 +36,9 @@
 }
 
 .team-member-decription {
-    padding-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
 }
 
 .github-link {

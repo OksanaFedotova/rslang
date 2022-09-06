@@ -31,9 +31,16 @@
     justify-content: flex-start;
     padding: 15px 20px;
     font-size: 1.2rem;
-    border: 2px #a6c54b solid;
+    border: 2px #ffff00 solid;
+    background-color: #fff;
     border-radius: 25px;
     width: 30%;
+}
+
+.game-stat-block:hover {
+    cursor: pointer;
+    background-color: rgb(211, 235, 247);
+    transition: .5s;
 }
 
 .block-title {
