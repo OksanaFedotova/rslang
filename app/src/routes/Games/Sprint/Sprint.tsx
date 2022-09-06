@@ -41,7 +41,6 @@ const Sprint = () => {
   const [isGameActive, setGameActive] = useState(false);
   const [variants, setVariants] = useState(arrayWords);
   const [clicks, setClicks] = useState(0);
-  const [isSoundOn, setIsSoundOn] = useState(true);
 
 
   const pageRandomNumber = Math.floor(Math.random() * 30);
@@ -230,14 +229,14 @@ const Sprint = () => {
                     if(word.word == variants[0] && (word.wordTranslate == variants[1])) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
-                      if(isSoundOn) rightSound.play();
+                      rightSound.play();
                       correctAnswers.push(word.id)
                       correctAnswersCount();
                       ++currentSerie.current;
                       } else {
                         wrongAnswers.push(word.id)
                         wrongAnswersCount();
-                        if(isSoundOn) wrongSound.play()
+                        wrongSound.play()
                         if (currentSerie.current > maxSerie.current) {
                           maxSerie.current = currentSerie.current;
                         }
@@ -271,14 +270,14 @@ const Sprint = () => {
                     if((word.word == variants[0] && (word.wordTranslate !== variants[1]))) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
-                      if(isSoundOn) rightSound.play();
+                      rightSound.play();
                       correctAnswers.push(word.id);   
                       correctAnswersCount();
                       ++currentSerie.current;
                     } else {
                       wrongAnswers.push(word.id)
                       wrongAnswersCount();
-                      if(isSoundOn) wrongSound.play()
+                      wrongSound.play()
                       if (currentSerie.current > maxSerie.current) {
                         maxSerie.current = currentSerie.current;
                       }
