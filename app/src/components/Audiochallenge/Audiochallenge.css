@@ -71,6 +71,12 @@ b{
     pointer-events: auto;
 }
 
+@media (max-width:768px) {
+    .words-container {
+        flex-direction:column
+    }
+}
+
 .word-block {
     display: flex;
     justify-content: space-between;
