@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState  } from "react";
 import { useParams} from "react-router";
 import { Link } from "react-router-dom";
 import {  useSelector, useDispatch } from "react-redux";
-import { setGroup, setPage } from "../../store/pageSlice";
+import { setGroup, setPage, cleanMarkedWords } from "../../store/pageSlice";
 import getWords from "../../services/request";
 
 import Card from "../../components/Card/Card";
@@ -58,15 +58,17 @@ const Page = () => {
   dispatch(setGroup(group));
   dispatch(setPage(page));
   //выделять страницу, если слова отмечены
-  const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
   const [allMarked, setAllMarked] = useState(false);
   const [menuGamesActive, setMenuGamesActive] = useState(true);
+  
+ const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
+
    const handlePageStyle = () => {
-    if (!allMarked && markedWords.length >= 19) {
+    if (markedWords.length >= 19) {
       setAllMarked(true);
       setMenuGamesActive(false);
     } 
-    if (allMarked && markedWords.length <= 20) {
+    if (markedWords.length < 20) {
       setAllMarked(false);
       setMenuGamesActive(true);
     }
@@ -87,12 +89,21 @@ const Page = () => {
     }
     })
   }, []);
+ 
   const handleClickButton = () => {
     setActive(!isActive)
   };
   const showGames = () => {
     setMenuGames(!isMenuGames)
   }
+
+  const handleTextbookNav = (index: number) => { 
+    dispatch(cleanMarkedWords())
+    getWords(index, page, res => {
+      setWords(res)
+    })
+  }
+
    return (
     <Fragment>
        <Header />
@@ -104,8 +115,7 @@ const Page = () => {
              handleClick={handleClickButton} />
           {
             isActive && <TextbookNav
-              handleClick={() => {getWords(group, page, res => setWords(res))}
-              }/> 
+              handleClick={handleTextbookNav}/> 
           }
           <Button
             className="button games-button"
@@ -164,13 +174,15 @@ const Page = () => {
                   result < 0 || result > 29 ? {pointerEvents: 'none'} : undefined
                 } 
                 onClick={
-                  () => getWords(group, result, res => {
-                    setWords(res);
-                    if (markedWords.length == 20) {
-                      setAllMarked(true);
-                      setMenuGamesActive(false);
-                    }
-                  })
+                  () => {
+                    dispatch(cleanMarkedWords())
+                    getWords(group, result, res => {
+                      setWords(res);
+                      if (markedWords.length == 20) {
+                        setAllMarked(true);
+                        setMenuGamesActive(false);
+                      }
+                  })}
                   }>
                 {title}
               </Link>

@@ -7,7 +7,7 @@ import cn from 'classnames';
 
  interface ITextbookNav {
   className?: string,
-  handleClick?: () => void
+  handleClick?: (index: number) => void,
  }
  const TextbookNav: React.FunctionComponent<ITextbookNav>  = ({className, handleClick}) => {
   
@@ -22,7 +22,9 @@ import cn from 'classnames';
         className={cn('group', title.split(' ')[0])} 
         to={`../textbook/group/${index}/page/${pageNumber}`}
         key={index}
-        onClick={handleClick ? handleClick : undefined}
+        onClick={() => {
+          handleClick ? handleClick(index) : undefined
+        }}
         >
           {title}
       </Link>

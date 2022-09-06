@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import { getAggregatedWords } from '../../services/user';
 import { setAllDifficultWords } from '../../store/wordsSlice';
-import getWords from "../../services/request";
 
 import Header from "../../components/Header/Header";
 import Card from "../../components/Card/Card";
@@ -33,7 +32,6 @@ const Difficult = () => {
 
   const isAuth = useSelector((state: any) => state.user.isAuth);
   const user = useSelector((state: any) => state.user.data);
-  const page = useSelector((state: any) => state.page.currentPage);
 
   const [difficultWords, setDifficultWords] = useState(initialValue);
   
