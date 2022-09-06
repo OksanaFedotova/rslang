@@ -41,6 +41,7 @@ const Sprint = () => {
   const [isGameActive, setGameActive] = useState(false);
   const [variants, setVariants] = useState(arrayWords);
   const [clicks, setClicks] = useState(0);
+  const [isSoundOn, setIsSoundOn] = useState(true);
 
 
   const pageRandomNumber = Math.floor(Math.random() * 30);
@@ -82,6 +83,8 @@ const Sprint = () => {
     const user = useSelector((state: any) => state.user.data);
 
  function pushStat(arr: string[]) {
+
+//Источник: https://ru.stackoverflow.com/questions/590571/
 
       const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
           get: any; set: (arg0: any, arg1: number) => void; 
@@ -227,14 +230,14 @@ const Sprint = () => {
                     if(word.word == variants[0] && (word.wordTranslate == variants[1])) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
-                      rightSound.play();
+                      if(isSoundOn) rightSound.play();
                       correctAnswers.push(word.id)
                       correctAnswersCount();
                       ++currentSerie.current;
                       } else {
                         wrongAnswers.push(word.id)
                         wrongAnswersCount();
-                        wrongSound.play()
+                        if(isSoundOn) wrongSound.play()
                         if (currentSerie.current > maxSerie.current) {
                           maxSerie.current = currentSerie.current;
                         }
@@ -268,14 +271,14 @@ const Sprint = () => {
                     if((word.word == variants[0] && (word.wordTranslate !== variants[1]))) {
                       currentCount = currentCount + 1;
                       setCount(currentCount);
-                      rightSound.play();
+                      if(isSoundOn) rightSound.play();
                       correctAnswers.push(word.id);   
                       correctAnswersCount();
                       ++currentSerie.current;
                     } else {
                       wrongAnswers.push(word.id)
                       wrongAnswersCount();
-                      wrongSound.play()
+                      if(isSoundOn) wrongSound.play()
                       if (currentSerie.current > maxSerie.current) {
                         maxSerie.current = currentSerie.current;
                       }

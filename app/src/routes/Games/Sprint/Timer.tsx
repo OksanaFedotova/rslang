@@ -19,8 +19,10 @@ const Timer: React.FC<ITimer> = () => {
         }
       }, [ seconds, timerActive ]);
       
+      const btnYes = document.querySelector(".yes-button") as HTMLButtonElement || null;
+      const btnNo = document.querySelector(".no-button") as HTMLButtonElement || null;
 
-return (
+      return (
     <div className="timer-field">
       {seconds
         ? <Fragment>
@@ -35,8 +37,11 @@ return (
             <div className="clock-block">{seconds}</div>
           </Fragment>
         : <>
+          {btnYes.disabled = true}
+          {btnNo.disabled = true}
           {document.querySelector("#root > div > div.result-wrapper")?.classList.add('active')}
           {document.querySelector("#root > div > div.level-wrapper")?.classList.add('hidden')}
+
         </>
       }
     </div>
