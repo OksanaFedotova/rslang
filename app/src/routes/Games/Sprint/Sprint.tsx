@@ -83,6 +83,8 @@ const Sprint = () => {
 
  function pushStat(arr: string[]) {
 
+//Источник: https://ru.stackoverflow.com/questions/590571/
+
       const resultReduce = arr.reduce(function(acc: { hash: { [x: string]: { [x: string]: any; }; }; map: {
           get: any; set: (arg0: any, arg1: number) => void; 
           }; result: any[]; }, cur: string | number) {
