@@ -58,21 +58,14 @@ const Page = () => {
   dispatch(setGroup(group));
   dispatch(setPage(page));
   //выделять страницу, если слова отмечены
-  const [allMarked, setAllMarked] = useState(false);
   const [menuGamesActive, setMenuGamesActive] = useState(true);
   
  const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
 
-   const handlePageStyle = () => {
-    if (markedWords.length >= 19) {
-      setAllMarked(true);
-      setMenuGamesActive(false);
-    } 
-    if (markedWords.length < 20) {
-      setAllMarked(false);
-      setMenuGamesActive(true);
-    }
-  }
+
+
+  useEffect(() => setMenuGamesActive(markedWords.length < 20), [markedWords]) 
+
 
   const differentStyles = ['A1','A2','B1','B2','C1','C2'];
   
@@ -84,7 +77,6 @@ const Page = () => {
     getWords(group, page, res => {
       setWords(res);
        if (markedWords.length == 20) {
-      setAllMarked(true);
       setMenuGamesActive(false);
     }
     })
@@ -98,7 +90,6 @@ const Page = () => {
   }
 
   const handleTextbookNav = (index: number) => { 
-    dispatch(cleanMarkedWords())
     getWords(index, page, res => {
       setWords(res)
     })
@@ -107,7 +98,7 @@ const Page = () => {
    return (
     <Fragment>
        <Header />
-       <div className={cn("page", differentStyles[group], {allMarked: allMarked})}>
+       <div className={cn("page", differentStyles[group], {allMarked: !menuGamesActive})}>
          <div className="button-container">
            <Button
              className="button textbook-button"
@@ -156,7 +147,6 @@ const Page = () => {
                audio={`https://rslang-b.herokuapp.com/${word.audio}`}
                audioExample={`https://rslang-b.herokuapp.com/${word.audioExample}`}
                audioMeaning={`https://rslang-b.herokuapp.com/${word.audioMeaning}`}
-               setPageStyle={handlePageStyle}
                />;
             }
            )}
@@ -179,7 +169,6 @@ const Page = () => {
                     getWords(group, result, res => {
                       setWords(res);
                       if (markedWords.length == 20) {
-                        setAllMarked(true);
                         setMenuGamesActive(false);
                       }
                   })}

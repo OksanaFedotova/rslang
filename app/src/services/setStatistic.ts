@@ -23,8 +23,8 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
   })
   if (!res.ok) { 
     if (res.status === 404) {
-      const studied = type == 'wright' ? true : false;
-      const correct =  type == 'wright' ? number : 0;
+      const studied = type == 'right' ? true : false;
+      const correct =  type == 'right' ? number : 0;
       const wrong =  type == 'wrong' ? number : 0;
         const wordInfo =  {
         "difficulty": "none",
@@ -34,6 +34,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
           "correct": correct,
           "wrong": wrong,
     }}
+
       createUserWord(user, wordId, wordInfo)
       return 1;
     } else {
@@ -41,8 +42,17 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
     }
   } else {
     const json = await res.json();
-    const correct =  type == 'wright' ? json.optional.correct + number : json.correct;
-    const wrong =  type == 'wrong' ? json.optional.wrong + number : json.wrong;
+    let correct, wrong;
+    if (json.optional.correct) {
+      correct =  type == 'right' ? +json.optional.correct + number : json.optional.correct;
+    } else {
+      correct =  type == 'right' ? number : 0;
+    }
+    if (json.optional.wrong) {
+      wrong =  type == 'wrong' ? +json.optional.wrong + number : json.optional.wrong;
+    } else {
+      wrong =  type == 'wrong' ? number : 0;
+    }
 
     const wordInfo =  {
         "difficulty": json.difficulty,
@@ -97,7 +107,7 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
   percent = Math.round(percentPerGame);
   //новые слова
-  const rightWordsPerGame = await calculateNewWords(user, rightWords, 'wright');
+  const rightWordsPerGame = await calculateNewWords(user, rightWords, 'right');
   const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
   const allWordsPerGame = rightWordsPerGame.concat(wrongWordsPerGame)
   const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;

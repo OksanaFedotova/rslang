@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState  } from "react";
+import React, { Fragment, useEffect, useState, useRef  } from "react";
 import { useSelector, useDispatch} from 'react-redux';
 import { Link } from "react-router-dom";
 
@@ -34,8 +34,13 @@ const Difficult = () => {
   const user = useSelector((state: any) => state.user.data);
 
   const [difficultWords, setDifficultWords] = useState(initialValue);
+
+  const spinner = useRef(true);
   
-  useEffect(() => getAggregatedWords(user, res => setDifficultWords(res[0].paginatedResults)), []);
+  useEffect(() => getAggregatedWords(user, res => {
+    spinner.current = false;
+    setDifficultWords(res[0].paginatedResults)
+  }), []);
 
   const handleRedraw = () => {
     getAggregatedWords(user, res => {setDifficultWords(res[0].paginatedResults)})
@@ -43,14 +48,15 @@ const Difficult = () => {
 
   
 useEffect(() => {
-  const elem = document.querySelector('.difficult-page-base');
-  const cardBlock = document.querySelector('.card');
-    if(cardBlock) {
+  if (!spinner.current) {
+    const elem = document.querySelector('.difficult-page-base');
+    if(difficultWords.length) {
     elem?.classList.add('hidden');
   } else {
     elem?.classList.remove('hidden')
   }
-})
+  }
+}, [difficultWords])
 
   //redux
   const dispatch = useDispatch();
@@ -100,6 +106,7 @@ useEffect(() => {
         </div>
 
         <div className='difficult-words-wrapper'>
+          {spinner.current ? <div>Идет загрузка...</div> : null}
     {
       difficultWords.map((word: _IWord) => {
         return <Card
