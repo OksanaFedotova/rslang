@@ -37,10 +37,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
 
       createUserWord(user, wordId, wordInfo)
       return 1;
-    } else {
-      alert ('Попробуйте выйти и зайти еще раз')
-    }
-  } else {
+    } } else {
     const json = await res.json();
     let correct, wrong;
     if (json.optional.correct) {
@@ -70,6 +67,7 @@ const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) =
 }
 
 const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[], series = 0) => {
+  if(!user) return;
   if (rightWords.length == 0 && wrongWords.length == 0) return
   const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
   const userStatistic = await getStatistic(user);
@@ -80,8 +78,10 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   let sprintWrong = 0;
   let audioCorrect = 0;
   let audioWrong = 0;
-  let percent = 0;
-  let longestSeries = 0;
+  let percentAudio = 0;
+  let percentSprint = 0;
+  let longestSeriesAudio = 0;
+  let longestSeriesSprint = 0;
   let newWordsSprint = 0;
   let newWordsAudio = 0;
   if (userStatistic) {
@@ -94,8 +94,10 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       sprintWrong = userStatistic.optional.sprintWrong || 0;
       audioCorrect = userStatistic.optional.audioCorrect || 0;
       audioWrong = userStatistic.optional.audioWrong || 0;
-      percent = userStatistic.optional.percent || 0;
-      longestSeries = (userStatistic.optional.longestSeries > series) ? userStatistic.optional.longestSeries : series || 0;
+      percentAudio = userStatistic.optional.percentAudio || 0;
+      percentSprint = userStatistic.optional.percentSprint || 0;
+      longestSeriesSprint = (userStatistic.optional.longestSeriesSprint > series) ? userStatistic.optional.longestSeriesSprint : series || 0;
+      longestSeriesAudio = (userStatistic.optional.longestSeriesAudio > series) ? userStatistic.optional.longestSeriesAudio : series || 0;
       newWordsSprint = userStatistic.optional.newWordsSprint || 0;
       newWordsAudio = userStatistic.optional.newWordsSprintAudio || 0;
       }
@@ -105,7 +107,8 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
 
   //процент
   const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
-  percent = Math.round(percentPerGame);
+  const percent = Math.round(percentPerGame);
+
   //новые слова
   const rightWordsPerGame = await calculateNewWords(user, rightWords, 'right');
   const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
@@ -113,9 +116,11 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
   const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;
   newWordsPerDay += newWordsPerGame;
   if (gameName == 'Sprint') {
-    newWordsSprint += newWordsPerDay
+    newWordsSprint += newWordsPerGame;
+    percentSprint = percent;
   } else {
-    newWordsAudio += newWordsPerDay;
+    newWordsAudio += newWordsPerGame;
+    percentAudio = percent;
   }
   //выученные слова
   const  learnedWordsPerGame = rightWords.map((word) => {
@@ -151,10 +156,12 @@ const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[
       sprintWrong: sprintWrong,
       audioCorrect: audioCorrect,
       audioWrong: audioWrong,
-      percent: percent,
-      longestSeries: longestSeries,
+      longestSeriesAudio: longestSeriesAudio,
+      longestSeriesSprint: longestSeriesSprint,
       newWordsSprint: newWordsSprint,
-      newWordsAudio: newWordsAudio
+      newWordsAudio: newWordsAudio,
+      percentAudio: percentAudio,
+      percentSprint: percentSprint
     }
   }
   putStatistic(user, data)

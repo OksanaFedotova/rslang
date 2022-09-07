@@ -30,11 +30,12 @@
     row-gap: 15px;
     justify-content: flex-start;
     padding: 15px 20px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     border: 2px #ffff00 solid;
     background-color: #fff;
     border-radius: 25px;
     width: 30%;
+    margin-top: 10px;
 }
 
 .game-stat-block:hover {
