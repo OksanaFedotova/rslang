@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Header from "../../components/Header/Header";
-import Layout from "../../components/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
 
 import { getStatistic } from "../../services/requestStatistic";
@@ -17,9 +16,6 @@ const Statistic = () => {
 
   const navigator = useNavigate();
   const [newUser, setIsNew] = useState(true);
-  type Obj = {
-    [key: string]: number | undefined
-  }
   const initialValue: any[] | [] = [];
 
   const [data, setData] = useState(initialValue);
@@ -29,6 +25,7 @@ const Statistic = () => {
       if (res) {
         setIsNew(false)
         setData(Object.values(res));
+        console.log(data)
       }
     }
     getStat()
@@ -61,15 +58,19 @@ const Statistic = () => {
           </div>
           <div className="game-stat-block">
             <div className="block-title">Спринт</div>
-       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsSprint}</p></div>
-       <div>Процент правильных ответов за день: <p className="data-block">{Math.round(data[2].percent)}%</p></div>
-       <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
+            <div>Новых слов за день: <p className="data-block">{data[2].newWordsSprint}</p></div>
+            <div>Процент правильных ответов за день: <p className="data-block">{Math.round(data[2].percentSprint || 0)}%</p></div>
+            <div>Правильных ответов: <p className="data-block">{Math.round(data[2].sprintCorrect || 0)}</p></div>
+            <div>Неправильных ответов: <p className="data-block">{Math.round(data[2].sprintWrong || 0)}</p></div>
+            <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeriesSprint || 0}</p></div>
           </div>
           <div className="game-stat-block">
             <div className="block-title">Аудиовызов</div>
-       <div>Всего новых слов за день: <p className="data-block">{data[2].newWordsAudio}</p></div>
-       <div>Процент правильных ответов за день: <p className="data-block">{Math.round(data[2].percent)}%</p></div>
-       <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeries}</p></div>
+            <div>Новых слов за день: <p className="data-block">{data[2].newWordsAudio}</p></div>
+            <div>Процент правильных ответов за день: <p className="data-block">{Math.round(data[2].percentAudio || 0)}%</p></div>
+            <div>Правильных ответов: <p className="data-block">{Math.round(data[2].audioCorrect || 0)}</p></div>
+            <div>Неправильных ответов: <p className="data-block">{Math.round(data[2].audioWrong || 0)}</p></div>
+            <div>Самая длинная серия правильных ответов за день: <p className="data-block">{data[2].longestSeriesAudio || 0}</p></div>
           </div>
         </div>
        </div>

@@ -11,7 +11,6 @@ import './Card.css'
 
 const prepareData = (arr: any, wordId: string, difficulty: string, studied: boolean, newWord: boolean) => {
   const wordData = arr.filter((wordRed: any) => wordRed.wordId === wordId)[0];
-  console.log(wordData)
   let dataToLoad = {};
   if (wordData) {
     dataToLoad  = {
