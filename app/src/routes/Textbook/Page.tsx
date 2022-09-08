@@ -61,12 +61,7 @@ const Page = () => {
   const [menuGamesActive, setMenuGamesActive] = useState(true);
   
  const markedWords = useSelector((state: any) => state.page.markedWordsOnPage);
-
-
-
-  useEffect(() => setMenuGamesActive(markedWords.length < 20), [markedWords]) 
-
-
+ useEffect(() => setMenuGamesActive(markedWords.length < 20), [markedWords]) 
   const differentStyles = ['A1','A2','B1','B2','C1','C2'];
   
   const [words, setWords] = useState(initialValue);

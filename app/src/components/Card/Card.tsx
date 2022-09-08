@@ -54,12 +54,13 @@ const Card: React.FunctionComponent<ICard> = ({wordId, image, textExample, textM
 useEffect(() => {
   getUserWord(user, wordId, (res) => {
       if (!res) return;
-      dispatch(setMarkedWords(res));
       if (res.difficulty && res.difficulty !== 'none') {
         setDifficult(true);
+        dispatch(setMarkedWords(res));
       }
       if (res.optional.studied) {
         setStudied(true);
+        dispatch(setMarkedWords(res));
       }
       if(res.optional.correct) {
         correctAnswerNumber.current = res.optional.correct

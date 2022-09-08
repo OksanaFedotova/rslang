@@ -3,7 +3,7 @@ interface IUserExist {
   refreshToken?: string,
   userId: string, 
 }
-const getStatistic = async (user: IUserExist) => {
+const getStatistic = async (user: IUserExist, callback?: any) => {
  return await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/statistics`, {
     method: 'GET',
     headers: {
