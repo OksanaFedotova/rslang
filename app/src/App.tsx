@@ -34,21 +34,6 @@ function App() {
     dispatch(setUser(null));
     localStorage.removeItem('user');
    }
-  //if (userLocal && userLocal.expire < Date.now()) {
-  //  (async () => {
-  //     const refresh = await refreshToken(userLocal); 
-  //     if (typeof refresh === 'number') {
-  //       dispatch(setUserAuth(false));
-  //       dispatch(setUser(null));
-  //       localStorage.removeItem('user');
-  //     } else {
-  //       userLocal.token = refresh.token;
-  //       userLocal.refreshToken = refresh.refreshToken
-  //       dispatch(setUser(userLocal));
-  //       dispatch(setUserAuth(true));
-  //     }
-  //  } )()
-  // }
   if (userLocal) {
       dispatch(setUser(userLocal));
       dispatch(setUserAuth(true));
