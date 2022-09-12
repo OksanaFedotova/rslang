@@ -1,9 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { getStatistic } from "../../services/requestStatistic";
-import { setUser, setUserAuth } from "../../store/userSlice";
+import { updateStatistic } from "../../services/setStatistic";
 import { RootState } from "../../store/store";
 import IUserStat from "../../Interfaces/IUserStat";
 
@@ -13,11 +11,9 @@ import Footer from "../../components/Footer/Footer";
 import "./Statistic.css";
 
 const Statistic = () => {
-  const dispatch = useDispatch();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
   const user = useSelector((state: RootState) => state.user.data);
 
-  const navigator = useNavigate();
   const [newUser, setIsNew] = useState(true);
   const initialValue: IUserStat = {
     learnedWords: 0,
@@ -42,7 +38,7 @@ const Statistic = () => {
   useEffect(() => {
     const getStat = async () => {
       if (user) {
-        const res = await getStatistic(user);
+        const res = await updateStatistic(user);
         if (res) {
           setIsNew(false);
           setData(res);
@@ -51,13 +47,6 @@ const Statistic = () => {
     };
     void getStat();
   }, []);
-
-  const handleClick = () => {
-    dispatch(setUser(null));
-    dispatch(setUserAuth(false));
-    localStorage.removeItem("user");
-    navigator("..");
-  };
 
   return (
     <Fragment>

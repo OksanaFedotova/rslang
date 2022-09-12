@@ -175,6 +175,18 @@ const Card: React.FunctionComponent<ICard> = ({
               Изученное слово
             </button>
           )}
+          {isStudied && (
+            <button
+              onClick={() => {
+                void setUserWord(user, wordId, "none", false, false);
+                void updateLearnedWords(user, "remove");
+                setStudied(false);
+                dispatch(removeMarkedWords(wordId));
+              }}
+            >
+              Неизученное слово
+            </button>
+          )}
           <div>
             <p>Количество правильных ответов: {correctAnswerNumber.current}</p>
           </div>

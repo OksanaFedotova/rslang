@@ -64,6 +64,7 @@ const Page = () => {
     (state: RootState) => state.page.markedWordsOnPage
   );
   useEffect(() => setMenuGamesActive(markedWords.length < 20), [markedWords]);
+
   const differentStyles = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
   const [words, setWords] = useState(initialValue);
@@ -166,9 +167,9 @@ const Page = () => {
                   dispatch(cleanMarkedWords());
                   getWords(group, result, res => {
                     setWords(res);
-                    if (markedWords.length == 20) {
-                      setMenuGamesActive(false);
-                    }
+                    markedWords.length < 20
+                      ? setMenuGamesActive(true)
+                      : setMenuGamesActive(false);
                   });
                 }}
               >
