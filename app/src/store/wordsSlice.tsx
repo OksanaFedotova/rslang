@@ -1,35 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
-import IWord from '../Interfaces/IWord'
+import { _IWord } from "../Interfaces/IWord";
 
 interface usersWords {
-    difficult: IWord[],
-    studied: IWord[],
-    newWords: IWord[],
+  difficult: _IWord[];
 }
 
 const initialState: usersWords = {
-    difficult: [],
-    studied: [],
-    newWords: [],
-}
+  difficult: []
+};
 
 export const slice = createSlice({
-  name: 'words',
+  name: "words",
   initialState,
   reducers: {
-    setDifficultWords: (state, action) => {
+    setDifficultWords: (state, action: { payload: _IWord }) => {
       state.difficult.push(action.payload);
     },
-    setStudiedtWords: (state, action) => {
-      state.studied.push(action.payload);
-    },
-    setNewWords: (state, action) => {
-      state.newWords.push(action.payload);
-    },
-    setAllDifficultWords: (state, action) => {
-       state.difficult = action.payload;
+    setAllDifficultWords: (state, action: { payload: _IWord[] }) => {
+      state.difficult = action.payload;
     }
-  } 
-})
+  }
+});
 export const { setDifficultWords, setAllDifficultWords } = slice.actions;
-export default slice.reducer
+export default slice.reducer;
