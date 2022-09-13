@@ -1,23 +1,23 @@
 .difficult-page-base {
-    height: 79vh;
+  height: 79vh;
 }
 
 .difficult-words-wrapper {
-    min-height: 79vh;
+  min-height: 79vh;
 }
 
 .difficult-page-base.hidden {
-    display: none;
+  display: none;
 }
 
 .difficult-image {
-    width: 50%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+  width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .difficult-h3 {
-    text-align: center;
-    padding-top: 50px;
+  text-align: center;
+  padding-top: 50px;
 }

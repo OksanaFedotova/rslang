@@ -1,6 +1,6 @@
-import React from 'react';
-import './Layout.css';
-import cn from 'classnames';
+import React from "react";
+import "./Layout.css";
+import cn from "classnames";
 
 interface ILayout {
   title?: string;
@@ -8,16 +8,17 @@ interface ILayout {
   className?: string;
 }
 
-const Layout: React.FunctionComponent<ILayout> = ({title, children, className}) => {
-    return (
-      <div 
-        className={cn ('layout', className)}
-      >
-        { title? <h3>{title}</h3>: null }
+const Layout: React.FunctionComponent<ILayout> = ({
+  title,
+  children,
+  className
+}) => {
+  return (
+    <div className={cn("layout", className)}>
+      {title ? <h3>{title}</h3> : null}
       <>{children}</>
-      </div>
-    )
-  }
- 
-  export default Layout;
-  
+    </div>
+  );
+};
+
+export default Layout;

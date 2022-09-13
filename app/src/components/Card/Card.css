@@ -11,7 +11,7 @@
   margin: 5px;
 }
 .card-img {
-   grid-area: 1 / 1 / 4 / 2;
+  grid-area: 1 / 1 / 4 / 2;
 }
 .word {
   font-size: 20px;
@@ -29,7 +29,7 @@
   color: black;
   border: 2px solid #ffff00;
 }
-.mark-word>button:hover {
+.mark-word > button:hover {
   background-color: #ffff00;
 }
 .difficult {
