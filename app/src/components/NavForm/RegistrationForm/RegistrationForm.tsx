@@ -62,7 +62,7 @@ const RegistrationForm: React.FunctionComponent<IRegistration> = ({
           };
           localStorage.setItem("user", JSON.stringify(res));
           //добавление пользователя в редакс
-          dispatch(setUser(JSON.parse(localStorage.user)));
+          dispatch(setUser(res));
           dispatch(setUserAuth(true));
           setRegistrationActive(false);
           updateSwitchButton();

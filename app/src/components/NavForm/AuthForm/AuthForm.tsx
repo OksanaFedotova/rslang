@@ -43,12 +43,12 @@ const AuthForm: React.FunctionComponent<IAuthForm> = ({
         };
         localStorage.setItem("user", JSON.stringify(res));
         //добавление пользователя в редакс
-        dispatch(setUser(JSON.parse(localStorage.user)));
+        dispatch(setUser(res));
         dispatch(setUserAuth(true));
         updateState();
         updateEnter();
       },
-      err => {
+      () => {
         setAuthError(true);
         setEmail("");
         setPassword("");

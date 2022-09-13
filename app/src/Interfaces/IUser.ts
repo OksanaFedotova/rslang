@@ -4,13 +4,12 @@ interface IUserExist {
   expire: number;
   userId: string;
   name: string;
+  error?: { status: "failed" };
 }
 interface IUser {
   name?: string;
   email: string;
   password?: string;
-  error?: { status: "failed" };
-  expire?: number;
 }
 
 export type { IUserExist, IUser };
