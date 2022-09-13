@@ -2,6 +2,7 @@
 ## Web app to learn English
 ![Main page](https://github.com/OksanaFedotova/rslang/raw/readme/app/src/assets/screenshots/mainScreenShot.jpg)
 
+
 * game-based learning
 ![Sprint](https://github.com/OksanaFedotova/rslang/raw/readme/app/src/assets/screenshots/sprintScreenShot.jpg)
 ![Audiochallenge](https://github.com/OksanaFedotova/rslang/raw/readme/app/src/assets/screenshots/audioScreenShot.jpg)
