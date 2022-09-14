@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import type { RootState } from "../../store/store";
 import cn from "classnames";
 
 const GROUPS = [
@@ -20,7 +21,7 @@ const TextbookNav: React.FunctionComponent<ITextbookNav> = ({
   className,
   handleClick
 }) => {
-  const isAuth = useSelector((state: any) => state.user.isAuth);
+  const isAuth = useSelector((state: RootState) => state.user.isAuth);
 
   const pageNumber = 0;
   return (

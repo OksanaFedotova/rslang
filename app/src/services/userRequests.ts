@@ -1,6 +1,6 @@
-import { IUser } from "../Interfaces/IUser";
+import { IUser, IUserExist } from "../Interfaces/IUser";
 
-const postUser = (user: IUser, callback: (res: IUser) => void) => {
+const postUser = (user: IUser, callback: (res: IUserExist) => void) => {
   fetch("https://rslang-b.herokuapp.com/users", {
     method: "POST",
     headers: {
@@ -10,13 +10,13 @@ const postUser = (user: IUser, callback: (res: IUser) => void) => {
     body: JSON.stringify(user)
   })
     .then(res => res.json())
-    .then((res: IUser) => callback(res))
+    .then((res: IUserExist) => callback(res))
     .catch(err => console.error(err));
 };
 
 const signIn = (
   user: IUser,
-  callback: (res: IUser) => void,
+  callback: (res: IUserExist) => void,
   callback2?: (error: Error) => void
 ) => {
   fetch("https://rslang-b.herokuapp.com/signin", {
@@ -28,7 +28,7 @@ const signIn = (
     body: JSON.stringify(user)
   })
     .then(res => res.json())
-    .then((res: IUser) => callback(res))
+    .then((res: IUserExist) => callback(res))
     .catch((error: Error) => {
       if (callback2) callback2(error);
     });

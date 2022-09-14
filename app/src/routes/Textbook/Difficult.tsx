@@ -25,12 +25,15 @@ const Difficult = () => {
 
   const spinner = useRef(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (user)
       getAggregatedWords(user, res => {
         spinner.current = false;
         const words = res[0].paginatedResults;
         setDifficultWords(words);
+        dispatch(setAllDifficultWords(res[0].paginatedResults));
       });
   }, []);
 
@@ -52,16 +55,9 @@ const Difficult = () => {
     }
   }, [difficultWords]);
 
-  //redux
-  const dispatch = useDispatch();
-  if (user)
-    getAggregatedWords(user, res =>
-      dispatch(setAllDifficultWords(res[0].paginatedResults))
-    );
-
   const [isActive, setActive] = useState(false);
   const [isMenuGames, setMenuGames] = useState(false);
-  // const [menuGamesActive, setMenuGamesActive] = useState(true);
+
   const handleClickButton = () => {
     setActive(!isActive);
   };

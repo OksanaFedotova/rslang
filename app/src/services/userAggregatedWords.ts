@@ -9,7 +9,7 @@ const getAggregatedWords = (
   callback: React.Dispatch<IAggregatedWords[]>
 ) => {
   fetch(
-    `https://rslang-b.herokuapp.com/users/${user.userId}/aggregatedWords?filter={"userWord.difficulty":"medium"}`,
+    `https://rslang-b.herokuapp.com/users/${user.userId}/aggregatedWords?wordsPerPage=100&filter={"userWord.difficulty":"medium"}`,
     {
       method: "GET",
       headers: {
