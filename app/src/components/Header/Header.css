@@ -1,0 +1,42 @@
+.header {
+  padding: 0 20px;
+  background-color: #28a3e8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 11vh;
+}
+
+.header-rightblock {
+  width: 280px;
+}
+
+.logo {
+  width: 70px;
+  height: 5vh;
+  cursor: pointer;
+}
+
+.header-logo:hover > .logo-text {
+  color: #ffff00;
+  transition: 0.5s;
+}
+
+.logo-text {
+  font-family: Merriweather;
+  color: #fff;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .logo {
+    margin-left: 90px;
+    transition: 0.3s;
+  }
+  .logo-text {
+    margin-left: 90px;
+    transition: 0.3s;
+  }
+}

@@ -1,0 +1,67 @@
+.team-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 30px;
+  row-gap: 40px;
+  min-height: 79vh;
+}
+
+.team-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  flex-wrap: wrap;
+}
+
+.team-member-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.team-member-name {
+  padding: 20px 0;
+  font-size: 1.2rem;
+}
+
+.team-member-role {
+  padding-bottom: 15px;
+  font-family: "Merriweather", sans-serif;
+}
+
+.team-member-decription {
+  padding: 20px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.github-link {
+  cursor: pointer;
+}
+
+.github-link:hover {
+  filter: invert(52%) sepia(92%) saturate(1321%) hue-rotate(173deg)
+    brightness(95%) contrast(92%);
+}
+
+@media (max-width: 850px) {
+  .team-member {
+    width: 40%;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-member {
+    width: 80%;
+  }
+
+  .team-member-image {
+    width: 45%;
+  }
+}

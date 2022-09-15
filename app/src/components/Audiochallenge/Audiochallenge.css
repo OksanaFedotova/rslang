@@ -1,0 +1,114 @@
+b {
+  padding: 5px;
+}
+
+.audiocard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background-color: rgb(211, 235, 247);
+  margin: 0 0 1em 0;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.wrapper-word {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.audio-control {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  align-items: center;
+  margin: 20px 0 20px 0;
+  padding: 5px;
+  border: 2px solid white;
+  border-radius: 12px;
+}
+
+.auch-card {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  background-color: rgb(24, 197, 197);
+}
+
+.next-button {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  color: black;
+}
+
+.next {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  color: black;
+  margin-bottom: 16px;
+}
+
+.words-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 7px;
+  padding: 20px 0 30px 0;
+  pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .words-container {
+    flex-direction: column;
+  }
+}
+
+.word-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.correct {
+  background-color: green;
+  border-radius: 5px;
+}
+
+.incorrect {
+  background-color: red;
+  border-radius: 5px;
+}
+
+.noclick {
+  pointer-events: none;
+}
+
+.close {
+  position: absolute;
+  left: 90%;
+  text-decoration: none;
+}
+
+.stat {
+  text-align: center;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.layout-auch {
+  height: 350px;
+}
+
+.layout-auch2 {
+  height: 200px;
+}

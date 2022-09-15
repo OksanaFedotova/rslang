@@ -1,0 +1,41 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.games-page-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+.game-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.game-block:hover {
+  border: 1px #a6c54b solid;
+  border-radius: 25px;
+  transition: 0.5s;
+}
+
+.game-image {
+  width: 90%;
+}
+
+@media (max-width: 850px) {
+  .games-page-wrapper {
+    flex-direction: column;
+    row-gap: 45px;
+  }
+  .game-image {
+    width: 70%;
+    height: auto;
+  }
+}

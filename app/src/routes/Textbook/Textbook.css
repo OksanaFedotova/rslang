@@ -1,0 +1,61 @@
+.textbook {
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+}
+.textbook-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5vh;
+}
+.groups-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: fit-content;
+}
+.group {
+  display: inline-block;
+  width: 12rem;
+  height: 3.75rem;
+  margin: 0.313rem;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  padding: 0.313rem;
+  border: rgb(121, 201, 255) solid 2px;
+}
+.textbook-image {
+  width: 45%;
+}
+.textbook-image > img {
+  width: 90%;
+}
+.A1 {
+  background-color: rgb(223, 249, 185);
+}
+.A2 {
+  background-color: rgb(254, 254, 174);
+}
+.B1 {
+  background-color: rgb(236, 195, 245);
+}
+.B2 {
+  background-color: rgb(169, 218, 251);
+}
+.C1 {
+  background-color: rgb(255, 218, 149);
+}
+.C2 {
+  background-color: rgb(194, 182, 255);
+}
+.Difficult {
+  background-color: white;
+  color: black;
+  border: 2px solid #4caf50;
+}
+.Difficult:hover {
+  background-color: #4caf50;
+  color: white;
+}
