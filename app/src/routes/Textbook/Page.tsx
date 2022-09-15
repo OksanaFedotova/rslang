@@ -164,9 +164,10 @@ const Page = () => {
                     : undefined
                 }
                 onClick={() => {
-                  dispatch(cleanMarkedWords());
                   getWords(group, result, res => {
                     setWords(res);
+                    dispatch(cleanMarkedWords());
+                    console.log(markedWords.length);
                     markedWords.length < 20
                       ? setMenuGamesActive(true)
                       : setMenuGamesActive(false);
