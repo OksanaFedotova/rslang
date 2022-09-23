@@ -6,6 +6,7 @@
 .button-container {
   display: flex;
   justify-content: center;
+  max-width: 100%;
 }
 .button {
   width: 200px;
@@ -50,4 +51,7 @@
   background-color: rgb(211, 235, 247);
   color: #000;
   border-radius: 5px;
+}
+.cards {
+ max-width: 100%;
 }
