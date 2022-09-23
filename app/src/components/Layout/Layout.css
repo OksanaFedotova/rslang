@@ -1,6 +1,6 @@
 .layout {
   flex: 1 1 auto;
-  /* height: 79vh; */
+  min-height: 79vh; 
   padding: 0 20px;
 }
 .layout > h3 {
