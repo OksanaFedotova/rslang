@@ -1,2 +1,2 @@
 /// <reference types="react-scripts" />
-module '*.mp3';
+module "*.mp3";

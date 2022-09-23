@@ -23,8 +23,8 @@
   text-decoration: none;
   color: #000;
   text-align: center;
-  padding: 2vh;
-  border:rgb(121, 201, 255) solid 2px
+  padding: 0.313rem;
+  border: rgb(121, 201, 255) solid 2px;
 }
 .textbook-image {
   width: 45%;
@@ -45,7 +45,7 @@
   background-color: rgb(169, 218, 251);
 }
 .C1 {
-  background-color: rgb(255, 218, 149)
+  background-color: rgb(255, 218, 149);
 }
 .C2 {
   background-color: rgb(194, 182, 255);
@@ -53,9 +53,9 @@
 .Difficult {
   background-color: white;
   color: black;
-  border: 2px solid #4CAF50;
+  border: 2px solid #4caf50;
 }
 .Difficult:hover {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }

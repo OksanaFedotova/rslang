@@ -1,19 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IUserExist } from "../Interfaces/IUser";
 
-const initialState = {
-  isAuth: false,
-  data: {},
+interface IUserState {
+  isAuth: boolean;
+  data: IUserExist | null;
 }
 
+const initialState: IUserState = {
+  isAuth: false,
+  data: {
+    token: "",
+    refreshToken: "",
+    expire: 0,
+    userId: "",
+    name: ""
+  }
+};
+
 export const slice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (state: IUserState, action: { payload: IUserExist | null }) => {
       state.data = action.payload;
     },
-    setUserAuth: (state, action) => {state.isAuth = action.payload},
+    setUserAuth: (state: IUserState, action: { payload: boolean }) => {
+      state.isAuth = action.payload;
+    }
   }
-})
-export const { setUser, setUserAuth} = slice.actions;
-export default slice.reducer
+});
+export const { setUser, setUserAuth } = slice.actions;
+export default slice.reducer;

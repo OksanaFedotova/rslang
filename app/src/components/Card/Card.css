@@ -10,8 +10,11 @@
 .card > div {
   margin: 5px;
 }
+.card > img {
+  width: 100%;
+}
 .card-img {
-   grid-area: 1 / 1 / 4 / 2;
+  grid-area: 1 / 1 / 4 / 2;
 }
 .word {
   font-size: 20px;
@@ -29,7 +32,7 @@
   color: black;
   border: 2px solid #ffff00;
 }
-.mark-word>button:hover {
+.mark-word > button:hover {
   background-color: #ffff00;
 }
 .difficult {
@@ -43,6 +46,12 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
+  }
+  .wrapper-example {
+    grid-area: 3 / 2;
+  }
+  .wrapper-meaning {
+    grid-area: 3 / 1;
   }
 }
 @media (max-width: 500px) {

@@ -1,171 +1,199 @@
 import { getStatistic, putStatistic } from "./requestStatistic";
-import { createUserWord, updateUserWord } from "../services/user"
+import { createUserWord, updateUserWord } from "./userWordsRequests";
+import { IUserExist } from "../Interfaces/IUser";
+import IUserWord from "../Interfaces/IUserWord";
 
-interface IUserExist {
-  token?: string,
-  refreshToken?: string,
-  userId: string, 
-}
 type Obj = {
- [key: string]: number 
-}
+  [key: string]: number;
+};
 
-const calculateNewWords = async (user: IUserExist, words: Obj[], type: string) => {
-  const promises =  words.map(async (word) =>  {
+const calculateNewWords = async (
+  user: IUserExist,
+  words: Obj[],
+  type: string
+) => {
+  const promises = words.map(async word => {
     const wordId = Object.keys(word)[0];
-    const number = Object.values(word)[0]
-    const res = await fetch(`https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${user.token}`,
-      'Accept': 'application/json',
-    }
-  })
-  if (!res.ok) { 
-    if (res.status === 404) {
-      const studied = type == 'right' ? true : false;
-      const correct =  type == 'right' ? number : 0;
-      const wrong =  type == 'wrong' ? number : 0;
-        const wordInfo =  {
-        "difficulty": "none",
-        "optional": {
-          "studied": studied, 
-          "newWord": false,
-          "correct": correct,
-          "wrong": wrong,
-    }}
-
-      createUserWord(user, wordId, wordInfo)
-      return 1;
-    } } else {
-    const json = await res.json();
-    let correct, wrong;
-    if (json.optional.correct) {
-      correct =  type == 'right' ? +json.optional.correct + number : json.optional.correct;
+    const number = Object.values(word)[0];
+    const res = await fetch(
+      `https://rslang-b.herokuapp.com/users/${user.userId}/words/${wordId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          Accept: "application/json"
+        }
+      }
+    );
+    if (!res.ok) {
+      if (res.status === 404) {
+        const studied = type == "right" ? true : false;
+        const correct = type == "right" ? number : 0;
+        const wrong = type == "wrong" ? number : 0;
+        const wordInfo = {
+          difficulty: "none",
+          optional: {
+            studied: studied,
+            newWord: false,
+            correct: correct,
+            wrong: wrong
+          }
+        };
+        createUserWord(user, wordId, wordInfo);
+        return 1;
+      }
     } else {
-      correct =  type == 'right' ? number : 0;
+      const json = (await res.json()) as IUserWord;
+      let correct, wrong;
+      if (json.optional.correct) {
+        correct =
+          type == "right"
+            ? +json.optional.correct + number
+            : json.optional.correct;
+      } else {
+        correct = type == "right" ? number : 0;
+      }
+      if (json.optional.wrong) {
+        wrong =
+          type == "wrong" ? +json.optional.wrong + number : json.optional.wrong;
+      } else {
+        wrong = type == "wrong" ? number : 0;
+      }
+      const wordInfo = {
+        difficulty: json.difficulty,
+        optional: {
+          studied: json.optional.studied,
+          newWord: false,
+          correct: correct,
+          wrong: wrong
+        }
+      };
+      updateUserWord(user, wordId, wordInfo);
     }
-    if (json.optional.wrong) {
-      wrong =  type == 'wrong' ? +json.optional.wrong + number : json.optional.wrong;
-    } else {
-      wrong =  type == 'wrong' ? number : 0;
-    }
-
-    const wordInfo =  {
-        "difficulty": json.difficulty,
-        "optional": {
-          "studied": json.studied, 
-          "newWord": false,
-          "correct": correct,
-          "wrong": wrong,
-    }}
-    updateUserWord(user, wordId, wordInfo)
-  }
-  })
-  const result= await Promise.all(promises).then((v) => v)
+  });
+  const result = await Promise.all(promises).then(v => v);
   return result;
-}
-
-const setStatistic = async (user: IUserExist, gameName: string, rightWords: Obj[], wrongWords: Obj[], series = 0) => {
-  if(!user) return;
-  if (rightWords.length == 0 && wrongWords.length == 0) return
-  const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`
+};
+const updateStatistic = async (user: IUserExist) => {
+  const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`;
   const userStatistic = await getStatistic(user);
-  let newWordsPerDay = 0;
-  let learnedWordsPerDay = 0;
-  let learnedWords = 0;
-  let sprintCorrect = 0;
-  let sprintWrong = 0;
-  let audioCorrect = 0;
-  let audioWrong = 0;
-  let percentAudio = 0;
-  let percentSprint = 0;
-  let longestSeriesAudio = 0;
-  let longestSeriesSprint = 0;
-  let newWordsSprint = 0;
-  let newWordsAudio = 0;
-  if (userStatistic) {
-    if (currentDate) {
-      if (currentDate == userStatistic.optional.currentDate) {
-      newWordsPerDay = userStatistic.optional.newWordsPerDay || 0;
-      learnedWordsPerDay = userStatistic.optional.learnedWordsPerDay || 0;
-      learnedWords = userStatistic.learnedWords || 0;
-      sprintCorrect = userStatistic.optional.sprintCorrect || 0;
-      sprintWrong = userStatistic.optional.sprintWrong || 0;
-      audioCorrect = userStatistic.optional.audioCorrect || 0;
-      audioWrong = userStatistic.optional.audioWrong || 0;
-      percentAudio = userStatistic.optional.percentAudio || 0;
-      percentSprint = userStatistic.optional.percentSprint || 0;
-      longestSeriesSprint = (userStatistic.optional.longestSeriesSprint > series) ? userStatistic.optional.longestSeriesSprint : series || 0;
-      longestSeriesAudio = (userStatistic.optional.longestSeriesAudio > series) ? userStatistic.optional.longestSeriesAudio : series || 0;
-      newWordsSprint = userStatistic.optional.newWordsSprint || 0;
-      newWordsAudio = userStatistic.optional.newWordsSprintAudio || 0;
-      }
-    }
-  }
- // const allWordsPerGame = [...rightWords, ...wrongWords].flatMap((word) => Object.keys(word));
-
-  //процент
-  const percentPerGame = (rightWords.length / (rightWords.length + wrongWords.length)) * 100;
-  const percent = Math.round(percentPerGame);
-
-  //новые слова
-  const rightWordsPerGame = await calculateNewWords(user, rightWords, 'right');
-  const wrongWordsPerGame = await calculateNewWords(user, wrongWords, 'wrong');
-  const allWordsPerGame = rightWordsPerGame.concat(wrongWordsPerGame)
-  const newWordsPerGame = allWordsPerGame.filter(v => typeof v === 'number').length;
-  newWordsPerDay += newWordsPerGame;
-  if (gameName == 'Sprint') {
-    newWordsSprint += newWordsPerGame;
-    percentSprint = percent;
-  } else {
-    newWordsAudio += newWordsPerGame;
-    percentAudio = percent;
-  }
-  //выученные слова
-  const  learnedWordsPerGame = rightWords.map((word) => {
-   const val = Object.values(word)[0] ? Object.values(word)[0] : 0;
-    if (val == undefined) {
-      return 
-    } else {
-      if (val > 1) {
-        return  Object.keys(word)[0]
-      }
-    }
-  }).filter(wordId => wordId).length;
-  learnedWordsPerDay += learnedWordsPerGame;
-  learnedWords += learnedWordsPerGame;
-  if (gameName == 'Sprint') {
-    sprintCorrect += rightWords.length;
-    sprintWrong += wrongWords.length;
-  }
-  if (gameName == 'AudioChallenge') {
-    audioCorrect += rightWords.length;
-    audioWrong += wrongWords.length;
-  }
-  //самая длинная серия
-
-  //отправить запрос 
-  const data = {
-    learnedWords: learnedWords,
+  let data = {
+    learnedWords: 0,
     optional: {
       currentDate: currentDate,
-      learnedWordsPerDay: learnedWordsPerDay,
-      newWordsPerDay: newWordsPerDay,
-      sprintCorrect: sprintCorrect,
-      sprintWrong: sprintWrong,
-      audioCorrect: audioCorrect,
-      audioWrong: audioWrong,
-      longestSeriesAudio: longestSeriesAudio,
-      longestSeriesSprint: longestSeriesSprint,
-      newWordsSprint: newWordsSprint,
-      newWordsAudio: newWordsAudio,
-      percentAudio: percentAudio,
-      percentSprint: percentSprint
+      learnedWordsPerDay: 0,
+      newWordsPerDay: 0,
+      sprintCorrect: 0,
+      sprintWrong: 0,
+      audioCorrect: 0,
+      audioWrong: 0,
+      longestSeriesAudio: 0,
+      longestSeriesSprint: 0,
+      newWordsSprint: 0,
+      newWordsAudio: 0,
+      percentAudio: 0,
+      percentSprint: 0
+    }
+  };
+  if (userStatistic) {
+    data.learnedWords = userStatistic.learnedWords;
+    if (currentDate == userStatistic.optional.currentDate) {
+      data = {
+        ...data,
+        optional: {
+          ...userStatistic.optional
+        }
+      };
     }
   }
-  putStatistic(user, data)
-}
+  return data;
+};
 
+const setStatistic = async (
+  user: IUserExist,
+  gameName: string,
+  rightWords: Obj[],
+  wrongWords: Obj[],
+  series = 0
+) => {
+  if (!user) return;
+  if (rightWords.length == 0 && wrongWords.length == 0) return;
+  const currentDate = `${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}`;
+  const userStatistic = await getStatistic(user);
+  let data = await updateStatistic(user);
+  if (userStatistic) {
+    data.learnedWords = userStatistic.learnedWords;
+    if (currentDate == userStatistic.optional.currentDate) {
+      data = {
+        ...data,
+        optional: {
+          ...userStatistic.optional
+        }
+      };
+      //определить лучшую серию
+      if (gameName == "Sprint") {
+        data.optional.longestSeriesSprint =
+          userStatistic.optional.longestSeriesSprint > series
+            ? userStatistic.optional.longestSeriesSprint
+            : series;
+      } else if (gameName == "AudioChallenge") {
+        data.optional.longestSeriesAudio =
+          userStatistic.optional.longestSeriesAudio > series
+            ? userStatistic.optional.longestSeriesAudio
+            : series;
+      }
+    }
+  } else {
+    if (gameName == "Sprint") {
+      data.optional.longestSeriesSprint = series;
+    } else if (gameName == "AudioChallenge") {
+      data.optional.longestSeriesAudio = series;
+    }
+  }
+  //новые слова
+  const rightWordsPerGame = await calculateNewWords(user, rightWords, "right");
+  const wrongWordsPerGame = await calculateNewWords(user, wrongWords, "wrong");
+  const allWordsPerGame = rightWordsPerGame.concat(wrongWordsPerGame);
+  const newWordsPerGame = allWordsPerGame.filter(
+    v => typeof v === "number"
+  ).length;
+  data.optional.newWordsPerDay += newWordsPerGame;
 
-export default setStatistic;
+  //выученные слова
+  const learnedWordsPerGame = rightWords
+    .map(word => {
+      const val = Object.values(word)[0] ? Object.values(word)[0] : 0;
+      if (val == undefined) {
+        return;
+      } else {
+        if (val > 2) {
+          return Object.keys(word)[0];
+        }
+      }
+    })
+    .filter(wordId => wordId).length;
+  data.optional.learnedWordsPerDay += learnedWordsPerGame;
+  data.learnedWords += learnedWordsPerGame;
+  if (gameName == "Sprint") {
+    data.optional.sprintCorrect += rightWords.length;
+    data.optional.sprintWrong += wrongWords.length;
+    data.optional.newWordsSprint += newWordsPerGame;
+    data.optional.percentSprint = Math.round(
+      (data.optional.sprintCorrect /
+        (data.optional.sprintCorrect + data.optional.sprintWrong)) *
+        100
+    );
+  } else if (gameName == "AudioChallenge") {
+    data.optional.audioCorrect += rightWords.length;
+    data.optional.audioWrong += wrongWords.length;
+    data.optional.newWordsAudio += newWordsPerGame;
+    data.optional.percentAudio = Math.round(
+      (data.optional.audioCorrect /
+        (data.optional.audioCorrect + data.optional.audioWrong)) *
+        100
+    );
+  }
+  putStatistic(user, data);
+};
+
+export { setStatistic, updateStatistic };

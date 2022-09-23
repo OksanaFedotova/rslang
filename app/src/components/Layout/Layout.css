@@ -1,6 +1,6 @@
 .layout {
   flex: 1 1 auto;
-  height: 79vh;
+  /* height: 79vh; */
   padding: 0 20px;
 }
 .layout > h3 {
@@ -8,3 +8,5 @@
   text-align: center;
   padding: 20px 0;
 }
+
+  

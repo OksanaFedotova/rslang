@@ -18,9 +18,8 @@
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
-    7px 7px 20px 0px rgba(0, 0, 0, .1),
-    4px 4px 5px 0px rgba(0, 0, 0, .1);
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
   background-color: #ffff00;
   margin: 10px;
@@ -31,10 +30,10 @@
 }
 .button:hover {
   background-color: darkorange;
-  transition: .5s;
+  transition: 0.5s;
 }
 .allMarked {
-  color:rgb(96, 95, 95);
+  color: rgb(96, 95, 95);
   background-color: rgb(220, 218, 218);
 }
 .page__menu-games {

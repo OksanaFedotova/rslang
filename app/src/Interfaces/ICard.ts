@@ -1,5 +1,6 @@
-interface IWord {
-  id: string;
+interface ICard {
+  wordId: string;
+  key?: string;
   image: string;
   textExample: string;
   textExampleTranslate: string;
@@ -11,5 +12,7 @@ interface IWord {
   audio: string;
   audioExample: string;
   audioMeaning: string;
+  redraw?: () => void;
+  setPageStyle?: () => void;
 }
-export default IWord;
+export default ICard;
